@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<colors>
+    <color name="black">#000000</color>
+    <color name="gray900">#1D2024</color>
+    <color name="gray800">#3A4047</color>
+    <color name="gray700">#58606B</color>
+    <color name="gray600">#92A0B2</color>
+    <color name="gray400">#A8B3C1</color>
+    <color name="gray100">#E9ECF0</color>
+    <color name="gray050">#EFF1F5</color>
+</colors>
