@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../gen/colors.gen.dart';
 
+
+import 'package:flutter/material.dart';
+import '../gen/colors.gen.dart';
+
 class AppText extends StatelessWidget {
   final String text;
   final Color color;
@@ -20,9 +24,12 @@ class AppText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final defaultStyle = TextStyle(color: color);
+    final effectiveStyle = style?.copyWith(color: color) ?? defaultStyle;
+
     return Text(
       text,
-      style: style?.copyWith(color: color),
+      style: effectiveStyle,
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
@@ -30,11 +37,17 @@ class AppText extends StatelessWidget {
   }
 }
 
+
 class TypoStyle {
   static const titleXLarge = TextStyle(
     fontSize: 24,
     height: 1.5,
     fontWeight: FontWeight.w600,
+  );
+  static const titleSLarge = TextStyle(
+    fontSize: 20,
+    height: 1.5,
+    fontWeight: FontWeight.w700,
   );
   static const titleLarge = TextStyle(
     fontSize: 22,

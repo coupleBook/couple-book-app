@@ -23,18 +23,26 @@ class $AssetsColorGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// File path: assets/bgImgs/Loading_ver01_2.svg
-  SvgGenImage get bgSplash01 => const SvgGenImage('assets/bgImgs/Loading_ver01_2.svg');
+  /// =================== Background ===================
+  SvgGenImage get bgSplash => const SvgGenImage('assets/bgImgs/splash_page.svg');
 
-  /// File path: assets/bgImgs/Loading_ver01_4.svg
-  SvgGenImage get bgSplash02 => const SvgGenImage('assets/bgImgs/Loading_ver01_4.svg');
 
-  /// File path: assets/bgImgs/Loading_ver02.svg
-  SvgGenImage get bgSplash03 => const SvgGenImage('assets/bgImgs/Loading_ver02.svg');
+  /// =================== Icon ===================
+  SvgGenImage get c_heartIcon => const SvgGenImage('assets/icons/c_heart_icon.svg');
+  SvgGenImage get c_googleIcon => const SvgGenImage('assets/icons/c_google_icon.svg');
+  SvgGenImage get c_kakaoIcon => const SvgGenImage('assets/icons/g_kakao_icon.svg');
+  SvgGenImage get c_naverIcon => const SvgGenImage('assets/icons/g_naver_icon.svg');
+
 
   /// List of all assets
   List<SvgGenImage> get values =>
-      [bgSplash01, bgSplash02, bgSplash03];
+      [
+          bgSplash
+        , c_heartIcon
+        , c_googleIcon
+        , c_kakaoIcon
+        , c_naverIcon
+      ];
 }
 
 class Assets {

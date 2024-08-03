@@ -43,4 +43,8 @@ class ColorName {
 
   /// Color: #FFFFFF
   static const Color white = Color(0xFFFFFFFF);
+
+  /// Color: #45496A
+  static const Color darkPurple = Color(0xFF45496A);
+
 }

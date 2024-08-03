@@ -4,13 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'gen/colors.gen.dart';
 
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const ProviderScope(child: CoupleBookApp()));
 }
-
 
 class CoupleBookApp extends ConsumerStatefulWidget {
   static final navKey = GlobalKey<NavigatorState>();
@@ -22,16 +19,10 @@ class CoupleBookApp extends ConsumerStatefulWidget {
 }
 
 class _CoupleBookAppState extends ConsumerState<CoupleBookApp> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'COUPLE BOOK', // 차후 텍스트 관리 json 을 생성 해서 관리 할 예정
+      title: 'COUPLE BOOK',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -46,5 +37,4 @@ class _CoupleBookAppState extends ConsumerState<CoupleBookApp> {
       routerConfig: router,
     );
   }
-
 }
