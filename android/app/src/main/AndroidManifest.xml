@@ -3,6 +3,10 @@
         android:label="COUPLE BOOK"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4079195719229107~3165019382"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"
