@@ -27,21 +27,60 @@ class $AssetsIconsGen {
   SvgGenImage get bgSplash => const SvgGenImage('assets/bgImgs/splash_page.svg');
 
 
-  /// =================== Icon ===================
+  /// =================== Contents ===================
+  SvgGenImage get heartContent => const SvgGenImage('assets/contents/heart01.svg');
+  SvgGenImage get heartBoxContent => const SvgGenImage('assets/contents/heart_box.svg');
+  SvgGenImage get homeBoxContent => const SvgGenImage('assets/contents/home_box.svg');
+  SvgGenImage get lineContent => const SvgGenImage('assets/contents/line.svg');
+  SvgGenImage get logoContent => const SvgGenImage('assets/contents/logo.svg');
+  SvgGenImage get miniHeartContent => const SvgGenImage('assets/contents/mini_heart.svg');
+  SvgGenImage get profileFemaleContent => const SvgGenImage('assets/contents/profile_female.svg');
+  SvgGenImage get profileMaleContent => const SvgGenImage('assets/contents/profile_male.svg');
+
+
+  /// =================== Icons ===================
   SvgGenImage get c_heartIcon => const SvgGenImage('assets/icons/c_heart_icon.svg');
   SvgGenImage get c_googleIcon => const SvgGenImage('assets/icons/c_google_icon.svg');
   SvgGenImage get c_kakaoIcon => const SvgGenImage('assets/icons/g_kakao_icon.svg');
   SvgGenImage get c_naverIcon => const SvgGenImage('assets/icons/g_naver_icon.svg');
 
+  SvgGenImage get botLineIcon => const SvgGenImage('assets/icons/bot_line.svg');
+  SvgGenImage get challengeIcon_n => const SvgGenImage('assets/icons/challenge_n');
+  SvgGenImage get coupleInfo_n => const SvgGenImage('assets/icons/couple_info_n.svg');
+  SvgGenImage get homeIcon_n => const SvgGenImage('assets/icons/home_n.svg');
+  SvgGenImage get moreIcon_n => const SvgGenImage('assets/icons/more_n.svg');
+  SvgGenImage get noticeIcon_n => const SvgGenImage('assets/icons/notice_n.svg');
+  SvgGenImage get settingIcon_n => const SvgGenImage('assets/icons/setting_n.svg');
+  SvgGenImage get timelineIcon_n => const SvgGenImage('assets/icons/timeline_n.svg');
+
 
   /// List of all assets
   List<SvgGenImage> get values =>
       [
+        /// Background
           bgSplash
+        /// CONTENTS
+        , heartContent
+        , heartBoxContent
+        , homeBoxContent
+        , lineContent
+        , logoContent
+        , miniHeartContent
+        , profileFemaleContent
+        , profileMaleContent
+        /// ICONS
         , c_heartIcon
         , c_googleIcon
         , c_kakaoIcon
         , c_naverIcon
+        , botLineIcon
+        , challengeIcon_n
+        , coupleInfo_n
+        , homeIcon_n
+        , moreIcon_n
+        , noticeIcon_n
+        , settingIcon_n
+        , timelineIcon_n
       ];
 }
 
