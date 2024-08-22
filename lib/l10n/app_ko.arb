@@ -1,0 +1,6 @@
+{
+  "app_name": "COUPLE BOOK",
+  "@app_name": {
+    "description": "앱 이름"
+  }
+}

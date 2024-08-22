@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'gen/colors.gen.dart';
+import 'l10n/app_localizations.dart';
+import 'l10n/l10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +24,9 @@ class _CoupleBookAppState extends ConsumerState<CoupleBookApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'COUPLE BOOK',
+      title: l10n.app_name,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
