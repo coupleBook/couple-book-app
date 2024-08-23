@@ -98,6 +98,36 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'COUPLE BOOK'**
   String get app_name;
+
+  /// No description provided for @home.
+  ///
+  /// In ko, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @couple_info.
+  ///
+  /// In ko, this message translates to:
+  /// **'커플정보'**
+  String get couple_info;
+
+  /// No description provided for @timeline.
+  ///
+  /// In ko, this message translates to:
+  /// **'타임라인'**
+  String get timeline;
+
+  /// No description provided for @challenge.
+  ///
+  /// In ko, this message translates to:
+  /// **'챌린지'**
+  String get challenge;
+
+  /// No description provided for @more.
+  ///
+  /// In ko, this message translates to:
+  /// **'더보기'**
+  String get more;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

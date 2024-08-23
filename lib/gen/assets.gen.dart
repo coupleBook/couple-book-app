@@ -45,13 +45,18 @@ class $AssetsIconsGen {
   SvgGenImage get c_naverIcon => const SvgGenImage('assets/icons/g_naver_icon.svg');
 
   SvgGenImage get botLineIcon => const SvgGenImage('assets/icons/bot_line.svg');
-  SvgGenImage get challengeIcon_n => const SvgGenImage('assets/icons/challenge_n');
+
+  /// Non-selected
+  SvgGenImage get challengeIcon_n => const SvgGenImage('assets/icons/challenge_n.svg');
   SvgGenImage get coupleInfo_n => const SvgGenImage('assets/icons/couple_info_n.svg');
   SvgGenImage get homeIcon_n => const SvgGenImage('assets/icons/home_n.svg');
   SvgGenImage get moreIcon_n => const SvgGenImage('assets/icons/more_n.svg');
   SvgGenImage get noticeIcon_n => const SvgGenImage('assets/icons/notice_n.svg');
   SvgGenImage get settingIcon_n => const SvgGenImage('assets/icons/setting_n.svg');
   SvgGenImage get timelineIcon_n => const SvgGenImage('assets/icons/timeline_n.svg');
+
+  /// selected
+  SvgGenImage get homeIcon_a => const SvgGenImage('assets/icons/home_a.svg');
 
 
   /// List of all assets
@@ -74,6 +79,7 @@ class $AssetsIconsGen {
         , c_kakaoIcon
         , c_naverIcon
         , botLineIcon
+        /// ICONS - Non-selected
         , challengeIcon_n
         , coupleInfo_n
         , homeIcon_n
@@ -81,6 +87,8 @@ class $AssetsIconsGen {
         , noticeIcon_n
         , settingIcon_n
         , timelineIcon_n
+        /// ICONS - selected
+        , homeIcon_a
       ];
 }
 

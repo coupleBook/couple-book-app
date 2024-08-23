@@ -66,7 +66,7 @@ flutter:
     - assets/colors/
     - assets/contents/
   fonts:
-    - family: Iseoyunche
+    - family: Iseoyunchae
       fonts:
         - asset: fonts/이서윤체.ttf
 

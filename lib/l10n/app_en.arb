@@ -1,3 +1,8 @@
 {
-  "app_name": "COUPLE BOOK"
+    "app_name": "COUPLE BOOK",
+    "home": "Home",
+    "couple_info": "커플정보",
+    "timeline": "타임라인",
+    "challenge": "챌린지",
+    "more": "더보기"
 }

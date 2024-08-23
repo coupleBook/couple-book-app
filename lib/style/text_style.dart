@@ -24,7 +24,7 @@ class AppText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultStyle = TextStyle(color: color);
+    final defaultStyle = TextStyle(color: color, fontFamily: 'Iseoyunchae');
     final effectiveStyle = style?.copyWith(color: color) ?? defaultStyle;
 
     return Text(
@@ -41,25 +41,36 @@ class AppText extends StatelessWidget {
 class TypoStyle {
   /// BOLD
   static const seoyunB46_1_5 = TextStyle(
+    fontFamily: 'Iseoyunchae',
     fontSize: 46,
     height: 1.5,
     fontWeight: FontWeight.bold,
   );
 
   /// REGULAR
+  static const seoyunR46_1_5 = TextStyle(
+    fontFamily: 'Iseoyunchae',
+    fontSize: 46,
+    height: 1.5,
+    fontWeight: FontWeight.w400,
+  );
+
   static const seoyunR32_1_4 = TextStyle(
+    fontFamily: 'Iseoyunchae',
     fontSize: 32,
     height: 1.4,
     fontWeight: FontWeight.w400,
   );
 
   static const seoyunR26_1_4 = TextStyle(
+    fontFamily: 'Iseoyunchae',
     fontSize: 26,
     height: 1.4,
     fontWeight: FontWeight.w100,
   );
 
   static const seoyunR19_1_4 = TextStyle(
+    fontFamily: 'Iseoyunchae',
     fontSize: 19.5,
     height: 1.4,
     fontWeight: FontWeight.w400,

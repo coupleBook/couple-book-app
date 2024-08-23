@@ -28,8 +28,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Assets.icons.noticeIcon_n.svg(
-                  width: 37,
-                  height: 32
+                  width: 33,
+                  height: 28
                 ),
               ),
             ),
@@ -45,8 +45,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Assets.icons.settingIcon_n.svg(
-                  width: 36,
-                  height: 36
+                  width: 32,
+                  height: 32
                 ),
               ),
             ),
