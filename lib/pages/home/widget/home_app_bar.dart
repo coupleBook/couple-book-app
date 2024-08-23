@@ -19,7 +19,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       actions: [
         Container(
-          margin: const EdgeInsets.only(right: 12),
+          margin: const EdgeInsets.only(right: 8),
           child: Center(
             child: InkWell(
               borderRadius: BorderRadius.circular(60),
@@ -28,8 +28,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Assets.icons.noticeIcon_n.svg(
-                  width: 33,
-                  height: 28
+                  width: 29,
+                  height: 24
                 ),
               ),
             ),
@@ -45,8 +45,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Assets.icons.settingIcon_n.svg(
-                  width: 32,
-                  height: 32
+                  width: 28,
+                  height: 28
                 ),
               ),
             ),
