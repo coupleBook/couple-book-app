@@ -26,7 +26,7 @@ class _LoginViewState extends State<LoginPage> {
               const SizedBox(height: 24),
               const AppText(
                 '커플북과 함께 우리의\n소중한 추억을 기록해요.',
-                style: TypoStyle.titleSLarge,
+                style: TypoStyle.seoyunB46_1_5,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 color: ColorName.darkPurple,

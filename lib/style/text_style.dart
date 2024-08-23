@@ -39,44 +39,29 @@ class AppText extends StatelessWidget {
 
 
 class TypoStyle {
-  static const titleXLarge = TextStyle(
-    fontSize: 24,
+  /// BOLD
+  static const seoyunB46_1_5 = TextStyle(
+    fontSize: 46,
     height: 1.5,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.bold,
   );
-  static const titleSLarge = TextStyle(
-    fontSize: 20,
-    height: 1.5,
-    fontWeight: FontWeight.w700,
-  );
-  static const titleLarge = TextStyle(
-    fontSize: 22,
-    height: 1.5,
-    fontWeight: FontWeight.w600,
-  );
-  static const titleMedium = TextStyle(
-    fontSize: 16,
-    height: 1.5,
-    fontWeight: FontWeight.w500,
-  );
-  static const bodyMedium = TextStyle(
-    fontSize: 15,
-    height: 1.5,
+
+  /// REGULAR
+  static const seoyunR32_1_4 = TextStyle(
+    fontSize: 32,
+    height: 1.4,
     fontWeight: FontWeight.w400,
   );
-  static const bodySmall = TextStyle(
-    fontSize: 14,
-    height: 1.5,
-    fontWeight: FontWeight.w400,
+
+  static const seoyunR26_1_4 = TextStyle(
+    fontSize: 26,
+    height: 1.4,
+    fontWeight: FontWeight.w100,
   );
-  static const descriptionSmall = TextStyle(
-    fontSize: 12,
-    height: 1.8,
+
+  static const seoyunR19_1_4 = TextStyle(
+    fontSize: 19.5,
+    height: 1.4,
     fontWeight: FontWeight.w400,
-  );
-  static const buttonLarge = TextStyle(
-    fontSize: 16,
-    height: 1.5,
-    fontWeight: FontWeight.w600,
   );
 }
