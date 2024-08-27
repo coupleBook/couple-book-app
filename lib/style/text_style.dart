@@ -47,6 +47,13 @@ class TypoStyle {
     fontWeight: FontWeight.bold,
   );
 
+  static const seoyunB19_1_4 = TextStyle(
+    fontFamily: 'Iseoyunchae',
+    fontSize: 19.5,
+    height: 1.4,
+    fontWeight: FontWeight.bold,
+  );
+
   /// REGULAR
   static const seoyunR46_1_5 = TextStyle(
     fontFamily: 'Iseoyunchae',

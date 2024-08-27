@@ -1,6 +1,10 @@
+// HomePage.dart
+
 import 'package:COUPLE_BOOK/gen/colors.gen.dart';
 import 'package:COUPLE_BOOK/pages/home/widget/home_app_bar.dart';
+import 'package:COUPLE_BOOK/pages/home/widget/main_dday.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // intl 패키지 추가
 
 import '../../gen/assets.gen.dart';
 import '../../l10n/l10n.dart';
@@ -15,11 +19,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  double _iconSize = 10.0;
+
+  // 현재 날짜와 D-day 계산
+  final String today = DateFormat('yy/MM/dd/E', 'ko_KR').format(DateTime.now());
+  final int dday = DateTime.now().difference(DateTime(2023, 11, 25)).inDays;
+
 
   // 각 탭에서 표시할 위젯들을 정의
-  static const List<Widget> _widgetOptions = <Widget>[
-    Center(child: AppText('Home')),
+  late final List<Widget> _widgetOptions = <Widget>[
+    MainDdayView(today: today, dday: dday), // Home 버튼에서 MainDdayView를 표시
     Center(child: AppText('커플정보')),
     Center(child: AppText('타임라인')),
     Center(child: AppText('챌린지')),
