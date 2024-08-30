@@ -77,28 +77,28 @@ class _HomePageState extends State<HomePage> {
               onDestinationSelected: _onItemTapped,
               destinations: [
                 NavigationDestination(
-                  selectedIcon: Assets.icons.homeIcon_a.svg(width: 24, height: 24),
-                  icon: Assets.icons.homeIcon_n.svg(width: 24, height: 24),
+                  selectedIcon: Assets.icons.homeIcon_on.svg(width: 24, height: 24),
+                  icon: Assets.icons.homeIcon_off.svg(width: 24, height: 24),
                   label: l10n.home,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.coupleInfo_n.svg(width: 24, height: 24),
-                  icon: Assets.icons.coupleInfo_n.svg(width: 24, height: 24),
+                  selectedIcon: Assets.icons.coupleInfo_on.svg(width: 24, height: 24),
+                  icon: Assets.icons.coupleInfo_off.svg(width: 24, height: 24),
                   label: l10n.couple_info,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.timelineIcon_n.svg(width: 24, height: 24),
-                  icon: Assets.icons.timelineIcon_n.svg(width: 24, height: 24),
+                  selectedIcon: Assets.icons.timelineIcon_on.svg(width: 24, height: 24),
+                  icon: Assets.icons.timelineIcon_off.svg(width: 24, height: 24),
                   label: l10n.timeline,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.challengeIcon_n.svg(width: 20, height: 20),
-                  icon: Assets.icons.challengeIcon_n.svg(width: 20, height: 20),
+                  selectedIcon: Assets.icons.challengeIcon_on.svg(width: 20, height: 20),
+                  icon: Assets.icons.challengeIcon_off.svg(width: 20, height: 20),
                   label: l10n.challenge,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.moreIcon_n.svg(width: 10, height: 10),
-                  icon: Assets.icons.moreIcon_n.svg(width: 10, height: 10),
+                  selectedIcon: Assets.icons.moreIcon_on.svg(width: 10, height: 10),
+                  icon: Assets.icons.moreIcon_off.svg(width: 10, height: 10),
                   label: l10n.more,
                 ),
               ],

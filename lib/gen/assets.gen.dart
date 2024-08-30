@@ -47,17 +47,20 @@ class $AssetsIconsGen {
   SvgGenImage get botLineIcon => const SvgGenImage('assets/icons/bot_line.svg');
 
   /// Non-selected
-  SvgGenImage get challengeIcon_n => const SvgGenImage('assets/icons/challenge_n.svg');
-  SvgGenImage get coupleInfo_n => const SvgGenImage('assets/icons/couple_info_n.svg');
-  SvgGenImage get homeIcon_n => const SvgGenImage('assets/icons/home_n.svg');
-  SvgGenImage get moreIcon_n => const SvgGenImage('assets/icons/more_n.svg');
+  SvgGenImage get challengeIcon_off => const SvgGenImage('assets/icons/challenge_off.svg');
+  SvgGenImage get coupleInfo_off => const SvgGenImage('assets/icons/couple_info_off.svg');
+  SvgGenImage get homeIcon_off => const SvgGenImage('assets/icons/home_off.svg');
+  SvgGenImage get moreIcon_off => const SvgGenImage('assets/icons/more_off.svg');
   SvgGenImage get noticeIcon_n => const SvgGenImage('assets/icons/notice_n.svg');
   SvgGenImage get settingIcon_n => const SvgGenImage('assets/icons/setting_n.svg');
-  SvgGenImage get timelineIcon_n => const SvgGenImage('assets/icons/timeline_n.svg');
+  SvgGenImage get timelineIcon_off => const SvgGenImage('assets/icons/timeline_off.svg');
 
-  /// selected
-  SvgGenImage get homeIcon_a => const SvgGenImage('assets/icons/home_a.svg');
-
+  /// Selected
+  SvgGenImage get homeIcon_on => const SvgGenImage('assets/icons/home_on.svg');
+  SvgGenImage get challengeIcon_on => const SvgGenImage('assets/icons/challenge_on.svg');
+  SvgGenImage get coupleInfo_on => const SvgGenImage('assets/icons/couple_info_on.svg');
+  SvgGenImage get moreIcon_on => const SvgGenImage('assets/icons/more_on.svg');
+  SvgGenImage get timelineIcon_on => const SvgGenImage('assets/icons/timeline_on.svg');
 
   /// List of all assets
   List<SvgGenImage> get values =>
@@ -80,15 +83,19 @@ class $AssetsIconsGen {
         , c_naverIcon
         , botLineIcon
         /// ICONS - Non-selected
-        , challengeIcon_n
-        , coupleInfo_n
-        , homeIcon_n
-        , moreIcon_n
+        , homeIcon_off
+        , challengeIcon_off
+        , coupleInfo_off
+        , moreIcon_off
         , noticeIcon_n
         , settingIcon_n
-        , timelineIcon_n
+        , timelineIcon_off
         /// ICONS - selected
-        , homeIcon_a
+        , homeIcon_on
+        , challengeIcon_on
+        , coupleInfo_on
+        , moreIcon_on
+        , timelineIcon_on
       ];
 }
 
