@@ -39,10 +39,18 @@ class AppText extends StatelessWidget {
 
 
 class TypoStyle {
+  /// 이서윤체
   /// BOLD
   static const seoyunB46_1_5 = TextStyle(
     fontFamily: 'Iseoyunchae',
     fontSize: 46,
+    height: 1.5,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const seoyunB32_1_5 = TextStyle(
+    fontFamily: 'Iseoyunchae',
+    fontSize: 32,
     height: 1.5,
     fontWeight: FontWeight.bold,
   );
@@ -79,6 +87,41 @@ class TypoStyle {
   static const seoyunR19_1_4 = TextStyle(
     fontFamily: 'Iseoyunchae',
     fontSize: 19.5,
+    height: 1.4,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const seoyunR10_1_4 = TextStyle(
+    fontFamily: 'Iseoyunchae',
+    fontSize: 13,
+    height: 1.4,
+    fontWeight: FontWeight.w400,
+  );
+
+
+  /// NotoSansKR
+  /// Bold
+
+  static const notoSansBold22 = TextStyle(
+    fontFamily: 'NotoSansKR',
+    fontSize: 22,
+    fontWeight: FontWeight.w900,
+  );
+
+
+  /// Regular
+  ///
+  ///
+  static const notoSansR19_1_4 = TextStyle(
+    fontFamily: 'NotoSansKR',
+    fontSize: 19,
+    height: 1.4,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const notoSansR13_1_4 = TextStyle(
+    fontFamily: 'NotoSansKR',
+    fontSize: 13,
     height: 1.4,
     fontWeight: FontWeight.w400,
   );

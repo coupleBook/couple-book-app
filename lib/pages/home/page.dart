@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   // 현재 날짜와 D-day 계산
-  final String today = DateFormat('yy/MM/dd/E', 'ko_KR').format(DateTime.now());
+  final String today = DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
   final int dday = DateTime.now().difference(DateTime(2023, 11, 25)).inDays;
 
 

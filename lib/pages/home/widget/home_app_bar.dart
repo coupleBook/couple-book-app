@@ -1,3 +1,4 @@
+import 'package:COUPLE_BOOK/style/text_style.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
@@ -10,55 +11,76 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({
     super.key,
     required this.onNotificationTab,
-    required this.onSettingTab
+    required this.onSettingTab,
   });
-
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      actions: [
-        Container(
-          margin: const EdgeInsets.only(right: 8),
-          child: Center(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(60),
-              highlightColor: ColorName.lightGray,
-              onTap: onNotificationTab,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Assets.icons.noticeIcon_n.svg(
-                  width: 29,
-                  height: 24
-                ),
+    return Container(
+      color: ColorName.backgroundColor,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppBar(
+            title: Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 24),
+              child: const AppText(
+                'COUPLE BOOK',
+                style: TypoStyle.notoSansBold22,
               ),
             ),
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: 12),
-          child: Center(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(60),
-              highlightColor: ColorName.lightGray,
-              onTap: onSettingTab,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Assets.icons.settingIcon_n.svg(
-                  width: 28,
-                  height: 28
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(left: 16),
+                child: Center(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(60),
+                    highlightColor: ColorName.lightGray,
+                    onTap: onNotificationTab,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Assets.icons.noticeIcon_n.svg(
+                        width: 29,
+                        height: 24,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Container(
+                margin: const EdgeInsets.only(right: 12),
+                child: Center(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(60),
+                    highlightColor: ColorName.lightGray,
+                    onTap: onSettingTab,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Assets.icons.settingIcon_n.svg(
+                        width: 28,
+                        height: 28,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            centerTitle: false,
+            backgroundColor: ColorName.backgroundColor,
+            elevation: 0, // AppBar의 그림자를 없앰
           ),
-        ),
-      ],
-      centerTitle: true,
-      backgroundColor: ColorName.backgroundColor,
+          // AppBar 아래에 라인을 추가합니다.
+          Container(
+            margin: const EdgeInsets.only(top: 30), // 라인의 위치를 더 아래로 내립니다.
+            color: ColorName.defaultGray, // 라인의 색상
+            height: 1.0, // 라인의 두께
+          ),
+        ],
+      ),
     );
   }
 
-
   @override
-  Size get preferredSize => const Size.fromHeight(70);
+  Size get preferredSize => const Size.fromHeight(90); // 높이를 조정하여 AppBar와 라인의 전체 크기를 설정합니다.
 }

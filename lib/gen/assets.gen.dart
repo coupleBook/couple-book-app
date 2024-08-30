@@ -45,6 +45,7 @@ class $AssetsIconsGen {
   SvgGenImage get c_naverIcon => const SvgGenImage('assets/icons/g_naver_icon.svg');
 
   SvgGenImage get botLineIcon => const SvgGenImage('assets/icons/bot_line.svg');
+  SvgGenImage get HBDIcon => const SvgGenImage('assets/icons/HBD.svg');
 
   /// Non-selected
   SvgGenImage get challengeIcon_off => const SvgGenImage('assets/icons/challenge_off.svg');
@@ -82,6 +83,7 @@ class $AssetsIconsGen {
         , c_kakaoIcon
         , c_naverIcon
         , botLineIcon
+        , HBDIcon
         /// ICONS - Non-selected
         , homeIcon_off
         , challengeIcon_off
