@@ -1,8 +1,8 @@
 // HomePage.dart
 
-import 'package:COUPLE_BOOK/gen/colors.gen.dart';
-import 'package:COUPLE_BOOK/pages/home/widget/home_app_bar.dart';
-import 'package:COUPLE_BOOK/pages/home/widget/main_dday.dart';
+import 'package:couple_book/gen/colors.gen.dart';
+import 'package:couple_book/pages/home/widget/home_app_bar.dart';
+import 'package:couple_book/pages/home/widget/main_dday.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // intl 패키지 추가
 
@@ -59,11 +59,12 @@ class _HomePageState extends State<HomePage> {
           ),
           NavigationBarTheme(
             data: NavigationBarThemeData(
+              overlayColor: MaterialStateProperty.all(Colors.transparent), // 터치 피드백 색상 제거
               labelTextStyle: MaterialStateProperty.all(
                 const TextStyle(
                   fontFamily: 'Iseoyunchae',
                   fontSize: 12,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w300,
                   color: ColorName.defaultGray,
                 ),
               ),

@@ -1,6 +1,6 @@
-import 'package:COUPLE_BOOK/pages/home/page.dart';
-import 'package:COUPLE_BOOK/pages/login/page.dart';
-import 'package:COUPLE_BOOK/pages/splash/page.dart';
+import 'package:couple_book/pages/home/page.dart';
+import 'package:couple_book/pages/login/page.dart';
+import 'package:couple_book/pages/splash/page.dart';
 import 'package:go_router/go_router.dart';
 import 'main.dart';
 

@@ -46,6 +46,7 @@ class $AssetsIconsGen {
 
   SvgGenImage get botLineIcon => const SvgGenImage('assets/icons/bot_line.svg');
   SvgGenImage get HBDIcon => const SvgGenImage('assets/icons/HBD.svg');
+  SvgGenImage get bookIcon => const SvgGenImage('assets/icons/book.svg');
 
   /// Non-selected
   SvgGenImage get challengeIcon_off => const SvgGenImage('assets/icons/challenge_off.svg');
@@ -55,6 +56,7 @@ class $AssetsIconsGen {
   SvgGenImage get noticeIcon_n => const SvgGenImage('assets/icons/notice_n.svg');
   SvgGenImage get settingIcon_n => const SvgGenImage('assets/icons/setting_n.svg');
   SvgGenImage get timelineIcon_off => const SvgGenImage('assets/icons/timeline_off.svg');
+  SvgGenImage get pencilIcon_off => const SvgGenImage('assets/icons/pencil_off.svg');
 
   /// Selected
   SvgGenImage get homeIcon_on => const SvgGenImage('assets/icons/home_on.svg');
@@ -84,6 +86,7 @@ class $AssetsIconsGen {
         , c_naverIcon
         , botLineIcon
         , HBDIcon
+        , bookIcon
         /// ICONS - Non-selected
         , homeIcon_off
         , challengeIcon_off
@@ -92,6 +95,7 @@ class $AssetsIconsGen {
         , noticeIcon_n
         , settingIcon_n
         , timelineIcon_off
+        , pencilIcon_off
         /// ICONS - selected
         , homeIcon_on
         , challengeIcon_on

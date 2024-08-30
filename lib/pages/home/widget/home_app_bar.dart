@@ -1,4 +1,4 @@
-import 'package:COUPLE_BOOK/style/text_style.dart';
+import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
@@ -24,7 +24,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           AppBar(
             title: Container(
               alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 24),
+              margin: const EdgeInsets.only(left: 11),
               child: const AppText(
                 'COUPLE BOOK',
                 style: TypoStyle.notoSansBold22,
@@ -72,7 +72,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           // AppBar 아래에 라인을 추가합니다.
           Container(
-            margin: const EdgeInsets.only(top: 30), // 라인의 위치를 더 아래로 내립니다.
+            margin: const EdgeInsets.only(top: 20), // 라인의 위치를 더 아래로 내립니다.
             color: ColorName.defaultGray, // 라인의 색상
             height: 1.0, // 라인의 두께
           ),

@@ -1,4 +1,4 @@
-import 'package:COUPLE_BOOK/router.dart';
+import 'package:couple_book/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

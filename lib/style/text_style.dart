@@ -50,7 +50,7 @@ class TypoStyle {
 
   static const seoyunB32_1_5 = TextStyle(
     fontFamily: 'Iseoyunchae',
-    fontSize: 32,
+    fontSize: 35,
     height: 1.5,
     fontWeight: FontWeight.bold,
   );
@@ -106,6 +106,7 @@ class TypoStyle {
     fontFamily: 'NotoSansKR',
     fontSize: 22,
     fontWeight: FontWeight.w900,
+    letterSpacing: -1.2, // 자간을 줄이기 위해 음수 값 설정
   );
 
 

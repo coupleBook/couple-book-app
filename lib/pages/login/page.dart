@@ -1,4 +1,4 @@
-import 'package:COUPLE_BOOK/gen/colors.gen.dart';
+import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
 import '../../gen/assets.gen.dart';
 import '../../style/text_style.dart';
