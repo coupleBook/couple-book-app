@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_2" data-name="레이어_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 19 19.39">
+  <defs>
+    <clipPath id="clippath">
+      <path d="M19,9.91c0-.69-.06-1.35-.18-1.98h-9.13v3.75h5.22c-.22,1.21-.91,2.24-1.93,2.93v2.43h3.13c1.83-1.69,2.89-4.17,2.89-7.12h0Z" clip-rule="evenodd" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clippath-1">
+      <path d="M9.69,19.39c2.62,0,4.81-.87,6.42-2.35l-3.13-2.43c-.87.58-1.98.93-3.28.93-2.52,0-4.66-1.71-5.42-4H1.03v2.51c1.6,3.17,4.87,5.34,8.66,5.34h0Z" clip-rule="evenodd" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clippath-2">
+      <path d="M4.27,11.54c-.19-.58-.3-1.2-.3-1.84s.11-1.26.3-1.84v-2.51H1.03c-.66,1.31-1.03,2.79-1.03,4.35s.37,3.04,1.03,4.35l3.24-2.51h0Z" clip-rule="evenodd" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clippath-3">
+      <path d="M9.69,3.86c1.42,0,2.7.49,3.71,1.45l2.78-2.78c-1.68-1.56-3.87-2.52-6.49-2.52C5.9,0,2.63,2.17,1.03,5.34l3.24,2.51c.76-2.29,2.9-4,5.42-4h0Z" clip-rule="evenodd" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="GUIDE">
+    <g>
+      <g>
+        <path d="M19,9.91c0-.69-.06-1.35-.18-1.98h-9.13v3.75h5.22c-.22,1.21-.91,2.24-1.93,2.93v2.43h3.13c1.83-1.69,2.89-4.17,2.89-7.12h0Z" fill="#fff" fill-rule="evenodd"/>
+        <g clip-path="url(#clippath)">
+          <rect x="4.31" y="2.55" width="20.08" height="19.88" fill="#fff"/>
+        </g>
+      </g>
+      <g>
+        <path d="M9.69,19.39c2.62,0,4.81-.87,6.42-2.35l-3.13-2.43c-.87.58-1.98.93-3.28.93-2.52,0-4.66-1.71-5.42-4H1.03v2.51c1.6,3.17,4.87,5.34,8.66,5.34h0Z" fill="#fff" fill-rule="evenodd"/>
+        <g clip-path="url(#clippath-1)">
+          <rect x="-4.35" y="6.15" width="25.85" height="18.62" fill="#fff"/>
+        </g>
+      </g>
+      <g>
+        <path d="M4.27,11.54c-.19-.58-.3-1.2-.3-1.84s.11-1.26.3-1.84v-2.51H1.03c-.66,1.31-1.03,2.79-1.03,4.35s.37,3.04,1.03,4.35l3.24-2.51h0Z" fill="#fff" fill-rule="evenodd"/>
+        <g clip-path="url(#clippath-2)">
+          <rect x="-5.39" y="-.05" width="15.04" height="19.48" fill="#fff"/>
+        </g>
+      </g>
+      <g>
+        <path d="M9.69,3.86c1.42,0,2.7.49,3.71,1.45l2.78-2.78c-1.68-1.56-3.87-2.52-6.49-2.52C5.9,0,2.63,2.17,1.03,5.34l3.24,2.51c.76-2.29,2.9-4,5.42-4h0Z" fill="#fff" fill-rule="evenodd"/>
+        <g clip-path="url(#clippath-3)">
+          <rect x="-4.35" y="-5.39" width="25.92" height="18.62" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

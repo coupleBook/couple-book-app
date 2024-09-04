@@ -12,6 +12,7 @@ class AppText extends StatelessWidget {
   final TextStyle? style;
   final TextAlign? textAlign;
   final int? maxLines;
+  final double letterSpacing;
 
   const AppText(
       this.text, {
@@ -20,11 +21,12 @@ class AppText extends StatelessWidget {
         this.style,
         this.textAlign,
         this.maxLines,
+        this.letterSpacing = 0
       });
 
   @override
   Widget build(BuildContext context) {
-    final defaultStyle = TextStyle(color: color, fontFamily: 'Iseoyunchae');
+    final defaultStyle = TextStyle(color: color, fontFamily: 'Iseoyunchae', letterSpacing: letterSpacing);
     final effectiveStyle = style?.copyWith(color: color) ?? defaultStyle;
 
     return Text(
@@ -41,7 +43,7 @@ class AppText extends StatelessWidget {
 class TypoStyle {
   /// 이서윤체
   /// BOLD
-  static const seoyunB46_1_5 = TextStyle(
+  static const    seoyunB46_1_5 = TextStyle(
     fontFamily: 'Iseoyunchae',
     fontSize: 46,
     height: 1.5,
@@ -99,9 +101,8 @@ class TypoStyle {
   );
 
 
-  /// NotoSansKR
+  /// NotoS ansKR
   /// Bold
-
   static const notoSansBold22 = TextStyle(
     fontFamily: 'NotoSansKR',
     fontSize: 22,
@@ -109,10 +110,15 @@ class TypoStyle {
     letterSpacing: -1.2, // 자간을 줄이기 위해 음수 값 설정
   );
 
+  static const notoSansSemiBold22 = TextStyle(
+    fontFamily: 'NotoSansKR',
+    fontSize: 26,
+    fontWeight: FontWeight.w500,
+    letterSpacing: -0.4, // 자간을 줄이기 위해 음수 값 설정
+  );
+
 
   /// Regular
-  ///
-  ///
   static const notoSansR19_1_4 = TextStyle(
     fontFamily: 'NotoSansKR',
     fontSize: 19,
@@ -125,5 +131,14 @@ class TypoStyle {
     fontSize: 13,
     height: 1.4,
     fontWeight: FontWeight.w400,
+  );
+
+
+  static const notoSansR14_1_4 = TextStyle(
+    fontFamily: 'NotoSansKR',
+    fontSize: 13.5,
+    height: 1.4,
+    fontWeight: FontWeight.w500,
+    letterSpacing: -0.4,
   );
 }

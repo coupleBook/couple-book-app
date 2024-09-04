@@ -233,6 +233,24 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string> <!-- 런처 스크린 설정 유지 -->
+
+    <!-- 추가: 백그라운드 모드를 비활성화하여 깜빡임 최소화 -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+    </array>
+
+    <!-- 추가: 상태 표시줄 숨기기 설정 -->
+    <key>UIStatusBarHidden</key>
+    <true/>
+
+    <!-- 추가: 상태 표시줄 모양 기반 설정 비활성화 -->
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+
+
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>

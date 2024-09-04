@@ -44,9 +44,14 @@ class $AssetsIconsGen {
   SvgGenImage get c_kakaoIcon => const SvgGenImage('assets/icons/g_kakao_icon.svg');
   SvgGenImage get c_naverIcon => const SvgGenImage('assets/icons/g_naver_icon.svg');
 
+  SvgGenImage get naverIcon => const SvgGenImage('assets/icons/NAVER.svg');
+  SvgGenImage get kakaoIcon => const SvgGenImage('assets/icons/KAKAO.svg');
+  SvgGenImage get googleIcon => const SvgGenImage('assets/icons/GOOGLE.svg');
+
   SvgGenImage get botLineIcon => const SvgGenImage('assets/icons/bot_line.svg');
   SvgGenImage get HBDIcon => const SvgGenImage('assets/icons/HBD.svg');
   SvgGenImage get bookIcon => const SvgGenImage('assets/icons/book.svg');
+  SvgGenImage get appLogoIcon => const SvgGenImage('assets/icons/app_logo.svg');
 
   /// Non-selected
   SvgGenImage get challengeIcon_off => const SvgGenImage('assets/icons/challenge_off.svg');
@@ -84,9 +89,14 @@ class $AssetsIconsGen {
         , c_googleIcon
         , c_kakaoIcon
         , c_naverIcon
+        , naverIcon
+        , kakaoIcon
+        , googleIcon
+
         , botLineIcon
         , HBDIcon
         , bookIcon
+        , appLogoIcon
         /// ICONS - Non-selected
         , homeIcon_off
         , challengeIcon_off
