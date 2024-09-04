@@ -54,10 +54,7 @@ class _LoginViewState extends State<LoginPage> {
 
               // Google Sign In Button
               ElevatedButton(
-                onPressed: () {
-                  print("teststsetsetse");
-                  _clickSignInButton();
-                },
+                onPressed: _clickSignInButton,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorName.defaultBlack, // 버튼 배경색
                   foregroundColor: ColorName.white,
@@ -91,9 +88,7 @@ class _LoginViewState extends State<LoginPage> {
 
               // Naver Sign In Button
               ElevatedButton(
-                onPressed: () {
-                  // Naver Sign In 로직
-                },
+                onPressed: _clickSignInButton,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorName.defaultBlack, // 버튼 배경색
                   foregroundColor: ColorName.white, // 글자색
@@ -126,9 +121,7 @@ class _LoginViewState extends State<LoginPage> {
 
               // Kakao Sign In Button
               ElevatedButton(
-                onPressed: () {
-                  // Kakao Sign In 로직
-                },
+                onPressed: null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFDEE8C4), // 버튼 배경색
                   foregroundColor: const Color(0xFF787D6F), // 글자색
