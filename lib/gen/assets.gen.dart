@@ -52,6 +52,7 @@ class $AssetsIconsGen {
   SvgGenImage get HBDIcon => const SvgGenImage('assets/icons/HBD.svg');
   SvgGenImage get bookIcon => const SvgGenImage('assets/icons/book.svg');
   SvgGenImage get appLogoIcon => const SvgGenImage('assets/icons/app_logo.svg');
+  SvgGenImage get preparingIcon => const SvgGenImage('assets/icons/preparing.svg');
 
   /// Non-selected
   SvgGenImage get challengeIcon_off => const SvgGenImage('assets/icons/challenge_off.svg');
@@ -97,6 +98,7 @@ class $AssetsIconsGen {
         , HBDIcon
         , bookIcon
         , appLogoIcon
+        , preparingIcon
         /// ICONS - Non-selected
         , homeIcon_off
         , challengeIcon_off

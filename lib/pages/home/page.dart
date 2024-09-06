@@ -28,10 +28,30 @@ class _HomePageState extends State<HomePage> {
   // 각 탭에서 표시할 위젯들을 정의
   late final List<Widget> _widgetOptions = <Widget>[
     MainDdayView(today: today, dday: dday), // Home 버튼에서 MainDdayView를 표시
-    Center(child: AppText('커플정보')),
-    Center(child: AppText('타임라인')),
-    Center(child: AppText('챌린지')),
-    Center(child: AppText('더보기')),
+    Center(
+      child: Transform.translate(
+        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
+      ),
+    ),
+    Center(
+      child: Transform.translate(
+        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
+      ),
+    ),
+    Center(
+      child: Transform.translate(
+        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
+      ),
+    ),
+    Center(
+      child: Transform.translate(
+        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
+      ),
+    ),
   ];
 
   // 탭 선택 시 호출되는 함수
