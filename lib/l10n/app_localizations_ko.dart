@@ -2,7 +2,7 @@ import 'app_localizations.dart';
 
 /// The translations for Korean (`ko`).
 class AppLocalizationsKo extends AppLocalizations {
-  AppLocalizationsKo() : super('ko');
+  AppLocalizationsKo([super.locale = 'ko']);
 
   @override
   String get appName => 'COUPLE BOOK';
