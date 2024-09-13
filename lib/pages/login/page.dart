@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../gen/assets.gen.dart';
 import '../../router.dart';
 import '../../style/text_style.dart';
+import 'package:logger/logger.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,8 +14,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginPage> {
+  final logger = Logger();
+
   void _clickSignInButton() {
-    print("click google sign in button");
+    logger.d("구글 로그인 버튼 클릭");
     context.goNamed(ViewRoute.home.name);
   }
 

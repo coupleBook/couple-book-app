@@ -97,7 +97,7 @@ abstract class AppLocalizations {
   ///
   /// In ko, this message translates to:
   /// **'COUPLE BOOK'**
-  String get app_name;
+  String get appName;
 
   /// No description provided for @home.
   ///
@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   ///
   /// In ko, this message translates to:
   /// **'커플정보'**
-  String get couple_info;
+  String get coupleInfo;
 
   /// No description provided for @timeline.
   ///

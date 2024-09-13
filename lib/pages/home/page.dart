@@ -8,16 +8,14 @@ import 'package:intl/intl.dart'; // intl 패키지 추가
 
 import '../../gen/assets.gen.dart';
 import '../../l10n/l10n.dart';
-import '../../style/text_style.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   // 현재 날짜와 D-day 계산
@@ -30,25 +28,25 @@ class _HomePageState extends State<HomePage> {
     MainDdayView(today: today, dday: dday), // Home 버튼에서 MainDdayView를 표시
     Center(
       child: Transform.translate(
-        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        offset: const Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
         child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
       ),
     ),
     Center(
       child: Transform.translate(
-        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        offset: const Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
         child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
       ),
     ),
     Center(
       child: Transform.translate(
-        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        offset: const Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
         child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
       ),
     ),
     Center(
       child: Transform.translate(
-        offset: Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
+        offset: const Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
         child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
       ),
     ),
@@ -79,8 +77,8 @@ class _HomePageState extends State<HomePage> {
           ),
           NavigationBarTheme(
             data: NavigationBarThemeData(
-              overlayColor: MaterialStateProperty.all(Colors.transparent), // 터치 피드백 색상 제거
-              labelTextStyle: MaterialStateProperty.all(
+              overlayColor: WidgetStateProperty.all(Colors.transparent), // 터치 피드백 색상 제거
+              labelTextStyle: WidgetStateProperty.all(
                 const TextStyle(
                   fontFamily: 'Iseoyunchae',
                   fontSize: 12,
@@ -105,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                 NavigationDestination(
                   selectedIcon: Assets.icons.coupleInfo_on.svg(width: 24, height: 24),
                   icon: Assets.icons.coupleInfo_off.svg(width: 24, height: 24),
-                  label: l10n.couple_info,
+                  label: l10n.coupleInfo,
                 ),
                 NavigationDestination(
                   selectedIcon: Assets.icons.timelineIcon_on.svg(width: 24, height: 24),

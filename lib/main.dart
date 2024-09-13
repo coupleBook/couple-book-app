@@ -24,14 +24,13 @@ class _CoupleBookAppState extends ConsumerState<CoupleBookApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: l10n.app_name,
+      title: l10n.appName,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: ColorName.white,
-          background: ColorName.white,
           surface: ColorName.white,
           surfaceTint: ColorName.white,
         ),

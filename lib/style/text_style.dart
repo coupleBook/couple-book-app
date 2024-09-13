@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../gen/colors.gen.dart';
-
-
-import 'package:flutter/material.dart';
 import '../gen/colors.gen.dart';
 
 class AppText extends StatelessWidget {
@@ -38,7 +33,6 @@ class AppText extends StatelessWidget {
     );
   }
 }
-
 
 class TypoStyle {
   /// 이서윤체
@@ -100,7 +94,6 @@ class TypoStyle {
     fontWeight: FontWeight.w400,
   );
 
-
   /// NotoS ansKR
   /// Bold
   static const notoSansBold22 = TextStyle(
@@ -117,7 +110,6 @@ class TypoStyle {
     letterSpacing: -0.4, // 자간을 줄이기 위해 음수 값 설정
   );
 
-
   /// Regular
   static const notoSansR19_1_4 = TextStyle(
     fontFamily: 'NotoSansKR',
@@ -132,7 +124,6 @@ class TypoStyle {
     height: 1.4,
     fontWeight: FontWeight.w400,
   );
-
 
   static const notoSansR14_1_4 = TextStyle(
     fontFamily: 'NotoSansKR',
