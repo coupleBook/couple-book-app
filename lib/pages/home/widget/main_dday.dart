@@ -3,8 +3,9 @@ import 'profile_popup.dart'; // 새로 만든 파일을 import
 import 'package:couple_book/gen/colors.gen.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../style/text_style.dart';
+import 'dart:io';
 
-class MainDdayView extends StatelessWidget {
+class MainDdayView extends StatefulWidget {
   final String today;
   final int dday;
 
@@ -13,6 +14,19 @@ class MainDdayView extends StatelessWidget {
     required this.today,
     required this.dday,
   });
+
+  @override
+  _MainDdayViewState createState() => _MainDdayViewState();
+}
+
+class _MainDdayViewState extends State<MainDdayView> {
+  String leftProfileName = "요셉";
+  String leftProfileBirthdate = "97/08/19";
+  File? leftProfileImage;
+
+  String rightProfileName = "지수";
+  String rightProfileBirthdate = "95/12/14";
+  File? rightProfileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +43,7 @@ class MainDdayView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20.0), // 왼쪽 패딩 추가로 오른쪽으로 이동
             child: AppText(
-              today,
+              widget.today,
               style: TypoStyle.notoSansR19_1_4,
             ),
           ),
@@ -50,7 +64,7 @@ class MainDdayView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     AppText(
-                      '$dday', // D-day 숫자
+                      '${widget.dday}', // D-day 숫자
                       style: TypoStyle.seoyunB32_1_5, // dday에 대한 스타일
                     ),
                     const AppText(
@@ -89,67 +103,125 @@ class MainDdayView extends StatelessWidget {
 
           // 프로필과 팝업 연동
           Center(
-            child: GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  backgroundColor: Colors.transparent, // 투명 배경
-                  isScrollControlled: true, // 스크롤 가능하도록 설정
-                  builder: (BuildContext context) {
-                    return FractionallySizedBox(
-                      heightFactor: 0.86, // 세로 길이를 화면의 86%로 설정
-                      child: Container(
-                        width: MediaQuery.of(context).size.width, // 가로 길이를 화면에 꽉 차게 설정
-                        decoration: const BoxDecoration(
-                          color: Colors.white, // 배경색
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
-                          ), // 팝업 상단에 둥근 모서리 적용
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min, // 자식의 크기에 맞게 Column 크기를 설정
-                            children: [
-                              // 팝업 안의 폼 부분
-                              ProfilePopupForm(), // 여기에 실제 폼을 넣습니다.
-                            ],
-                          ),
-                        ),
+            child: Container(
+              width: 320, // 너비 조정
+              height: 240, // 높이 조정
+              decoration: BoxDecoration(
+                color: ColorName.backgroundColor, // 배경색 설정
+                border: Border.all(
+                  color: Colors.black, // 외곽선 색상 설정
+                  width: 1.0, // 외곽선 두께
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          var result = await showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent, // 투명 배경
+                            isScrollControlled: true, // 스크롤 가능하도록 설정
+                            builder: (BuildContext context) {
+                              return FractionallySizedBox(
+                                heightFactor: 0.86, // 세로 길이를 화면의 86%로 설정
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width, // 가로 길이를 화면에 꽉 차게 설정
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white, // 배경색
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0),
+                                    ), // 팝업 상단에 둥근 모서리 적용
+                                  ),
+                                  child: ProfilePopupForm(
+                                    name: leftProfileName, // 왼쪽 프로필의 이름
+                                    birthdate: leftProfileBirthdate, // 왼쪽 프로필의 생년월일
+                                    selectedImage: leftProfileImage,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                          if (result != null) {
+                            setState(() {
+                              leftProfileName = result['name'];
+                              leftProfileBirthdate = result['birthdate'];
+                              leftProfileImage = result['image'];
+                            });
+                          }
+                        },
+                        child: _buildProfileColumn(leftProfileName, leftProfileBirthdate, leftProfileImage != null
+                            ? CircleAvatar(
+                          radius: 40,
+                          backgroundImage: FileImage(leftProfileImage!), // 이미지 파일 원형으로 설정
+                          backgroundColor: Colors.transparent,
+                        )
+                            : CircleAvatar(
+                          radius: 40,
+                          child: Assets.icons.profileMaleContent.svg(width: 80, height: 80),
+                          backgroundColor: Colors.transparent,
+                        )),
                       ),
-                    );
-                  },
-                );
-
-              },
-              child: Container(
-                width: 320, // 너비 조정
-                height: 240, // 높이 조정
-                decoration: BoxDecoration(
-                  color: ColorName.backgroundColor, // 배경색 설정
-                  border: Border.all(
-                    color: Colors.black, // 외곽선 색상 설정
-                    width: 1.0, // 외곽선 두께
+                      const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
+                      Assets.icons.miniHeartContent.svg(
+                        width: 12,
+                        height: 12,
+                      ),
+                      const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
+                      GestureDetector(
+                        onTap: () async {
+                          var result = await showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent, // 투명 배경
+                            isScrollControlled: true, // 스크롤 가능하도록 설정
+                            builder: (BuildContext context) {
+                              return FractionallySizedBox(
+                                heightFactor: 0.86, // 세로 길이를 화면의 86%로 설정
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width, // 가로 길이를 화면에 꽉 차게 설정
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white, // 배경색
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0),
+                                    ), // 팝업 상단에 둥근 모서리 적용
+                                  ),
+                                  child: ProfilePopupForm(
+                                    name: rightProfileName, // 오른쪽 프로필의 이름
+                                    birthdate: rightProfileBirthdate, // 오른쪽 프로필의 생년월일
+                                    selectedImage: rightProfileImage,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                          if (result != null) {
+                            setState(() {
+                              rightProfileName = result['name'];
+                              rightProfileBirthdate = result['birthdate'];
+                              rightProfileImage = result['image'];
+                            });
+                          }
+                        },
+                        child: _buildProfileColumn(rightProfileName, rightProfileBirthdate, rightProfileImage != null
+                            ? CircleAvatar(
+                          radius: 40,
+                          backgroundImage: FileImage(rightProfileImage!), // 이미지 파일 원형으로 설정
+                          backgroundColor: Colors.transparent,
+                        )
+                            : CircleAvatar(
+                          radius: 40,
+                          child: Assets.icons.profileFemaleContent.svg(width: 80, height: 80),
+                          backgroundColor: Colors.transparent,
+                        )),
+                      ),
+                    ],
                   ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                      children: [
-                        _buildProfileColumn('요셉', '97/08/19', Assets.icons.profileMaleContent.svg(width: 80, height: 80)),
-                        const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
-                        Assets.icons.miniHeartContent.svg(
-                          width: 12,
-                          height: 12,
-                        ),
-                        const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
-                        _buildProfileColumn('지수', '95/12/14', Assets.icons.profileFemaleContent.svg(width: 80, height: 80)),
-                      ],
-                    ),
-                  ],
-                ),
+                ],
               ),
             ),
           ),
@@ -158,11 +230,11 @@ class MainDdayView extends StatelessWidget {
     );
   }
 
-  // 프로필 정보 빌드 메소드
+// 프로필 정보 빌드 메소드
   Widget _buildProfileColumn(String name, String birthdate, Widget profileIcon) {
     return Column(
       children: [
-        profileIcon,
+        profileIcon, // 원형 프로필 이미지
         const SizedBox(height: 8.0),
         AppText(
           name,

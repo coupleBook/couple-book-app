@@ -8,6 +8,17 @@ import 'dart:io'; // 파일 관련 작업을 위해 추가
 import '../../../style/text_style.dart';
 
 class ProfilePopupForm extends StatefulWidget {
+  final String name;
+  final String birthdate;
+  final File? selectedImage; // 프로필 사진 필드 추가
+
+  const ProfilePopupForm({
+    super.key,
+    required this.name,
+    required this.birthdate,
+    this.selectedImage, // 프로필 사진 필드 추가
+  });
+
   @override
   _ProfilePopupFormState createState() => _ProfilePopupFormState();
 }
@@ -20,6 +31,14 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
 
   File? _selectedImage; // 선택한 이미지를 저장할 변수
   final ImagePicker _picker = ImagePicker(); // ImagePicker 인스턴스 생성
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.name; // 전달된 이름을 설정
+    _birthdateController.text = widget.birthdate; // 전달된 생일을 설정
+    _selectedImage = widget.selectedImage; // 전달된 프로필 사진 설정
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +174,8 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
     }
   }
 
+// 기존 코드에서 Navigator.pop()에 수정된 데이터를 추가하여 반환하도록 합니다.
+
   Widget _buildSaveButton() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
@@ -165,7 +186,11 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
             birthdateError = _birthdateController.text.isEmpty ? '날짜를 선택해 주세요.' : null;
           });
           if (nameError == null && birthdateError == null) {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop({
+              'name': _nameController.text,
+              'birthdate': _birthdateController.text,
+              'image': _selectedImage,
+            });
           }
         },
         style: ElevatedButton.styleFrom(
@@ -183,6 +208,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
       ),
     );
   }
+
 
   String? _validateName(String name) {
     if (name.isEmpty) {
