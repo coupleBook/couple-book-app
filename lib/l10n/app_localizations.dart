@@ -105,7 +105,7 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get home;
 
-  /// No description provided for @couple_info.
+  /// No description provided for @coupleInfo.
   ///
   /// In ko, this message translates to:
   /// **'커플정보'**

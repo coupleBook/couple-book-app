@@ -1,5 +1,6 @@
-import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
+import 'profile_popup.dart'; // 새로 만든 파일을 import
+import 'package:couple_book/gen/colors.gen.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../style/text_style.dart';
 
@@ -83,84 +84,96 @@ class MainDdayView extends StatelessWidget {
                 ),
               ],
             ),
-
           ),
           const SizedBox(height: 70.0), // 상단 내용과 프로필 박스 사이 간격
 
-          // 네모 박스 (이미지)와 프로필 정보
+          // 프로필과 팝업 연동
           Center(
-            child: Container(
-              width: 320, // 너비 조정
-              height: 240, // 높이 조정
-              decoration: BoxDecoration(
-                color: ColorName.backgroundColor, // 배경색 설정
-                border: Border.all(
-                  color: Colors.black, // 외곽선 색상 설정
-                  width: 1.0, // 외곽선 두께
+            child: GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent, // 투명 배경
+                  isScrollControlled: true, // 스크롤 가능하도록 설정
+                  builder: (BuildContext context) {
+                    return FractionallySizedBox(
+                      heightFactor: 0.86, // 세로 길이를 화면의 86%로 설정
+                      child: Container(
+                        width: MediaQuery.of(context).size.width, // 가로 길이를 화면에 꽉 차게 설정
+                        decoration: const BoxDecoration(
+                          color: Colors.white, // 배경색
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
+                          ), // 팝업 상단에 둥근 모서리 적용
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min, // 자식의 크기에 맞게 Column 크기를 설정
+                            children: [
+                              // 팝업 안의 폼 부분
+                              ProfilePopupForm(), // 여기에 실제 폼을 넣습니다.
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+
+              },
+              child: Container(
+                width: 320, // 너비 조정
+                height: 240, // 높이 조정
+                decoration: BoxDecoration(
+                  color: ColorName.backgroundColor, // 배경색 설정
+                  border: Border.all(
+                    color: Colors.black, // 외곽선 색상 설정
+                    width: 1.0, // 외곽선 두께
+                  ),
                 ),
-                boxShadow: const [
-                  BoxShadow(
-                    color: ColorName.defaultBlack,
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                    children: [
-                      Column(
-                        children: [
-                          Assets.icons.profileMaleContent.svg(
-                            width: 80,
-                            height: 80,
-                          ),
-                          const SizedBox(height: 8.0),
-                          AppText(
-                            '요셉',
-                            style: TypoStyle.seoyunR19_1_4.copyWith(fontSize: 16),
-                          ),
-                          AppText(
-                            '97/08/19',
-                            style: TypoStyle.notoSansR13_1_4.copyWith(fontSize: 10),
-                            color: ColorName.defaultGray,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
-                      Assets.icons.miniHeartContent.svg(
-                        width: 12,
-                        height: 12,
-                      ),
-                      const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                        children: [
-                          Assets.icons.profileFemaleContent.svg(
-                            width: 80,
-                            height: 80,
-                          ),
-                          const SizedBox(height: 8.0),
-                          AppText(
-                            '지수',
-                            style: TypoStyle.seoyunR19_1_4.copyWith(fontSize: 16),
-                          ),
-                          AppText(
-                            '95/12/14',
-                            style: TypoStyle.notoSansR13_1_4.copyWith(fontSize: 10),
-                            color: ColorName.defaultGray,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+                      children: [
+                        _buildProfileColumn('요셉', '97/08/19', Assets.icons.profileMaleContent.svg(width: 80, height: 80)),
+                        const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
+                        Assets.icons.miniHeartContent.svg(
+                          width: 12,
+                          height: 12,
+                        ),
+                        const SizedBox(width: 20.0), // 두 프로필 아이콘 사이의 간격
+                        _buildProfileColumn('지수', '95/12/14', Assets.icons.profileFemaleContent.svg(width: 80, height: 80)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  // 프로필 정보 빌드 메소드
+  Widget _buildProfileColumn(String name, String birthdate, Widget profileIcon) {
+    return Column(
+      children: [
+        profileIcon,
+        const SizedBox(height: 8.0),
+        AppText(
+          name,
+          style: TypoStyle.seoyunR19_1_4.copyWith(fontSize: 16),
+        ),
+        AppText(
+          birthdate,
+          style: TypoStyle.notoSansR13_1_4.copyWith(fontSize: 10),
+          color: ColorName.defaultGray,
+        ),
+      ],
     );
   }
 }
