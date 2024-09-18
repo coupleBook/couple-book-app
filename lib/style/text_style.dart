@@ -110,6 +110,13 @@ class TypoStyle {
     letterSpacing: -0.4, // 자간을 줄이기 위해 음수 값 설정
   );
 
+  static const notoSansSemiBold13_1_4 = TextStyle(
+    fontFamily: 'NotoSansKR',
+    fontSize: 13,
+    height: 1.4,
+    fontWeight: FontWeight.w500,
+  );
+
   /// Regular
   static const notoSansR19_1_4 = TextStyle(
     fontFamily: 'NotoSansKR',
