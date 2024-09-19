@@ -4,9 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 import 'dart:io'; // 파일 관련 작업을 위해 추가
-import 'package:permission_handler/permission_handler.dart'; // permission_handler 패키지 추가
-
 import '../../../style/text_style.dart';
+import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
 class ProfilePopupForm extends StatefulWidget {
   final String name;
@@ -62,7 +61,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                child: const Icon(Icons.close, color: Colors.black), // 닫기 버튼
+                child: Assets.icons.closeIcon.svg(width: 16, height: 16), // 닫기 아이콘 추가
               ),
             ),
             const SizedBox(height: 16),
@@ -103,143 +102,37 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
               : null, // 이미지가 선택되지 않았을 때 기본 아이콘 표시
         ),
         Positioned(
-          bottom: 0,
+          bottom: 4,
           right: -4, // 아이콘이 더 오른쪽으로 가도록 위치 조정
           child: IconButton(
-            icon: const Icon(Icons.camera_alt, color: Colors.orangeAccent),
-            onPressed: _showPermissionRequestPopup, // 카메라 아이콘 클릭 시 작은 팝업 표시
+            icon: Assets.icons.albumIcon.svg(width: 26, height: 26), // 카메라 아이콘 추가
+            onPressed: () {
+              _requestPermissionAndPickImage(); // 권한 요청 및 이미지 선택 실행
+            }, // 카메라 아이콘 클릭 시 권한 처리 위젯 실행
           ),
         ),
       ],
     );
   }
 
-  // 작은 팝업을 보여주기 위한 함수
-  void _showPermissionRequestPopup() {
-    showModalBottomSheet(
+  // 권한을 요청한 후 이미지 선택을 처리하는 함수
+  Future<void> _requestPermissionAndPickImage() async {
+    // 권한 처리 위젯을 사용하여 권한을 요청하고 이미지 선택 수행
+    await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return _buildPermissionPopup();
+        return PermissionHandlerWidget(
+          appName: 'COUPLE BOOK',
+          onPermissionGranted: _pickImageFromGallery,
+          callLocation: 'PHOTO_ACTION',
+        );
       },
     );
   }
 
-  // 사용자 맞춤형 권한 요청 팝업
-  Widget _buildPermissionPopup() {
-    return Container(
-      width: MediaQuery.of(context).size.width, // 스크린에 꽉 차게 설정
-      padding: const EdgeInsets.all(16.0),
-      decoration: const BoxDecoration(
-        color: ColorName.defaultBlack,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20.0),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.photo_library,
-            color: Colors.blueAccent,
-            size: 40,
-          ),
-          const SizedBox(height: 16),
-
-          // RichText를 사용하여 텍스트 스타일을 다르게 적용
-          RichText(
-            textAlign: TextAlign.center,
-            text: const TextSpan(
-              children: [
-                TextSpan(
-                  text: 'COUPLE BOOK',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.0,
-                    color: ColorName.white, // COUPLE BOOK에 다른 스타일 적용
-                  ),
-                ),
-                TextSpan(
-                  text: '에서 기기의 사진과 동영상에\n액세스하도록 허용하시겠습니까?',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // 버튼을 세로로 배치하고 가로 크기를 동일하게 맞춤
-          Column(
-            children: [
-              SizedBox(
-                width: double.infinity, // 가로 크기를 화면 가득 채우도록 설정
-                child: TextButton(
-                  onPressed: () async {
-                    Navigator.of(context).pop(); // 팝업 닫기
-                    await _requestPermissionAndPickImage(); // 실제 권한 요청 수행
-                  },
-                  child: const Text(
-                    '허용',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.blueAccent, // 버튼 텍스트 색상
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: double.infinity, // 가로 크기를 화면 가득 채우도록 설정
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // 팝업 닫기
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('갤러리 접근 권한이 거부되었습니다.')),
-                    );
-                  },
-                  child: const Text(
-                    '허용 안함',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white, // 버튼 텍스트 색상
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-  Future<void> _requestPermissionAndPickImage() async {
-    if (Platform.isAndroid) {
-      if (await Permission.storage.request().isGranted) {
-        await _pickImageFromGallery();
-      } else if (await Permission.manageExternalStorage.isDenied) {
-        if (await Permission.manageExternalStorage.request().isGranted) {
-          await _pickImageFromGallery();
-        } else {
-          _showPermissionDeniedMessage();
-        }
-      } else if (await Permission.storage.isPermanentlyDenied) {
-        _openAppSettings(); // 권한이 영구적으로 거부되었을 때 설정 페이지로 이동
-      }
-    } else if (Platform.isIOS) {
-      if (await Permission.photos.request().isGranted) {
-        await _pickImageFromGallery();
-      } else if (await Permission.photos.isPermanentlyDenied) {
-        _openAppSettings(); // 권한이 영구적으로 거부되었을 때 설정 페이지로 이동
-      } else {
-        _showPermissionDeniedMessage();
-      }
-    }
-  }
-
+  // 이미지 선택을 처리하는 함수
   Future<void> _pickImageFromGallery() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -247,23 +140,6 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
         _selectedImage = File(pickedFile.path);
       });
     }
-  }
-
-  void _showPermissionDeniedMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('갤러리 접근 권한이 필요합니다.'),
-        action: SnackBarAction(
-          label: '설정',
-          onPressed: _openAppSettings, // "설정" 버튼을 누르면 설정 페이지로 이동
-        ),
-      ),
-    );
-  }
-
-  // 설정 페이지로 이동
-  Future<void> _openAppSettings() async {
-    await openAppSettings();
   }
 
   Widget _buildTextField({

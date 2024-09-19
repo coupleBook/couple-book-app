@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/l10n.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import
 import 'package:couple_book/gen/colors.gen.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../style/text_style.dart';
+import 'permission_handler_widget.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart'; // 권한 체크 패키지 추가
 
@@ -21,6 +23,7 @@ class MainDdayView extends StatefulWidget {
 }
 
 class _MainDdayViewState extends State<MainDdayView> {
+  late PermissionHandlerWidget permissionHandlerWidget;
   String leftProfileName = "요셉";
   String leftProfileBirthdate = "97/08/19";
   File? leftProfileImage;
@@ -32,164 +35,14 @@ class _MainDdayViewState extends State<MainDdayView> {
   @override
   void initState() {
     super.initState();
-    _checkAndRequestPermissions(); // 화면 진입 시 권한 체크 및 요청
-  }
-
-  Future<void> _checkAndRequestPermissions() async {
-    if (Platform.isAndroid) {
-      if (await Permission.storage.isDenied || await Permission.manageExternalStorage.isDenied) {
-        _showPermissionRequestPopup();
-      }
-    } else if (Platform.isIOS) {
-      if (await Permission.photos.isDenied) {
-        _showPermissionRequestPopup();
-      }
-    }
-  }
-
-  void _showPermissionRequestPopup() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return _buildPermissionPopup();
+    permissionHandlerWidget = PermissionHandlerWidget(
+      onPermissionGranted: () {
+        /// print('Permission granted');
       },
+      appName: l10n.appName,
+      callLocation: 'HOME',
     );
   }
-
-  Widget _buildPermissionPopup() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(16.0),
-      decoration: const BoxDecoration(
-        color: ColorName.defaultBlack,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20.0),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.photo_library,
-            color: Colors.blueAccent,
-            size: 40,
-          ),
-          const SizedBox(height: 16),
-          RichText(
-            textAlign: TextAlign.center,
-            text: const TextSpan(
-              children: [
-                TextSpan(
-                  text: 'COUPLE BOOK',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.0,
-                    color: ColorName.white,
-                  ),
-                ),
-                TextSpan(
-                  text: '에서 기기의 사진과 동영상에\n액세스하도록 허용하시겠습니까?',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () async {
-                    Navigator.of(context).pop(); // 팝업 닫기
-                    await _requestPermissionAndPickImage(); // 실제 권한 요청 수행
-                  },
-                  child: const Text(
-                    '허용',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.blueAccent,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // 팝업 닫기
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('갤러리 접근 권한이 거부되었습니다.')),
-                    );
-                  },
-                  child: const Text(
-                    '허용 안함',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _requestPermissionAndPickImage() async {
-    if (Platform.isAndroid) {
-      if (await Permission.storage.request().isGranted || await Permission.manageExternalStorage.request().isGranted) {
-        // 권한이 허용되면 이미지를 선택하거나 다른 작업 수행
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('갤러리 접근 권한이 필요합니다.')),
-        );
-      }
-    } else if (Platform.isIOS) {
-      if (await Permission.photos.request().isGranted) {
-        // 권한이 허용되면 이미지를 선택하거나 다른 작업 수행
-      } else if (await Permission.photos.isDenied || await Permission.photos.isPermanentlyDenied) {
-        // 권한이 거부되거나 영구적으로 거부된 경우 설정 페이지로 안내
-        _showSettingsDialog();
-      }
-    }
-  }
-
-// 설정 페이지로 안내하는 다이얼로그
-  void _showSettingsDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('권한 설정 필요'),
-          content: const Text('갤러리 접근을 위해 설정에서 권한을 허용해 주세요.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('취소'),
-            ),
-            TextButton(
-              onPressed: () {
-                openAppSettings(); // 설정 페이지로 이동
-                Navigator.of(context).pop();
-              },
-              child: const Text('설정으로 이동'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -200,6 +53,13 @@ class _MainDdayViewState extends State<MainDdayView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          PermissionHandlerWidget(
+            onPermissionGranted: () {
+            /// print('Permission granted');
+            },
+            appName: l10n.appName,
+            callLocation: 'HOME',
+          ),
           const SizedBox(height: 24.0),
           Padding(
             padding: const EdgeInsets.only(left: 20.0),
