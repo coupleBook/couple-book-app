@@ -115,9 +115,8 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
     );
   }
 
-  // 권한을 요청한 후 이미지 선택을 처리하는 함수
+// 권한을 요청한 후 이미지 선택을 처리하는 함수
   Future<void> _requestPermissionAndPickImage() async {
-    // 권한 처리 위젯을 사용하여 권한을 요청하고 이미지 선택 수행
     await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -125,12 +124,17 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
       builder: (BuildContext context) {
         return PermissionHandlerWidget(
           appName: 'COUPLE BOOK',
-          onPermissionGranted: _pickImageFromGallery,
+          onPermissionGranted: () async {
+            // 권한이 허용되면 이미지를 선택하고 모달을 닫음
+            await _pickImageFromGallery();
+            Navigator.of(context).pop(); // 모달 닫기
+          },
           callLocation: 'PHOTO_ACTION',
         );
       },
     );
   }
+
 
   // 이미지 선택을 처리하는 함수
   Future<void> _pickImageFromGallery() async {
