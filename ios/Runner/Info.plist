@@ -244,11 +244,11 @@
 
     <!-- 추가: 상태 표시줄 숨기기 설정 -->
     <key>UIStatusBarHidden</key>
-    <true/>
+    <true/>정
 
     <!-- 추가: 상태 표시줄 모양 기반 설정 비활성화 -->
     <key>UIViewControllerBasedStatusBarAppearance</key>
-    <false/>팅
+    <false/>
 
     <!-- 갤러리 접근 권한 요청 이유 설정 -->
     <key>NSPhotoLibraryUsageDescription</key>
