@@ -248,13 +248,15 @@
 
     <!-- 추가: 상태 표시줄 모양 기반 설정 비활성화 -->
     <key>UIViewControllerBasedStatusBarAppearance</key>
-    <false/>
+    <false/>팅
 
     <!-- 갤러리 접근 권한 요청 이유 설정 -->
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>앱에서 사진 및 동영상에 접근하려면 권한이 필요합니다.</string>
-    <key>NSCameraUsageDescription</key>
-    <string>앱에서 카메라를 사용하려면 권한이 필요합니다.</string>
+    <string>앱에서 사진에 접근하려면 권한이 필요합니다.</string>
+
+    <!-- iOS 14 이상에서는 사용자가 선택적으로 특정 사진에만 접근을 허용할 수 있음 -->
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>사진을 저장하려면 권한이 필요합니다.</string>
 
 
 	<key>UIMainStoryboardFile</key>
