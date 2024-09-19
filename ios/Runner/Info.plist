@@ -244,7 +244,7 @@
 
     <!-- 추가: 상태 표시줄 숨기기 설정 -->
     <key>UIStatusBarHidden</key>
-    <true/>정
+    <true/>
 
     <!-- 추가: 상태 표시줄 모양 기반 설정 비활성화 -->
     <key>UIViewControllerBasedStatusBarAppearance</key>
