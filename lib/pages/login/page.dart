@@ -31,7 +31,7 @@ class _LoginViewState extends State<LoginPage> {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("platform", platform.name);
       if (isLoggedIn && mounted) {
-        context.goNamed(ViewRoute.coupleAnniversary.name);
+        context.goNamed(ViewRoute.signupAnimation.name);
       }
     } catch (e) {
       logger.e('$platform 로그인 오류: $e');

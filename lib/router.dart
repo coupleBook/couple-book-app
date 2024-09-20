@@ -1,6 +1,7 @@
 import 'package:couple_book/pages/couple_anniversary/page.dart';
 import 'package:couple_book/pages/home/page.dart';
 import 'package:couple_book/pages/login/page.dart';
+import 'package:couple_book/pages/login/signup_animation.dart';
 import 'package:couple_book/pages/logout/page.dart';
 import 'package:couple_book/pages/splash/page.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,7 @@ enum ViewRoute {
   logout,
   home,
   coupleAnniversary,
+  signupAnimation,
 }
 
 extension RouteString on ViewRoute {
@@ -28,6 +30,8 @@ extension RouteString on ViewRoute {
         return 'HOME';
       case ViewRoute.coupleAnniversary:
         return 'COUPLE_ANNIVERSARY';
+      case ViewRoute.signupAnimation:
+        return 'SIGNUP_ANIMATION';
     }
   }
 }
@@ -38,9 +42,7 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       name: 'SPLASH',
-      builder: (context, state) {
-        return const SplashView();
-      },
+      builder: (context, state) => const SplashView(),
     ),
     GoRoute(
       path: '/Login',
@@ -62,6 +64,11 @@ final router = GoRouter(
       name: 'COUPLE_ANNIVERSARY',
       builder: (context, state) =>
           const CoupleAnniversaryPage(), // CoupleAnniversaryPage 클래스 이름은 실제 파일에 맞게 조정하세요
+    ),
+    GoRoute(
+      path: '/signup-animation',
+      name: 'SIGNUP_ANIMATION',
+      builder: (context, state) => const SignupAnimationPage(),
     ),
   ],
 );
