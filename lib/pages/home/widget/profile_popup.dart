@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 import 'dart:io'; // 파일 관련 작업을 위해 추가
+import '../../../l10n/l10n.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
@@ -69,16 +70,16 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
             const SizedBox(height: 16),
             _buildTextField(
               controller: _nameController,
-              label: '이름',
+              label: l10n.name,
               errorText: nameError,
-              hintText: '2~20자 이내여야 합니다.',
+              hintText: l10n.limitTextPlaceHolder,
             ),
             const SizedBox(height: 16),
             _buildTextField(
               controller: _birthdateController,
-              label: '생일',
+              label: l10n.birthday,
               errorText: birthdateError,
-              hintText: '날짜를 선택해 주세요.',
+              hintText: l10n.selectDate,
               onTap: _selectDate,
               readOnly: true,
             ),
@@ -123,7 +124,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return PermissionHandlerWidget(
-          appName: 'COUPLE BOOK',
+          appName: l10n.appName,
           onPermissionGranted: () async {
             // 권한이 허용되면 이미지를 선택하고 모달을 닫음
             await _pickImageFromGallery();
@@ -204,7 +205,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
         onPressed: () {
           setState(() {
             nameError = _validateName(_nameController.text);
-            birthdateError = _birthdateController.text.isEmpty ? '날짜를 선택해 주세요.' : null;
+            birthdateError = _birthdateController.text.isEmpty ? l10n.selectDate : null;
           });
           if (nameError == null && birthdateError == null) {
             Navigator.of(context).pop({
@@ -221,8 +222,8 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
             borderRadius: BorderRadius.circular(24.0),
           ),
         ),
-        child: const AppText(
-          '저장하기',
+        child: AppText(
+          l10n.save,
           style: TypoStyle.notoSansR13_1_4,
           color: ColorName.white,
         ),
@@ -232,9 +233,9 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
 
   String? _validateName(String name) {
     if (name.isEmpty) {
-      return '이름을 입력해 주세요.';
+      return l10n.typingName;
     } else if (name.length < 2 || name.length > 20) {
-      return '2~20자 이내여야 합니다.';
+      return l10n.limitTextPlaceHolder;
     }
     return null;
   }

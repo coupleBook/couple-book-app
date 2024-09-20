@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
+import '../../../l10n/l10n.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function() onNotificationTab;
@@ -27,8 +28,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             title: Container(
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 11),
-              child: const AppText(
-                'COUPLE BOOK',
+              child: AppText(
+                l10n.appName,
                 style: TypoStyle.notoSansBold22,
               ),
             ),

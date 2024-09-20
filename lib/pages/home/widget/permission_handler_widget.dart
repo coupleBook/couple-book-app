@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../l10n/l10n.dart';
+
 class PermissionHandlerWidget extends StatefulWidget {
   final VoidCallback onPermissionGranted;
   final String appName;
@@ -103,9 +105,9 @@ class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
                     color: Colors.white,
                   ),
                 ),
-                const TextSpan(
-                  text: '에서 기기의 사진과 동영상에\n액세스하도록 허용하시겠습니까?',
-                  style: TextStyle(
+                TextSpan(
+                  text: l10n.accessPhotoPopupTitle,
+                  style: const TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                   ),
@@ -131,9 +133,9 @@ class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
                       _showSettingsDialog(context);
                     }
                   },
-                  child: const Text(
-                    '전체 접근 허용',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.fullAccess,
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.blueAccent,
                     ),
@@ -147,9 +149,9 @@ class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
                     Navigator.of(context).pop();
                     widget.onPermissionGranted(); // 제한된 접근이 허용된 경우 바로 처리
                   },
-                  child: const Text(
-                    '제한된 접근 허용',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.limitedAccess,
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     ),
@@ -162,12 +164,12 @@ class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
                   onPressed: () {
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('갤러리 접근 권한이 거부되었습니다.')),
+                      SnackBar(content: Text(l10n.accessDeniedGallery)),
                     );
                   },
-                  child: const Text(
-                    '허용 안 함',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.accessDenied,
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     ),
@@ -186,21 +188,21 @@ class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('권한 설정 필요'),
-          content: const Text('갤러리 접근을 위해 설정에서 권한을 허용해 주세요.'),
+          title: Text(l10n.needAccessPermission),
+          content: Text(l10n.accessPermissionDescription),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('취소'),
+              child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () {
                 openAppSettings();
                 Navigator.of(context).pop();
               },
-              child: const Text('설정으로 이동'),
+              child: Text(l10n.moveToSetting),
             ),
           ],
         );
