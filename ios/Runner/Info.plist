@@ -2,6 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+					<!-- 네이버 로그인 -->
+                    <string>coupleBookApp</string>
+					<!-- google login -->
+					<string>com.googleusercontent.apps.189604622922-3m03bel0hbkuuibvkfo5eap0vqm6i40v</string>
+                </array>
+            </dict>
+        </array>
+
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>naversearchapp</string>
+            <string>naversearchthirdlogin</string>
+        </array>
+        <key>naverServiceAppUrlScheme</key>
+        <string>coupleBookApp</string>
+        <key>naverConsumerKey</key>
+        <string>DyYig_NBRiKHloXITjYl</string>
+        <key>naverConsumerSecret</key>
+        <string>SLk5z2lk1H</string>
+        <key>naverServiceAppName</key>
+        <string>CoupleBook</string>
+
+        <!-- http allows configurations -->
+        <key>NSAppTransportSecurity</key>
+        <dict>
+           <key>NSAllowsArbitraryLoads</key>
+           <true/>
+           <key>NSExceptionDomains</key>
+           <dict>
+              <key>naver.com</key>
+              <dict>
+                 <key>NSExceptionRequiresForwardSecrecy</key>
+                 <false/>
+                 <key>NSIncludesSubdomains</key>
+                 <true/>
+              </dict>
+              <key>naver.net</key>
+              <dict>
+                 <key>NSExceptionRequiresForwardSecrecy</key>
+                 <false/>
+                 <key>NSIncludesSubdomains</key>
+                 <true/>
+              </dict>
+           </dict>
+        </dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

@@ -1,0 +1,6 @@
+Pods/naveridlogin-sdk-ios/NaverThirdPartyLogin.xcframework/ios-arm64/NaverThirdPartyLogin.framework/NaverThirdPartyLogin
+Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework/GoogleMobileAds.xcframework/ios-arm64_x86_64-simulator/GoogleMobileAds.framework/GoogleMobileAds
+Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework/GoogleMobileAds.xcframework/ios-arm64/GoogleMobileAds.framework/GoogleMobileAds
+./Pods/naveridlogin-sdk-ios/NaverThirdPartyLogin.xcframework/ios-arm64/NaverThirdPartyLogin.framework/NaverThirdPartyLogin
+./Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework/GoogleMobileAds.xcframework/ios-arm64_x86_64-simulator/GoogleMobileAds.framework/GoogleMobileAds
+./Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework/GoogleMobileAds.xcframework/ios-arm64/GoogleMobileAds.framework/GoogleMobileAds

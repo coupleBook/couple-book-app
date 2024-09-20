@@ -1,2 +1,10 @@
-#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
 #include "Generated.xcconfig"
+
+OAUTH_GOOGLE_URL_SCHEME=com.googleusercontent.apps.189604622922-3m03bel0hbkuuibvkfo5eap0vqm6i40v
+OAUTH_GOOGLE_CLIENT_ID=189604622922-3m03bel0hbkuuibvkfo5eap0vqm6i40v.apps.googleusercontent.com
+OAUTH_GOOGLE_REVERSED_CLIENT_ID=com.googleusercontent.apps.189604622922-3m03bel0hbkuuibvkfo5eap0vqm6i40v
+OAUTH_NAVER_URL_SCHEME=coupleBookApp
+OAUTH_NAVER_CONSUMER_KEY=DyYig_NBRiKHloXITjYl
+OAUTH_NAVER_CONSUMER_SECRET=SLk5z2lk1H
+OAUTH_NAVER_SERVICE_APP_NAME=CoupleBook

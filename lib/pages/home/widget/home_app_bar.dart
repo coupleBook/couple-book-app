@@ -1,5 +1,7 @@
+import 'package:couple_book/router.dart';
 import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
@@ -54,7 +56,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(60),
                     highlightColor: ColorName.lightGray,
-                    onTap: onSettingTab,
+                    onTap: () {
+                      context.goNamed(ViewRoute.logout.name);
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Assets.icons.settingIcon_n.svg(

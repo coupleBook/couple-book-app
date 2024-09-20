@@ -5,9 +5,11 @@ import 'package:couple_book/pages/home/widget/home_app_bar.dart';
 import 'package:couple_book/pages/home/widget/main_dday.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // intl 패키지 추가
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../l10n/l10n.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -17,11 +19,34 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  late SharedPreferences prefs;
+  String? anniversaryDate;
 
   // 현재 날짜와 D-day 계산
-  final String today = DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
-  final int dday = DateTime.now().difference(DateTime(2023, 11, 25)).inDays;
+  final String today =
+      DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
 
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      anniversaryDate = prefs.getString('couple_anniversary');
+    });
+  }
+
+  int dday = 0;
+
+  void calculateDday() {
+    if (anniversaryDate != null) {
+      final anniversary = DateFormat('yyyy-MM-dd').parse(anniversaryDate!);
+      dday = DateTime.now().difference(anniversary).inDays;
+    }
+  }
 
   // 각 탭에서 표시할 위젯들을 정의
   late final List<Widget> _widgetOptions = <Widget>[
@@ -77,7 +102,8 @@ class HomePageState extends State<HomePage> {
           ),
           NavigationBarTheme(
             data: NavigationBarThemeData(
-              overlayColor: WidgetStateProperty.all(Colors.transparent), // 터치 피드백 색상 제거
+              overlayColor:
+                  WidgetStateProperty.all(Colors.transparent), // 터치 피드백 색상 제거
               labelTextStyle: WidgetStateProperty.all(
                 const TextStyle(
                   fontFamily: 'Iseoyunchae',
@@ -96,27 +122,34 @@ class HomePageState extends State<HomePage> {
               onDestinationSelected: _onItemTapped,
               destinations: [
                 NavigationDestination(
-                  selectedIcon: Assets.icons.homeIcon_on.svg(width: 24, height: 24),
+                  selectedIcon:
+                      Assets.icons.homeIcon_on.svg(width: 24, height: 24),
                   icon: Assets.icons.homeIcon_off.svg(width: 24, height: 24),
                   label: l10n.home,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.coupleInfo_on.svg(width: 24, height: 24),
+                  selectedIcon:
+                      Assets.icons.coupleInfo_on.svg(width: 24, height: 24),
                   icon: Assets.icons.coupleInfo_off.svg(width: 24, height: 24),
                   label: l10n.coupleInfo,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.timelineIcon_on.svg(width: 24, height: 24),
-                  icon: Assets.icons.timelineIcon_off.svg(width: 24, height: 24),
+                  selectedIcon:
+                      Assets.icons.timelineIcon_on.svg(width: 24, height: 24),
+                  icon:
+                      Assets.icons.timelineIcon_off.svg(width: 24, height: 24),
                   label: l10n.timeline,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.challengeIcon_on.svg(width: 20, height: 20),
-                  icon: Assets.icons.challengeIcon_off.svg(width: 20, height: 20),
+                  selectedIcon:
+                      Assets.icons.challengeIcon_on.svg(width: 20, height: 20),
+                  icon:
+                      Assets.icons.challengeIcon_off.svg(width: 20, height: 20),
                   label: l10n.challenge,
                 ),
                 NavigationDestination(
-                  selectedIcon: Assets.icons.moreIcon_on.svg(width: 10, height: 10),
+                  selectedIcon:
+                      Assets.icons.moreIcon_on.svg(width: 10, height: 10),
                   icon: Assets.icons.moreIcon_off.svg(width: 10, height: 10),
                   label: l10n.more,
                 ),

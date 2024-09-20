@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import '../../../l10n/l10n.dart';
-import 'profile_popup.dart'; // 새로 만든 파일을 import
+import 'dart:io';
+
 import 'package:couple_book/gen/colors.gen.dart';
+import 'package:flutter/material.dart';
+
 import '../../../../gen/assets.gen.dart';
+import '../../../l10n/l10n.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart';
-import 'dart:io';
-import 'package:permission_handler/permission_handler.dart'; // 권한 체크 패키지 추가
+import 'profile_popup.dart'; // 새로 만든 파일을 import
 
 class MainDdayView extends StatefulWidget {
   final String today;
@@ -19,10 +20,10 @@ class MainDdayView extends StatefulWidget {
   });
 
   @override
-  _MainDdayViewState createState() => _MainDdayViewState();
+  MainDdayViewState createState() => MainDdayViewState();
 }
 
-class _MainDdayViewState extends State<MainDdayView> {
+class MainDdayViewState extends State<MainDdayView> {
   late PermissionHandlerWidget permissionHandlerWidget;
   String leftProfileName = "요셉";
   String leftProfileBirthdate = "97/08/19";
@@ -55,7 +56,7 @@ class _MainDdayViewState extends State<MainDdayView> {
         children: [
           PermissionHandlerWidget(
             onPermissionGranted: () {
-            /// print('Permission granted');
+              /// print('Permission granted');
             },
             appName: l10n.appName,
             callLocation: 'HOME',
@@ -175,15 +176,16 @@ class _MainDdayViewState extends State<MainDdayView> {
                           leftProfileBirthdate,
                           leftProfileImage != null
                               ? CircleAvatar(
-                            radius: 40,
-                            backgroundImage: FileImage(leftProfileImage!),
-                            backgroundColor: Colors.transparent,
-                          )
+                                  radius: 40,
+                                  backgroundImage: FileImage(leftProfileImage!),
+                                  backgroundColor: Colors.transparent,
+                                )
                               : CircleAvatar(
-                            radius: 40,
-                            child: Assets.icons.profileMaleContent.svg(width: 80, height: 80),
-                            backgroundColor: Colors.transparent,
-                          ),
+                                  radius: 40,
+                                  backgroundColor: Colors.transparent,
+                                  child: Assets.icons.profileMaleContent
+                                      .svg(width: 80, height: 80),
+                                ),
                         ),
                       ),
                       const SizedBox(width: 20.0),
@@ -232,15 +234,17 @@ class _MainDdayViewState extends State<MainDdayView> {
                           rightProfileBirthdate,
                           rightProfileImage != null
                               ? CircleAvatar(
-                            radius: 40,
-                            backgroundImage: FileImage(rightProfileImage!),
-                            backgroundColor: Colors.transparent,
-                          )
+                                  radius: 40,
+                                  backgroundImage:
+                                      FileImage(rightProfileImage!),
+                                  backgroundColor: Colors.transparent,
+                                )
                               : CircleAvatar(
-                            radius: 40,
-                            child: Assets.icons.profileFemaleContent.svg(width: 80, height: 80),
-                            backgroundColor: Colors.transparent,
-                          ),
+                                  radius: 40,
+                                  backgroundColor: Colors.transparent,
+                                  child: Assets.icons.profileFemaleContent
+                                      .svg(width: 80, height: 80),
+                                ),
                         ),
                       ),
                     ],
@@ -254,7 +258,8 @@ class _MainDdayViewState extends State<MainDdayView> {
     );
   }
 
-  Widget _buildProfileColumn(String name, String birthdate, Widget profileIcon) {
+  Widget _buildProfileColumn(
+      String name, String birthdate, Widget profileIcon) {
     return Column(
       children: [
         profileIcon,
