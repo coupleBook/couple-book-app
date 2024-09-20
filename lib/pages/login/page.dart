@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../gen/assets.gen.dart';
+import '../../l10n/l10n.dart';
 import '../../style/text_style.dart';
 import 'login_service.dart';
 
@@ -39,7 +40,7 @@ class _LoginViewState extends State<LoginPage> {
   }
 
   Widget _buildSignInButton({
-    required VoidCallback onPressed,
+    required VoidCallback? onPressed,
     required String text,
     required Widget icon,
     required Color backgroundColor,
@@ -88,15 +89,16 @@ class _LoginViewState extends State<LoginPage> {
                 child: Assets.icons.appLogoIcon.svg(width: 310, height: 98),
               ),
               const SizedBox(height: 12), // 46px 자간
-              const AppText(
-                '커플북과 함께 우리의\n소중한 추억을 기록해요.',
+              AppText(
+                l10n.loginPageTitle,
                 style: TypoStyle.notoSansSemiBold22,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 68),
 
               // Sub Text
-              const AppText('SNS 계정으로 간편 가입하기',
+              AppText(
+                  l10n.loginPageSubTitle,
                   style: TypoStyle.notoSansR14_1_4,
                   color: ColorName.defaultGray,
                   letterSpacing: -1.2),
@@ -105,7 +107,7 @@ class _LoginViewState extends State<LoginPage> {
               // Google Sign In Button
               _buildSignInButton(
                 onPressed: () => _handleSignIn(LoginPlatform.google),
-                text: '구글 계정으로 가입하기',
+                text: l10n.signInGoogle,
                 icon: Assets.icons.googleIcon.svg(),
                 backgroundColor: ColorName.defaultBlack,
                 textColor: ColorName.white,
@@ -113,15 +115,15 @@ class _LoginViewState extends State<LoginPage> {
               const SizedBox(height: 24),
               _buildSignInButton(
                 onPressed: () => _handleSignIn(LoginPlatform.naver),
-                text: '네이버로 가입하기',
+                text: l10n.signInNaver,
                 icon: Assets.icons.naverIcon.svg(),
                 backgroundColor: ColorName.defaultBlack,
                 textColor: ColorName.white,
               ),
               const SizedBox(height: 24),
               _buildSignInButton(
-                onPressed: () {},
-                text: '카카오톡으로 가입하기',
+                onPressed: null,
+                text: l10n.signInKakao,
                 icon: Assets.icons.kakaoIcon.svg(),
                 backgroundColor: const Color(0xFFDEE8C4),
                 textColor: const Color(0xFF787D6F),

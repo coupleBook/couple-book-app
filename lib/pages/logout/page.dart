@@ -10,6 +10,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../l10n/l10n.dart';
+
 class LogoutPage extends StatefulWidget {
   const LogoutPage({super.key});
 
@@ -124,7 +126,7 @@ class _LogoutViewState extends State<LogoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('로그아웃'),
+        title: Text(l10n.logout),
       ),
       body: Center(
         child: Column(
@@ -133,12 +135,12 @@ class _LogoutViewState extends State<LogoutPage> {
             if (_currentPlatform == LoginPlatform.naver)
               ElevatedButton(
                 onPressed: () => _handleLogout(LoginPlatform.naver),
-                child: const Text('네이버 로그아웃'),
+                child: Text(l10n.logoutNaver),
               )
             else if (_currentPlatform == LoginPlatform.google)
               ElevatedButton(
                 onPressed: () => _handleLogout(LoginPlatform.google),
-                child: const Text('구글 로그아웃'),
+                child: Text(l10n.logoutGoogle),
               ),
           ],
         ),
