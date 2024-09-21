@@ -90,4 +90,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get moveToSetting => '설정으로 이동';
+
+  @override
+  String get confirmSetting => '설정완료';
 }

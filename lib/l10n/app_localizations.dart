@@ -266,6 +266,12 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'설정으로 이동'**
   String get moveToSetting;
+
+  /// No description provided for @confirmSetting.
+  ///
+  /// In ko, this message translates to:
+  /// **'설정완료'**
+  String get confirmSetting;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

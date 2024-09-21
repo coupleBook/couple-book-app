@@ -19,6 +19,9 @@ class LoginService {
     ));
   }
 
+  /// ************************************************
+  /// SNS 별 로그인 처리 함수 실행
+  /// ************************************************
   Future<bool> signIn(LoginPlatform platform) async {
     switch (platform) {
       case LoginPlatform.naver:
@@ -28,6 +31,9 @@ class LoginService {
     }
   }
 
+  /// ************************************************
+  /// 네이버 로그인 처리 함수
+  /// ************************************************
   Future<bool> _naverSignIn() async {
     try {
       await FlutterNaverLogin.logIn();
@@ -55,6 +61,9 @@ class LoginService {
     }
   }
 
+  /// ************************************************
+  /// 구글 로그인 처리 함수
+  /// ************************************************
   Future<bool> _googleSignIn(LoginPlatform platform) async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(

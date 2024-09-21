@@ -39,6 +39,10 @@ class _LoginViewState extends State<LoginPage> {
     }
   }
 
+  /// ************************************************
+  /// 로그인 버튼 공통 처리
+  /// TODO: 나중엔 버튼도 공통 컴포넌트 상위로 분리 해야함
+  /// ************************************************
   Widget _buildSignInButton({
     required VoidCallback? onPressed,
     required String text,

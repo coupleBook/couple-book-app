@@ -26,6 +26,9 @@ class ColorName {
   /// Color: #787D6F
   static const Color defaultGray = Color(0xFF787D6F);
 
+  /// Color: #DEE8C4
+  static const Color pointBtnBg = Color(0xFFDEE8C4);
+
 
   /// 임시 컬러 색상들 TODO: 나중에 지울 임시 컬러셋
   /// Color: #000000
