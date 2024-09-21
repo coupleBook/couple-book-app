@@ -101,7 +101,6 @@ class _LoginViewState extends State<LoginPage> {
               const SizedBox(height: 68),
 
               // Sub Text절
-// Sub Text절
               Padding(
                 padding: const EdgeInsets.only(top: 6), // 위로 6px의 여백 추가
                 child: AppText(

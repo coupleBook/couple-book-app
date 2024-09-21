@@ -4,6 +4,7 @@ import 'package:couple_book/pages/login/page.dart';
 import 'package:couple_book/pages/login/signup_animation.dart';
 import 'package:couple_book/pages/logout/page.dart';
 import 'package:couple_book/pages/splash/page.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'main.dart';
@@ -42,33 +43,98 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       name: 'SPLASH',
-      builder: (context, state) => const SplashView(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const SplashView(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/Login',
       name: 'LOGIN',
-      builder: (context, state) => const LoginPage(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const LoginPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/Logout',
       name: 'LOGOUT',
-      builder: (context, state) => const LogoutPage(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const LogoutPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/Home',
       name: 'HOME',
-      builder: (context, state) => const HomePage(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const HomePage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/couple-anniversary',
       name: 'COUPLE_ANNIVERSARY',
-      builder: (context, state) =>
-          const CoupleAnniversaryPage(), // CoupleAnniversaryPage 클래스 이름은 실제 파일에 맞게 조정하세요
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const CoupleAnniversaryPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/signup-animation',
       name: 'SIGNUP_ANIMATION',
-      builder: (context, state) => const SignupAnimationPage(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const SignupAnimationPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
     ),
   ],
 );
