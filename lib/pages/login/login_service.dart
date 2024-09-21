@@ -1,5 +1,5 @@
 import 'package:couple_book/env/environment.dart';
-import 'package:couple_book/pages/login/login_platform.dart';
+import 'package:couple_book/utils/constants/login_platform.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

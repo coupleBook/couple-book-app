@@ -1,12 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/router.dart';
 import 'package:couple_book/style/text_style.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../l10n/l10n.dart';
+import '../../utils/widgets/calendar.dart';  // Calendar 위젯 임포트
 
 final logger = Logger();
 
@@ -21,20 +21,35 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
   DateTime? _selectedDate;
 
   /// ************************************************
-  /// flutter 기본 날짜 달력 VIEW and 지정 날짜 저장
+  /// 화면의 절반 높이만 차지하는 달력 모달 뷰
   /// ************************************************
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    await showModalBottomSheet(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,  // 배경을 투명하게 설정
+      builder: (BuildContext context) {
+        return FractionallySizedBox(
+          heightFactor: 0.5,  // 화면의 절반만 차지하게 설정
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20.0),  // 모서리를 둥글게
+              ),
+            ),
+            child: Calendar(
+              selectedDate: _selectedDate,  // 선택된 날짜 전달
+              onDaySelected: (selectedDay) {
+                setState(() {
+                  _selectedDate = selectedDay;  // 선택된 날짜 저장
+                });
+              },
+            ),
+          ),
+        );
+      },
     );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
   }
 
   /// ************************************************
@@ -43,8 +58,7 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
   Future<void> _saveDateAndNavigate() async {
     if (_selectedDate != null) {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(
-          'couple_anniversary', _selectedDate!.toIso8601String());
+      await prefs.setString('couple_anniversary', _selectedDate!.toIso8601String());
       logger.i('선택된 날짜 저장: $_selectedDate');
 
       if (mounted) {
@@ -78,18 +92,25 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorName.pointBtnBg,
                 foregroundColor: Colors.black87,
-                minimumSize: Size(screenWidth * 0.84, 68),
+                minimumSize: Size(screenWidth * 0.84, 58),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                elevation: 0,
+                elevation: 0,  // 그림자 제거
+                shadowColor: Colors.transparent,  // 그림자 색상을 투명으로 설정
+                splashFactory: NoSplash.splashFactory,  // 클릭 시 물결 효과 제거
               ),
-              child: AppText(_selectedDate == null
-                      ? l10n.selectDate
-                      : '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일',
-                  style: TypoStyle.notoSansSemiBold13_1_4.copyWith(fontSize: 15, letterSpacing: -0.2),
-                  color: ColorName.defaultGray),
-              onPressed: () => _selectDate(context),
+              child: AppText(
+                _selectedDate == null
+                    ? l10n.selectDate
+                    : '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일',
+                style: TypoStyle.notoSansSemiBold13_1_4.copyWith(
+                  fontSize: 15,
+                  letterSpacing: -0.2,
+                ),
+                color: ColorName.defaultGray,
+              ),
+              onPressed: () => _selectDate(context), // 날짜 선택 버튼 클릭 시 모달 호출
             ),
             const SizedBox(height: 13),
             ElevatedButton(
@@ -97,15 +118,13 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
                 backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
                     if (states.contains(MaterialState.disabled)) {
-                      // 버튼이 비활성화 상태일 때의 배경색
-                      return ColorName.defaultGray;
+                      return ColorName.defaultGray;  // 버튼 비활성화 상태일 때
                     }
-                    // 버튼이 활성화 상태일 때의 배경색
-                    return ColorName.defaultBlack;
+                    return ColorName.defaultBlack;  // 활성화 상태일 때
                   },
                 ),
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                minimumSize: MaterialStateProperty.all<Size>(Size(screenWidth * 0.84, 68)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(screenWidth * 0.84, 58)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -113,11 +132,17 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
                 ),
               ),
               onPressed: _selectedDate == null ? null : _saveDateAndNavigate,
-              child: AppText(l10n.confirmSetting,
-                  style: TypoStyle.notoSansSemiBold13_1_4.copyWith(fontSize: 15, letterSpacing: -0.2),
-                  color:  _selectedDate == null ? ColorName.pointBtnBg : ColorName.white),
+              child: AppText(
+                l10n.confirmSetting,
+                style: TypoStyle.notoSansSemiBold13_1_4.copyWith(
+                  fontSize: 15,
+                  letterSpacing: -0.2,
+                ),
+                color: _selectedDate == null
+                    ? ColorName.pointBtnBg
+                    : ColorName.white,
+              ),
             ),
-
           ],
         ),
       ),
