@@ -101,12 +101,17 @@ class _LoginViewState extends State<LoginPage> {
               const SizedBox(height: 68),
 
               // Sub Text절
-              AppText(
+// Sub Text절
+              Padding(
+                padding: const EdgeInsets.only(top: 6), // 위로 6px의 여백 추가
+                child: AppText(
                   l10n.loginPageSubTitle,
                   style: TypoStyle.notoSansR14_1_4,
                   color: ColorName.defaultGray,
-                  letterSpacing: -1.2),
-              const SizedBox(height: 22),
+                  letterSpacing: -1.2,
+                ),
+              ),
+              const SizedBox(height: 25),
 
               // Google Sign In Button
               _buildSignInButton(
@@ -127,7 +132,7 @@ class _LoginViewState extends State<LoginPage> {
               const SizedBox(height: 18),
               _buildSignInButton(
                 onPressed: null,
-                text: l10n.signInKakao,
+                text: l10n.signInKakao,용
                 icon: Assets.icons.kakaoIcon.svg(),
                 backgroundColor: const Color(0xFFDEE8C4),
                 textColor: const Color(0xFF787D6F),
