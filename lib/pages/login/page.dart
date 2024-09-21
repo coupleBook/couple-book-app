@@ -132,7 +132,7 @@ class _LoginViewState extends State<LoginPage> {
               const SizedBox(height: 18),
               _buildSignInButton(
                 onPressed: null,
-                text: l10n.signInKakao,용
+                text: l10n.signInKakao,
                 icon: Assets.icons.kakaoIcon.svg(),
                 backgroundColor: const Color(0xFFDEE8C4),
                 textColor: const Color(0xFF787D6F),
