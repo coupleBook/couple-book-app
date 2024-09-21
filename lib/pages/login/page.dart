@@ -96,13 +96,13 @@ class _LoginViewState extends State<LoginPage> {
               ),
               const SizedBox(height: 68),
 
-              // Sub Text
+              // Sub Text절
               AppText(
                   l10n.loginPageSubTitle,
                   style: TypoStyle.notoSansR14_1_4,
                   color: ColorName.defaultGray,
                   letterSpacing: -1.2),
-              const SizedBox(height: 26),
+              const SizedBox(height: 22),
 
               // Google Sign In Button
               _buildSignInButton(
@@ -112,7 +112,7 @@ class _LoginViewState extends State<LoginPage> {
                 backgroundColor: ColorName.defaultBlack,
                 textColor: ColorName.white,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
               _buildSignInButton(
                 onPressed: () => _handleSignIn(LoginPlatform.naver),
                 text: l10n.signInNaver,
@@ -120,7 +120,7 @@ class _LoginViewState extends State<LoginPage> {
                 backgroundColor: ColorName.defaultBlack,
                 textColor: ColorName.white,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
               _buildSignInButton(
                 onPressed: null,
                 text: l10n.signInKakao,
