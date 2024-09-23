@@ -1,23 +1,13 @@
-import 'package:couple_book/env/environment.dart';
+import 'package:couple_book/api/auth/auth_api.dart';
 import 'package:couple_book/utils/constants/login_platform.dart';
-import 'package:dio/dio.dart';
+import 'package:couple_book/utils/security/auth_security.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
 class LoginService {
   final logger = Logger();
-  // TODO 공통 상수 분리.
-  late final Dio _dio;
-
-  LoginService() {
-    _dio = Dio(BaseOptions(
-      baseUrl: '${Environment.restApiUrl}/api/v1/login',
-      connectTimeout: const Duration(milliseconds: 60000),
-      receiveTimeout: const Duration(milliseconds: 30000),
-    ));
-  }
+  AuthApi authApi = AuthApi();  // AuthApi의 인스턴스 생성
 
   /// ************************************************
   /// SNS 별 로그인 처리 함수 실행
@@ -33,6 +23,7 @@ class LoginService {
 
   /// ************************************************
   /// 네이버 로그인 처리 함수
+  /// TODO: 네이버 로그인은 테스터 등록이 필요해서 등록 후 재개발 예정
   /// ************************************************
   Future<bool> _naverSignIn() async {
     try {
@@ -43,16 +34,20 @@ class LoginService {
         throw Exception("네이버 로그인 실패");
       }
 
-      final response = await _dio.get(
-        "/naver",
-        queryParameters: {"access_token": token.accessToken},
-      );
-
+      final response = await authApi.signIn('naver', token.accessToken);
       final accessToken = response.headers["Authorization"]!.first;
+
       logger.d("naverAccessToken : $accessToken");
 
-      const secureStorage = FlutterSecureStorage();
-      await secureStorage.write(key: "accessToken", value: accessToken);
+      setAccessToken(accessToken);
+
+      // 저장이 잘 됐는지 확인
+      final savedToken = await getAccessToken();
+      logger.d("naverSavedToken : $savedToken");
+
+      if (savedToken != accessToken) {
+        throw Exception("토큰 저장 실패");
+      }
 
       return FlutterNaverLogin.isLoggedIn;
     } catch (error) {
@@ -81,24 +76,22 @@ class LoginService {
           logger.d('${entry.key}: ${entry.value}');
         }
       }
-      final googleToken =
-          authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
-      logger.d('google accessToken: $googleToken');
+      final googleToken = authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
 
-      final response = await _dio.get(
-        "/google",
-        queryParameters: {"access_token": googleToken},
-      );
-
+      final response = await authApi.signIn('google', googleToken!);
       final accessToken = response.headers["Authorization"]!.first;
-      logger.d("googleAccessToken : $accessToken");
 
-      const secureStorage = FlutterSecureStorage();
-      await secureStorage.write(key: "accessToken", value: accessToken);
+      // 'Bearer ' 제거
+      String tokenWithoutBearer = accessToken.replaceFirst('Bearer ', '');
+      // 모든 공백 제거
+      String pureAccessToken = tokenWithoutBearer.replaceAll(' ', '');
+
+      await setAccessToken(pureAccessToken);
 
       // 저장이 잘 됐는지 확인
-      final savedToken = await secureStorage.read(key: "accessToken");
-      if (savedToken != accessToken) {
+      final savedToken = await getAccessToken();
+
+      if (savedToken != pureAccessToken) {
         throw Exception("토큰 저장 실패");
       }
       logger.d("토큰이 성공적으로 저장되었습니다.");

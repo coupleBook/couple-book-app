@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../gen/assets.gen.dart';
 import '../../l10n/l10n.dart';
 import '../../style/text_style.dart';
-import 'login_service.dart';
+import '../../feature/auth/login_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
