@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 
 class LoginService {
   final logger = Logger();
-  AuthApi authApi = AuthApi();  // AuthApi의 인스턴스 생성
+  AuthApi authApi = AuthApi();
 
   /// ************************************************
   /// SNS 별 로그인 처리 함수 실행
@@ -23,7 +23,6 @@ class LoginService {
 
   /// ************************************************
   /// 네이버 로그인 처리 함수
-  /// TODO: 네이버 로그인은 테스터 등록이 필요해서 등록 후 재개발 예정
   /// ************************************************
   Future<bool> _naverSignIn() async {
     try {
