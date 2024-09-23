@@ -43,13 +43,14 @@ class LoginService {
         throw Exception("네이버 로그인 실패");
       }
 
-      final response = await _dio.get(
+      final response = await _dio.post(
         "/naver",
         queryParameters: {"access_token": token.accessToken},
       );
 
       final accessToken = response.headers["Authorization"]!.first;
       logger.d("naverAccessToken : $accessToken");
+      logger.d("response: ${response.data}");
 
       const secureStorage = FlutterSecureStorage();
       await secureStorage.write(key: "accessToken", value: accessToken);
@@ -85,13 +86,14 @@ class LoginService {
           authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
       logger.d('google accessToken: $googleToken');
 
-      final response = await _dio.get(
+      final response = await _dio.post(
         "/google",
         queryParameters: {"access_token": googleToken},
       );
 
       final accessToken = response.headers["Authorization"]!.first;
       logger.d("googleAccessToken : $accessToken");
+      logger.d("response: ${response.data}");
 
       const secureStorage = FlutterSecureStorage();
       await secureStorage.write(key: "accessToken", value: accessToken);
