@@ -19,7 +19,7 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
     super.initState();
 
     Timer(const Duration(milliseconds: 3700), () {
-      context.goNamed(ViewRoute.coupleAnniversary.name);
+      // context.goNamed(ViewRoute.coupleAnniversary.name);
     });
   }
 
@@ -45,7 +45,6 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 10),
             Text(
               '${widget.userName}님 반가워요',
               style: const TextStyle(
