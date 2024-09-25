@@ -1,9 +1,10 @@
-import 'package:couple_book/api/auth/auth_api.dart';
 import 'package:couple_book/utils/constants/login_platform.dart';
 import 'package:couple_book/utils/security/auth_security.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+
+import '../../api/auth_api/auth_api.dart';
 
 class LoginService {
   final logger = Logger();
@@ -33,7 +34,8 @@ class LoginService {
       }
 
       final response = await authApi.signIn('naver', token.accessToken);
-      final accessToken = response.headers["Authorization"]!.first;
+      final accessToken = response.accessToken;
+
 
       // 'Bearer ' 제거
       String tokenWithoutBearer = accessToken.replaceFirst('Bearer ', '');
@@ -79,8 +81,10 @@ class LoginService {
       final googleToken = authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
 
       final response = await authApi.signIn('google', googleToken!);
-      final accessToken = response.headers["Authorization"]!.first;
+      final accessToken = response.accessToken;
 
+      logger.d('response google:: $response');
+      logger.d('response google me:: ${response.me}');
       // 'Bearer ' 제거
       String tokenWithoutBearer = accessToken.replaceFirst('Bearer ', '');
       // 모든 공백 제거
