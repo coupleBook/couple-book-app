@@ -36,6 +36,7 @@ class $AssetsIconsGen {
   SvgGenImage get miniHeartContent => const SvgGenImage('assets/contents/mini_heart.svg');
   SvgGenImage get profileFemaleContent => const SvgGenImage('assets/contents/profile_female.svg');
   SvgGenImage get profileMaleContent => const SvgGenImage('assets/contents/profile_male.svg');
+  SvgGenImage get pencilUnderlineBg => const SvgGenImage('assets/contents/pencil_underline_bg.svg');
 
 
   /// =================== Icons ===================
@@ -88,6 +89,7 @@ class $AssetsIconsGen {
         , miniHeartContent
         , profileFemaleContent
         , profileMaleContent
+        , pencilUnderlineBg
         /// ICONS
         , c_heartIcon
         , c_googleIcon

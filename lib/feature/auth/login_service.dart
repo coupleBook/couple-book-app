@@ -28,7 +28,6 @@ class LoginService {
     try {
       await FlutterNaverLogin.logIn();
       NaverAccessToken token = await FlutterNaverLogin.currentAccessToken;
-      logger.d('token: ${token.accessToken}');
       if (token.accessToken.isEmpty) {
         throw Exception("네이버 로그인 실패");
       }
@@ -36,15 +35,17 @@ class LoginService {
       final response = await authApi.signIn('naver', token.accessToken);
       final accessToken = response.headers["Authorization"]!.first;
 
-      logger.d("naverAccessToken : $accessToken");
+      // 'Bearer ' 제거
+      String tokenWithoutBearer = accessToken.replaceFirst('Bearer ', '');
+      // 모든 공백 제거
+      String pureAccessToken = tokenWithoutBearer.replaceAll(' ', '');
 
-      setAccessToken(accessToken);
+      await setAccessToken(pureAccessToken);
 
       // 저장이 잘 됐는지 확인
       final savedToken = await getAccessToken();
-      logger.d("naverSavedToken : $savedToken");
 
-      if (savedToken != accessToken) {
+      if (savedToken != pureAccessToken) {
         throw Exception("토큰 저장 실패");
       }
 
