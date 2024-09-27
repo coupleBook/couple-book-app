@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:couple_book/router.dart';
+
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SignupAnimationPage extends StatefulWidget {
   // TODO 유저 정보 받아오기
