@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../api/session.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
+import '../../utils/security/auth_security.dart';
 import '../login/page.dart';
 
 class SplashView extends StatefulWidget {
@@ -16,10 +18,22 @@ class _SplashViewState extends State<SplashView>
   late Animation<double> _opacityAnimation;
   bool showLoginPage = false; // 로그인 페이지 표시 여부 결정
   bool hideSplash = false; // 스플래시 화면을 완전히 제거할지 여부
+  bool existToken = false;
 
   @override
   void initState() {
     super.initState();
+    _initializeSplash();
+  }
+
+  Future<void> _initializeSplash() async {
+    /// TODO: 로그인 토큰만 체크 하지만 처음 만난날이 설정 되어있는지도 체크해서 홈, 처음만난날 페이지 이동 분기 처리 해야함
+    final accessToken = await getAccessToken();
+    Session.accessToken = accessToken;
+
+    if(Session.accessToken.isNotEmpty) {
+      existToken = true;
+    }
 
     _controller = AnimationController(
       vsync: this,
