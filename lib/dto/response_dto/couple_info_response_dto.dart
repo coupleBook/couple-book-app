@@ -1,8 +1,8 @@
 import 'package:couple_book/dto/api_dto.dart';
-import 'package:couple_book/dto/auth/couple_info.dart';
+import 'package:couple_book/dto/couple/couple_info_dto.dart';
 
 class CoupleInfoResponse extends ApiResponse {
-  CoupleInfo coupleInfo;
+  CoupleInfoDto coupleInfo;
 
   CoupleInfoResponse({
       required super.status
@@ -14,7 +14,7 @@ class CoupleInfoResponse extends ApiResponse {
     return CoupleInfoResponse(
         status: json['status'],
         error: json['error'],
-        coupleInfo: CoupleInfo.fromJson(json['data']['coupleInfo'])
+        coupleInfo: CoupleInfoDto.fromJson(json['data']['coupleInfo'])
     );
   }
 }

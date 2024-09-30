@@ -1,4 +1,4 @@
-class MyInfo {
+class MyInfoDto {
   String id;
   String name;
   String? birthday; // 날짜 ex) 1997-03-10
@@ -7,7 +7,7 @@ class MyInfo {
   String provider;
   String updatedAt; // 날짜 timestamp
 
-  MyInfo({
+  MyInfoDto({
       required this.id
     , required this.name
     , this.birthday
@@ -17,8 +17,8 @@ class MyInfo {
     , required this.updatedAt
   });
 
-  factory MyInfo.fromJson(Map<String, dynamic> json) {
-    return MyInfo(
+  factory MyInfoDto.fromJson(Map<String, dynamic> json) {
+    return MyInfoDto(
       id: json['id'],
       name: json['name'],
       birthday: json['birthday'],
