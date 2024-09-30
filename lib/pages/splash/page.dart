@@ -18,7 +18,7 @@ class _SplashViewState extends State<SplashView>
   late Animation<double> _opacityAnimation;
   bool showLoginPage = false; // 로그인 페이지 표시 여부 결정
   bool hideSplash = false; // 스플래시 화면을 완전히 제거할지 여부
-  bool existToken = false;
+  bool existToken = false; // 토큰이 존재하는지 여부
 
   @override
   void initState() {
