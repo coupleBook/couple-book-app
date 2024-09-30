@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import '../../api/session.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../utils/security/auth_security.dart';
 import '../login/page.dart';
 
+
+final logger = Logger();
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
@@ -23,41 +26,47 @@ class _SplashViewState extends State<SplashView>
   @override
   void initState() {
     super.initState();
-    _initializeSplash();
-  }
-
-  Future<void> _initializeSplash() async {
-    /// TODO: 로그인 토큰만 체크 하지만 처음 만난날이 설정 되어있는지도 체크해서 홈, 처음만난날 페이지 이동 분기 처리 해야함
-    final accessToken = await getAccessToken();
-    Session.accessToken = accessToken;
-
-    if(Session.accessToken.isNotEmpty) {
-      existToken = true;
-    }
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1), // 애니메업이션 지속 시간
+      duration: const Duration(seconds: 1),
     );
 
     _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
-    _controller.forward().then((_) {
-      setState(() {
-        showLoginPage = true; // 로그인 페이지 표시 시작
-      });
+    _initializeSplash();
+  }
 
-      Future.delayed(const Duration(milliseconds: 500), () {
-        _controller.reverse().then((_) {
-          // 애니메이션이 완료되면 스플래시 화면을 제거
-          setState(() {
-            hideSplash = true;
+  Future<void> _initializeSplash() async {
+    try {
+      final accessToken = await getAccessToken();
+      Session.accessToken = accessToken;
+
+      if (Session.accessToken.isNotEmpty) {
+        setState(() {
+          existToken = true;
+        });
+      }
+
+
+      _controller.forward().then((_) {
+        setState(() {
+          showLoginPage = true;
+        });
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          _controller.reverse().then((_) {
+            setState(() {
+              hideSplash = true;
+            });
           });
         });
       });
-    });
+    } catch (e) {
+      logger.d("Error during splash initialization: $e");
+    }
   }
 
   @override
