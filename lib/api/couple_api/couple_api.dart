@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
+import '../../dto/response_dto/couple_info_response.dart';
 import '../../dto/response_dto/create_couple_code_response_dto.dart';
 import '../../dto/response_dto/find_user_info_response.dart';
 import '../../env/environment.dart';
@@ -36,6 +37,17 @@ class CoupleApi {
     return FindUserInfoResponse.fromJson(response.data);
   }
 
+  /// ************************************************
+  /// 커플 코드 연결 API
+  /// TODO: DTO 를 ResponseDto 를 만들었는데 굳이 ResponseDto 가 필요한가? CoupleInfoDto와 공통 으로 묶을 순 없을까
+  /// ************************************************
+  Future<CoupleInfoResponse> linkCouple(String coupleCode) async {
+    final Response<dynamic> response = await _dio.post(
+      '${Environment.restApiUrl}/api/v1/couple/link',
+      data: {"code" : coupleCode}
+    );
 
+    return CoupleInfoResponse.fromJson(response.data);
+  }
 
 }
