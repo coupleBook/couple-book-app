@@ -3,9 +3,10 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-import '../../dto/response_dto/couple_info_response.dart';
+import '../../dto/response_dto/change_dating_date_response_dto.dart';
+import '../../dto/response_dto/couple_info_response_dto.dart';
 import '../../dto/response_dto/create_couple_code_response_dto.dart';
-import '../../dto/response_dto/find_user_info_response.dart';
+import '../../dto/response_dto/find_user_info_response_dto.dart';
 import '../../env/environment.dart';
 import '../session.dart';
 
@@ -49,5 +50,19 @@ class CoupleApi {
 
     return CoupleInfoResponse.fromJson(response.data);
   }
+
+  /// ************************************************
+  /// 사귄날 변경 API
+  /// ************************************************
+  Future<ChangeDatingDateResponseDto> changeDatingDate(String datingAnniversary) async {
+    final Response<dynamic> response = await _dio.put(
+      '${Environment.restApiUrl}/api/v1/couple/anniversary/dating',
+      data: {"datingAnniversary" : datingAnniversary}
+    );
+
+    return ChangeDatingDateResponseDto.fromJson(response.data);
+  }
+
+
 
 }
