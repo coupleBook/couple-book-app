@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../router.dart';
 
 class SignupAnimationPage extends StatefulWidget {
   // TODO 유저 정보 받아오기
@@ -18,7 +21,7 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
     super.initState();
 
     Timer(const Duration(milliseconds: 3700), () {
-      // context.goNamed(ViewRoute.coupleAnniversary.name);
+      context.goNamed(ViewRoute.coupleAnniversary.name);
     });
   }
 
