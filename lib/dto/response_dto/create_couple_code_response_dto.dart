@@ -2,7 +2,7 @@ import '../api_dto.dart';
 
 class CreateCoupleCodeResponseDto extends ApiResponse {
   String code;
-  double expirationTimeInSeconds;
+  int expirationTimeInSeconds;
 
   CreateCoupleCodeResponseDto({
         required super.status
