@@ -13,7 +13,6 @@ class AuthApi {
 
   /// ************************************************
   /// SNS 로그인 API
-  /// TODO: DTO 만들어야하나?
   /// ************************************************
   Future<LoginResponseDto> signIn(String platform, String token) async {
     final Response<dynamic> response = await _dio.post(
@@ -26,5 +25,12 @@ class AuthApi {
     // logger.d('response.data:: ' + response.data);
 
     return LoginResponseDto.fromJson(response.data, accessToken);
+  }
+
+  /// ************************************************
+  /// SNS 로그인 API
+  /// ************************************************
+  Future<void> logout() async {
+    await _dio.post('${Environment.restApiUrl}/api/v1/logout');
   }
 }
