@@ -1,7 +1,7 @@
 class PartnerInfoDto {
   String id;
   String name;
-  String? datingAnniversary; // 날짜
+  String? birthday; // 날짜
   String? gender;
   String? profileImageUrl;
   String provider;
@@ -9,7 +9,7 @@ class PartnerInfoDto {
   PartnerInfoDto({
       required this.id
     , required this.name
-    , this.datingAnniversary
+    , this.birthday
     , this.gender
     , this.profileImageUrl
     , required this.provider
@@ -19,11 +19,10 @@ class PartnerInfoDto {
     return PartnerInfoDto(
       id: json['id'],
       name: json['name'],
-      datingAnniversary: json['datingAnniversary'],
+      birthday: json['birthday'],
       gender: json['gender'],
       profileImageUrl: json['profileImageUrl'],
       provider: json['provider'],
     );
   }
-
 }
