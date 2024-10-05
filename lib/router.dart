@@ -4,6 +4,7 @@ import 'package:couple_book/pages/login/page.dart';
 import 'package:couple_book/pages/login/signup_animation.dart';
 import 'package:couple_book/pages/logout/page.dart';
 import 'package:couple_book/pages/splash/page.dart';
+import 'package:couple_book/pages/test/page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +17,7 @@ enum ViewRoute {
   home,
   coupleAnniversary,
   signupAnimation,
+  testPage,
 }
 
 extension RouteString on ViewRoute {
@@ -33,6 +35,8 @@ extension RouteString on ViewRoute {
         return 'COUPLE_ANNIVERSARY';
       case ViewRoute.signupAnimation:
         return 'SIGNUP_ANIMATION';
+      case ViewRoute.testPage:
+        return 'TEST_PAGE';
     }
   }
 }
@@ -127,6 +131,22 @@ final router = GoRouter(
         return CustomTransitionPage(
           key: state.pageKey,
           child: const SignupAnimationPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+    GoRoute(
+      path: '/test',
+      name: 'TEST_PAGE',
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const ApiTestPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity: animation,

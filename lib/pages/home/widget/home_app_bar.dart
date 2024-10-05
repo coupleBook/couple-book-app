@@ -58,7 +58,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     borderRadius: BorderRadius.circular(60),
                     highlightColor: ColorName.lightGray,
                     onTap: () {
-                      context.goNamed(ViewRoute.logout.name);
+                      context.goNamed(ViewRoute.testPage.name);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12),
