@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import '../../api/session.dart';
+
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../utils/security/auth_security.dart';
 import '../login/page.dart';
 
-
 final logger = Logger();
+
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
@@ -41,15 +41,11 @@ class _SplashViewState extends State<SplashView>
 
   Future<void> _initializeSplash() async {
     try {
-      final accessToken = await getAccessToken();
-      Session.accessToken = accessToken;
+      await getAccessToken();
 
-      if (Session.accessToken.isNotEmpty) {
-        setState(() {
-          existToken = true;
-        });
-      }
-
+      setState(() {
+        existToken = true;
+      });
 
       _controller.forward().then((_) {
         setState(() {
