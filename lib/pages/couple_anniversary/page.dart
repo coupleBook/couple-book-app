@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // flutter_svg 임포트
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/router.dart';
 import 'package:couple_book/style/text_style.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../gen/assets.gen.dart';
 import '../../l10n/l10n.dart';
 import '../../utils/widgets/calendar.dart';  // Calendar 위젯 임포트
 
@@ -59,7 +61,7 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
     if (_selectedDate != null) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('couple_anniversary', _selectedDate!.toIso8601String());
-      logger.i('선택된 날짜 저장: $_selectedDate');
+      logger.d('선택된 날짜 저장: $_selectedDate');
 
       if (mounted) {
         context.goNamed(ViewRoute.home.name);
@@ -78,15 +80,38 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              '처음 만난 날 설정하기',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
+            SizedBox(
+              width: screenWidth * 0.9,
+              height: 100,  // 박스의 높이를 지정하여 충분한 공간을 확보
+              child: Stack(
+                alignment: Alignment.bottomCenter,  // 텍스트와 이미지를 중앙에 맞춤
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    right: screenWidth * 0.11,
+                    child: Assets.icons.pencilUnderlineBg.svg(
+                      width: screenWidth * 0.64,  // 텍스트 너비에 맞게 이미지 크기 설정
+                      fit: BoxFit.contain,  // 이미지 크기가 텍스트에 맞게 조정되도록 설정
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 7),  // 하단에서 10px 패딩 추가
+                    child:  AppText(
+                      '처음 만난 날 설정하기',
+                      style: TypoStyle.notoSansR19_1_4.copyWith(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
             ),
+
+
+
+
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(

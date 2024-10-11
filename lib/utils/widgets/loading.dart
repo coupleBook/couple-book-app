@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
-import 'dart:ui'; // 블러 효과를 위해 필요
+import 'package:flutter/services.dart';
 
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({super.key});
+class LoadingWidget extends StatelessWidget {
+  const LoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Opacity(
-            opacity: 0.5,
-            child: Container(
-              color: Colors.black,
-            ),
-          ),
-
-          // 블러 효과 적용
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-            child: Container(
-              color: Colors.black.withOpacity(0),
-            ),
-          ),
-
-          Center(
-            child: Image.asset(
-              'assets/contents/loading.gif',
-              width: 100.0,
-              height: 100.0,
-            ),
-          ),
-        ],
+    return Center(
+      child: Image.asset(
+        'assets/contents/loading.gif',
+        width: 100,
+        height: 100,
       ),
     );
   }
+}
+
+void showLoadingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // 다른 곳을 누르면 닫히지 않도록
+    builder: (BuildContext context) {
+      return const Dialog(
+        backgroundColor: Colors.transparent,
+        child: LoadingWidget(),
+      );
+    },
+  );
+}
+
+void hideLoadingDialog(BuildContext context) {
+  Navigator.of(context).pop(); // 로딩 창 닫기
 }

@@ -23,6 +23,7 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
         'ON ERROR REQUEST[${e.requestOptions.method}]: ${e.requestOptions.path}');
     logger.d('ON ERROR RESPONSE: ${e.response}');
     logger.d('ON ERROR STATUS CODE: ${e.response?.statusCode}');
+    logger.d('ON ERROR HEADER: ${e.response?.headers}');
 
     handler.next(
       DioException(
