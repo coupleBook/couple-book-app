@@ -15,14 +15,19 @@ class AuthApi {
   /// SNS 로그인 API
   /// ************************************************
   Future<LoginResponseDto> signIn(String platform, String token) async {
-    final Response<dynamic> response = await _dio.post(
+    var dio = Dio(BaseOptions(
+      baseUrl: Environment.restApiUrl,
+      connectTimeout: const Duration(milliseconds: 60000),
+      receiveTimeout: const Duration(milliseconds: 30000),
+    ));
+
+    final Response<dynamic> response = await dio.post(
       '${Environment.restApiUrl}/api/v1/login/$platform',
       queryParameters: {'access_token': token},
     );
     final accessToken = response.headers["Authorization"]!.first;
 
     logger.d('response :: $response');
-    // logger.d('response.data:: ' + response.data);
 
     return LoginResponseDto.fromJson(response.data, accessToken);
   }
