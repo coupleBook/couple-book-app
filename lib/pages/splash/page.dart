@@ -41,11 +41,13 @@ class _SplashViewState extends State<SplashView>
 
   Future<void> _initializeSplash() async {
     try {
-      await getAccessToken();
+      final accessToken = await getAccessToken();
 
-      setState(() {
-        existToken = true;
-      });
+      if (accessToken.isNotEmpty) {
+        setState(() {
+          existToken = true;
+        });
+      }
 
       _controller.forward().then((_) {
         setState(() {
