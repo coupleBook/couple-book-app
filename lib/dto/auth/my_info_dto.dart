@@ -3,7 +3,7 @@ class MyInfoDto {
   String name;
   String? birthday; // 날짜 ex) 1997-03-10
   String? gender;
-  String? profileImageUrl;
+  int? profileImageVersion;
   String provider;
   String updatedAt; // 날짜 timestamp
 
@@ -12,7 +12,7 @@ class MyInfoDto {
     , required this.name
     , this.birthday
     , this.gender
-    , this.profileImageUrl
+    , this.profileImageVersion
     , required this.provider
     , required this.updatedAt
   });
@@ -23,7 +23,7 @@ class MyInfoDto {
       name: json['name'],
       birthday: json['birthday'],
       gender: json['gender'],
-      profileImageUrl: json['profileImageUrl'],
+      profileImageVersion: json['profileImageVersion'],
       provider: json['provider'],
       updatedAt: json['updatedAt'],
     );
@@ -31,7 +31,7 @@ class MyInfoDto {
 
   @override
   String toString() {
-    return 'MyInfo{id: $id, name: $name, birthday: $birthday gender: $gender, profileImageUrl: $profileImageUrl, provider: $provider, updatedAt: $updatedAt}';
+    return 'MyInfo{id: $id, name: $name, birthday: $birthday gender: $gender, profileImageVersion: $profileImageVersion, provider: $provider, updatedAt: $updatedAt}';
   }
 
 

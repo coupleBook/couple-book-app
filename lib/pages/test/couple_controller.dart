@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/couple_api/couple_api.dart';
-import '../../dto/response_dto/find_user_info_response_dto.dart';  // FindUserInfoResponse 클래스 임포트
+import '../../dto/response_dto/couple_code_creator_info_response.dart'; // FindUserInfoResponse 클래스 임포트
 
 class CoupleController {
   final BuildContext context;
@@ -37,7 +37,6 @@ class CoupleController {
 
       // 조회된 데이터를 팝업 창으로 보여줌
       _showPopup(response);
-
     } catch (e) {
       logger.e('커플 연동 코드 조회 실패: $e');
       _showSnackBar('커플 연동 코드 조회 실패: $e');
@@ -66,7 +65,7 @@ class CoupleController {
   }
 
   // 팝업 창으로 데이터를 보여주는 함수
-  void _showPopup(FindUserInfoResponse userInfo) {
+  void _showPopup(CoupleCodeCreatorInfoResponse userInfo) {
     showDialog<void>(
       context: context,
       barrierDismissible: true, // 바깥 클릭 시 닫기 허용
@@ -83,10 +82,6 @@ class CoupleController {
                 if (userInfo.birthday != null) ...[
                   const SizedBox(height: 10),
                   Text('생일: ${userInfo.birthday}'),
-                ],
-                if (userInfo.profileImageUrl != null) ...[
-                  const SizedBox(height: 10),
-                  Text('프로필 이미지: ${userInfo.profileImageUrl}'),
                 ],
                 if (userInfo.gender != null) ...[
                   const SizedBox(height: 10),
