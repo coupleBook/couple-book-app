@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 import '../../dto/response_dto/change_dating_date_response_dto.dart';
 import '../../dto/response_dto/couple_info_response_dto.dart';
 import '../../dto/response_dto/create_couple_code_response_dto.dart';
-import '../../dto/response_dto/find_user_info_response_dto.dart';
+import '../../dto/response_dto/couple_code_creator_info_response.dart';
 import '../../env/environment.dart';
 import '../session.dart';
 
@@ -29,13 +29,13 @@ class CoupleApi {
   /// ************************************************
   /// 커플 코드로 유저 정보 조회 API
   /// ************************************************
-  Future<FindUserInfoResponse> findUserInfoByCode(String coupleCode) async {
+  Future<CoupleCodeCreatorInfoResponse> findUserInfoByCode(String coupleCode) async {
     final Response<dynamic> response = await _dio.get(
       '${Environment.restApiUrl}/api/v1/couple/linkcode',
       queryParameters: {"code" : coupleCode}
     );
 
-    return FindUserInfoResponse.fromJson(response.data);
+    return CoupleCodeCreatorInfoResponse.fromJson(response.data);
   }
 
   /// ************************************************

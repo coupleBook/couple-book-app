@@ -28,6 +28,7 @@ class AuthApi {
     final accessToken = response.headers["Authorization"]!.first;
 
     logger.d('response :: $response');
+    logger.d('accessToken :: $accessToken');
 
     return LoginResponseDto.fromJson(response.data, accessToken);
   }
