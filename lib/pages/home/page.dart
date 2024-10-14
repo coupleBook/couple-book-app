@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../l10n/l10n.dart';
-import '../challenge/page.dart';
+import '../timeline/page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -58,13 +58,13 @@ class HomePageState extends State<HomePage> {
         child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
       ),
     ),
+    const TimelinePage(),
     Center(
       child: Transform.translate(
         offset: const Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
         child: Assets.icons.preparingIcon.svg(width: 94, height: 150),
       ),
     ),
-    const ChallengePage(),
     Center(
       child: Transform.translate(
         offset: const Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
