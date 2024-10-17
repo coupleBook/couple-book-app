@@ -58,6 +58,9 @@ class $AssetsIconsGen {
   SvgGenImage get albumIcon => const SvgGenImage('assets/icons/album.svg');
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.svg');
 
+  SvgGenImage get circleIcon => const SvgGenImage('assets/icons/circle_icon.svg');
+  SvgGenImage get plusIcon => const SvgGenImage('assets/icons/plus_icon.svg');
+
   /// Non-selected
   SvgGenImage get challengeIcon_off => const SvgGenImage('assets/icons/challenge_off.svg');
   SvgGenImage get coupleInfo_off => const SvgGenImage('assets/icons/couple_info_off.svg');
@@ -106,6 +109,9 @@ class $AssetsIconsGen {
         , preparingIcon
         , albumIcon
         , closeIcon
+
+        , circleIcon
+        , plusIcon
         /// ICONS - Non-selected
         , homeIcon_off
         , challengeIcon_off

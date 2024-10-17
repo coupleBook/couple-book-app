@@ -37,7 +37,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
   void initState() {
     super.initState();
     _nameController.text = widget.name; // 전달된 이름을 설정
-    _birthdateController.text = widget.birthdate; // 전달된 생일을 설정
+    _birthdateController.text = widget.birthdate; // 전달된 생일을 설정\
     _selectedImage = widget.selectedImage; // 전달된 프로필 사진 설정
   }
 
@@ -46,7 +46,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.86, // 팝업 높이 설정
       decoration: const BoxDecoration(
-        color: Color(0xFFFFF7DF), // 배경색 설정
+        color: ColorName.pointBtnBg2, // 배경색 설정
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
@@ -67,24 +67,27 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
             ),
             const SizedBox(height: 16),
             _buildProfileIcon(), // 프로필 아이콘 빌드
-            const SizedBox(height: 16),
+            const SizedBox(height: 37),
             _buildTextField(
               controller: _nameController,
               label: l10n.name,
               errorText: nameError,
-              hintText: l10n.limitTextPlaceHolder,
+              // hintText: l10n.limitTextPlaceHolder,
+              hintText: "이름을 입력해 주세요."
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 22),
             _buildTextField(
               controller: _birthdateController,
               label: l10n.birthday,
               errorText: birthdateError,
-              hintText: l10n.selectDate,
+              // hintText: l10n.selectDate,
+              hintText: "날짜를 선택해 주세요.",
               onTap: _selectDate,
               readOnly: true,
             ),
             const Spacer(), // 남은 공간을 차지하게 하여 버튼이 아래로 이동하도록 설정
             _buildSaveButton(),
+            const SizedBox(height: 18),
           ],
         ),
       ),
@@ -103,8 +106,8 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
               : null, // 이미지가 선택되지 않았을 때 기본 아이콘 표시
         ),
         Positioned(
-          bottom: 4,
-          right: -4, // 아이콘이 더 오른쪽으로 가도록 위치 조정
+          bottom: 0,
+          right: -6, // 아이콘이 더 오른쪽으로 가도록 위치 조정
           child: IconButton(
             icon: Assets.icons.albumIcon.svg(width: 26, height: 26), // 카메라 아이콘 추가
             onPressed: () {
@@ -148,39 +151,44 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
   }
 
   Widget _buildTextField({
-    required TextEditingController controller,
+    required TextEditingController? controller,
     required String label,
     String? errorText,
     String? hintText,
     VoidCallback? onTap,
     bool readOnly = false, // 기본적으로 readOnly는 false
+    double? width, // 추가된 width 인자
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.black, fontSize: 14)), // 라벨 텍스트 스타일
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          cursorColor: Colors.orangeAccent, // 커서 색상
-          readOnly: readOnly, // readOnly는 이름 필드와 날짜 필드에 따라 다르게 적용
-          onTap: onTap, // 날짜 필드에서만 캘린더가 뜨도록 onTap 이벤트 설정
-          decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: const TextStyle(color: Colors.orangeAccent), // 힌트 텍스트 스타일
-            errorText: errorText,
-            errorStyle: const TextStyle(color: Colors.orangeAccent), // 에러 텍스트 색상
-            enabledBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: ColorName.defaultGray), // 밑줄 색상
-            ),
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: ColorName.defaultGray), // 포커스된 상태에서의 밑줄 색상
+        // Text(label, style: const TextStyle(color: Colors.black, fontSize: 14)), // 라벨 텍스트 스타일
+        // const SizedBox(height: 8),
+        Container(
+          width: 300, // width 적용
+          child: TextField(
+            controller: controller,
+            cursorColor: Colors.orangeAccent, // 커서 색상
+            readOnly: readOnly, // readOnly는 이름 필드와 날짜 필드에 따라 다르게 적용
+            onTap: onTap, // 날짜 필드에서만 캘린더가 뜨도록 onTap 이벤트 설정
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.w500), // 힌트 텍스트 스타일
+              errorText: errorText,
+              errorStyle: const TextStyle(color: Colors.orangeAccent), // 에러 텍스트 색상
+              enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: ColorName.defaultGray), // 밑줄 색상
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: ColorName.defaultGray), // 포커스된 상태에서의 밑줄 색상
+              ),
             ),
           ),
         ),
       ],
     );
   }
+
 
   Future<void> _selectDate() async {
     DateTime? pickedDate = await showDatePicker(
@@ -199,6 +207,9 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
   }
 
   Widget _buildSaveButton() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    double widthSize = screenWidth * 0.8;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: ElevatedButton(
@@ -217,14 +228,18 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorName.defaultBlack, // 버튼 색상
-          minimumSize: const Size(double.infinity, 50),
+          minimumSize: const Size(310, 60),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
         child: AppText(
           l10n.save,
-          style: TypoStyle.notoSansR13_1_4,
+          style: TypoStyle.notoSansR13_1_4.copyWith(
+            fontSize: 15,
+            letterSpacing: -0.2,
+            fontWeight: FontWeight.w500,
+          ),
           color: ColorName.white,
         ),
       ),

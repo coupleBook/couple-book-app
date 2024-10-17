@@ -29,6 +29,9 @@ class ColorName {
   /// Color: #DEE8C4
   static const Color pointBtnBg = Color(0xFFDEE8C4);
 
+  /// Color: #F5F9E2
+  static const Color pointBtnBg2 = Color(0xFFF5F9E2);
+
 
   /// 임시 컬러 색상들 TODO: 나중에 지울 임시 컬러셋
   /// Color: #000000
