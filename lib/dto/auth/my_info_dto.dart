@@ -45,6 +45,4 @@ class MyInfoDto {
   String toString() {
     return 'MyInfo{id: $id, name: $name, birthday: $birthday gender: $gender, profileImageVersion: $profileImageVersion, provider: $provider, updatedAt: $updatedAt}';
   }
-
-
 }

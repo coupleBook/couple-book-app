@@ -34,7 +34,6 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
     try {
       MyInfoDto? myInfo = await getMyInfo();
       if (myInfo != null && myInfo.name != null) {
-        logger.d('_loadUserName: ${myInfo.name}');
         setState(() {
           userName = myInfo.name; // userName에 값 할당
         });

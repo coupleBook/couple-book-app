@@ -1,5 +1,5 @@
+import 'package:couple_book/utils/security/couple_security.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // flutter_svg 임포트
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/router.dart';
 import 'package:couple_book/style/text_style.dart';
@@ -61,7 +61,7 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
     if (_selectedDate != null) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('couple_anniversary', _selectedDate!.toIso8601String());
-      logger.d('선택된 날짜 저장: $_selectedDate');
+      await setAnniversary(_selectedDate);
 
       if (mounted) {
         context.goNamed(ViewRoute.home.name);

@@ -28,8 +28,6 @@ class _LoginViewState extends State<LoginPage> {
 
   Future<void> _handleSignIn(LoginPlatform platform) async {
     try {
-      context.goNamed(ViewRoute.signupAnimation.name);
-      return;
       bool isLoggedIn = await _loginService.signIn(platform);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("platform", platform.name);

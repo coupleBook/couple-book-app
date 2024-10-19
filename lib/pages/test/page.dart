@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../l10n/l10n.dart';
 import '../../router.dart';
 import '../../utils/constants/login_platform.dart';
+import '../../utils/security/auth_security.dart';
 import 'couple_controller.dart';
 import 'logout_controller.dart';
 
@@ -145,6 +146,13 @@ class _ApiTestViewState extends State<ApiTestPage> {
                 children: [
                   _buildLogoutButton(), // 로그아웃 버튼
                   const SizedBox(height: 20), // 간격 추가
+                  ElevatedButton(
+                    onPressed: () async => {
+                      await logout()
+                    },
+                    child: const Text('스토리지 전체삭제'),
+                  ),
+                  const SizedBox(height: 10), // 간격 추가
                   ElevatedButton(
                     onPressed: _generateCoupleLinkCode,
                     child: const Text('커플 연동 코드 생성'),

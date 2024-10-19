@@ -46,7 +46,7 @@ class LoginService {
       String pureAccessToken = tokenWithoutBearer.replaceAll(' ', '');
 
       await setAccessToken(pureAccessToken);
-      await setMyInfo(MyInfoDto(name: myInfo.name, gender: myInfo.gender, birthday: myInfo.birthday));
+      await setMyInfo(MyInfoDto(name: myInfo.name, gender: myInfo.gender, birthday: myInfo.birthday, provider: LoginPlatform.naver.name));
 
       // 저장이 잘 됐는지 확인
       final savedToken = await getAccessToken();
@@ -95,7 +95,7 @@ class LoginService {
       String pureAccessToken = tokenWithoutBearer.replaceAll(' ', '');
 
       await setAccessToken(pureAccessToken);
-      await setMyInfo(MyInfoDto(name: myInfo.name, gender: myInfo.gender, birthday: myInfo.birthday));
+      await setMyInfo(MyInfoDto(name: myInfo.name, gender: myInfo.gender, birthday: myInfo.birthday, provider: LoginPlatform.google.name));
 
       // 저장이 잘 됐는지 확인
       final savedToken = await getAccessToken();

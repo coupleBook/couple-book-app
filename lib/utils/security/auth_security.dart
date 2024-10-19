@@ -46,8 +46,10 @@ Future<String> getAccessToken() async {
 }
 
 /// ************************************************
-/// 로그아웃 시 액세스 토큰 삭제 함수
+/// 로그아웃 시 액세스 토큰 삭제 함수 TODO: 추후 수정
 /// ************************************************
 Future<void> logout() async {
   await secureStorage.delete(key: 'ACCESS_TOKEN');
+  await secureStorage.delete(key: 'MY_INFO');
+  await secureStorage.delete(key: 'ANNIVERSARY_KEY');
 }

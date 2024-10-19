@@ -20,7 +20,7 @@ const secureStorage = FlutterSecureStorage(
 /// ************************************************
 /// 처음 만난 날 로컬 스토리지에 저장 하는 함수
 /// ************************************************
-Future<void> setAnniversary(DateTime anniversary) async {
+Future<void> setAnniversary(DateTime? anniversary) async {
   String key = 'ANNIVERSARY_KEY';
   String value = anniversary.toString();
 
