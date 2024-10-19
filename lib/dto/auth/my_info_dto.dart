@@ -1,21 +1,33 @@
 class MyInfoDto {
-  String id;
+  String? id;
   String name;
   String? birthday; // 날짜 ex) 1997-03-10
   String? gender;
   int? profileImageVersion;
-  String provider;
-  String updatedAt; // 날짜 timestamp
+  String? provider;
+  String? updatedAt; // 날짜 timestamp
 
   MyInfoDto({
-      required this.id
+      this.id
     , required this.name
     , this.birthday
     , this.gender
     , this.profileImageVersion
-    , required this.provider
-    , required this.updatedAt
+    , this.provider
+    , this.updatedAt
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'birthday': birthday,
+      'gender': gender,
+      'profileImageVersion': profileImageVersion,
+      'provider': provider,
+      'updatedAt': updatedAt,
+    };
+  }
 
   factory MyInfoDto.fromJson(Map<String, dynamic> json) {
     return MyInfoDto(
