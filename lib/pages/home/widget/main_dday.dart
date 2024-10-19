@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:couple_book/gen/colors.gen.dart';
+import 'package:couple_book/utils/security/couple_security.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../l10n/l10n.dart';
@@ -10,32 +12,32 @@ import 'permission_handler_widget.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import
 
 class MainDdayView extends StatefulWidget {
-  final String today;
-  final int dday;
-
-  const MainDdayView({
-    super.key,
-    required this.today,
-    required this.dday,
-  });
+  const MainDdayView({super.key,});
 
   @override
   MainDdayViewState createState() => MainDdayViewState();
 }
 
 class MainDdayViewState extends State<MainDdayView> {
-  late PermissionHandlerWidget permissionHandlerWidget;
-  String leftProfileName = "요셉";
-  String leftProfileBirthdate = "97/08/19";
-  File? leftProfileImage;
+  final String todayDate = DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
+  String anniversaryDate = '';
+  String dday = '';
 
-  String rightProfileName = "지수";
-  String rightProfileBirthdate = "95/12/14";
+  late PermissionHandlerWidget permissionHandlerWidget;
+  String leftProfileName = "Honey";
+  String? leftProfileBirthdate = "";
+  File? leftProfileImage;
+  int? leftProfileImageVersion;
+
+  String rightProfileName = "Honey";
+  String? rightProfileBirthdate = "";
   File? rightProfileImage;
+  int? rightProfileImageVersion;
 
   @override
   void initState() {
     super.initState();
+    _asyncMethod();
     permissionHandlerWidget = PermissionHandlerWidget(
       onPermissionGranted: () {
         /// print('Permission granted');
@@ -43,6 +45,38 @@ class MainDdayViewState extends State<MainDdayView> {
       appName: l10n.appName,
       callLocation: 'HOME',
     );
+  }
+
+  _asyncMethod() async {
+    await getAnniversaryDate();
+    await getMyData();
+    calculateDday();
+  }
+
+  /// TODO: 처음만날날, D-day 계산 로직 서비스로 분리 예정
+  /// getAnniversaryDate, calculateDday
+  getAnniversaryDate() async {
+    String anniversary = await getAnniversary();
+    setState(() {
+      anniversaryDate = anniversary;
+    });
+  }
+
+  void calculateDday() {
+    if (anniversaryDate != null) {
+      final anniversary = DateFormat('yyyy-MM-dd').parse(anniversaryDate);
+      int calculateDday = DateTime.now().difference(anniversary).inDays + 1;
+      dday = calculateDday.toString();
+    }
+  }
+
+  getMyData() async {
+    final myInfo = await getMyInfo();
+    if (myInfo != null) {
+      leftProfileName = myInfo.name;
+      leftProfileBirthdate = myInfo.birthday!;
+      leftProfileImageVersion = myInfo.profileImageVersion;
+    }
   }
 
   @override
@@ -65,7 +99,7 @@ class MainDdayViewState extends State<MainDdayView> {
           Padding(
             padding: const EdgeInsets.only(left: 20.0),
             child: AppText(
-              widget.today,
+              todayDate,
               style: TypoStyle.notoSansR19_1_4,
             ),
           ),
@@ -84,7 +118,7 @@ class MainDdayViewState extends State<MainDdayView> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     AppText(
-                      '${widget.dday}',
+                      dday,
                       style: TypoStyle.seoyunB32_1_5,
                     ),
                     const AppText(
@@ -111,7 +145,7 @@ class MainDdayViewState extends State<MainDdayView> {
                 ),
                 const SizedBox(width: 4.0),
                 AppText(
-                  '처음 만난 날: 23/11/25/금요일',
+                  '처음 만난 날: $anniversaryDate',
                   style: TypoStyle.notoSansR19_1_4.copyWith(fontSize: 12),
                   color: ColorName.defaultGray,
                 ),
@@ -231,7 +265,7 @@ class MainDdayViewState extends State<MainDdayView> {
                         },
                         child: _buildProfileColumn(
                           rightProfileName,
-                          rightProfileBirthdate,
+                          rightProfileBirthdate!,
                           rightProfileImage != null
                               ? CircleAvatar(
                                   radius: 40,
@@ -258,8 +292,7 @@ class MainDdayViewState extends State<MainDdayView> {
     );
   }
 
-  Widget _buildProfileColumn(
-      String name, String birthdate, Widget profileIcon) {
+  Widget _buildProfileColumn(String name, String? birthdate, Widget profileIcon) {
     return Column(
       children: [
         profileIcon,
@@ -269,7 +302,7 @@ class MainDdayViewState extends State<MainDdayView> {
           style: TypoStyle.seoyunR19_1_4.copyWith(fontSize: 16),
         ),
         AppText(
-          birthdate,
+          birthdate!,
           style: TypoStyle.notoSansR13_1_4.copyWith(fontSize: 10),
           color: ColorName.defaultGray,
         ),

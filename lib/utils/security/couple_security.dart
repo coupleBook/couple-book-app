@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:couple_book/dto/auth/my_info_dto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 final logger = Logger();
@@ -42,7 +43,9 @@ Future<String> getAnniversary() async {
   try {
     String? anniversary = await secureStorage.read(key: 'ANNIVERSARY_KEY');
     if (anniversary != null) {
-      return anniversary;
+      final dateTimeAnniversary = DateFormat('yyyy-MM-dd').parse(anniversary);
+      final formattedDate = DateFormat('yyyy-MM-dd').format(dateTimeAnniversary);
+      return formattedDate;
     } else {
       return '';
     }

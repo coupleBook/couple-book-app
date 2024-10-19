@@ -10,13 +10,13 @@ import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
 class ProfilePopupForm extends StatefulWidget {
   final String name;
-  final String birthdate;
+  final String? birthdate;
   final File? selectedImage; // 프로필 사진 필드 추가
 
   const ProfilePopupForm({
     super.key,
     required this.name,
-    required this.birthdate,
+    this.birthdate,
     this.selectedImage, // 프로필 사진 필드 추가
   });
 
@@ -26,7 +26,7 @@ class ProfilePopupForm extends StatefulWidget {
 
 class _ProfilePopupFormState extends State<ProfilePopupForm> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _birthdateController = TextEditingController();
+  final TextEditingController? _birthdateController = TextEditingController();
   String? nameError;
   String? birthdateError;
 
@@ -37,7 +37,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
   void initState() {
     super.initState();
     _nameController.text = widget.name; // 전달된 이름을 설정
-    _birthdateController.text = widget.birthdate; // 전달된 생일을 설정\
+    _birthdateController?.text = widget.birthdate!; // 전달된 생일을 설정\
     _selectedImage = widget.selectedImage; // 전달된 프로필 사진 설정
   }
 
@@ -200,7 +200,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
 
     if (pickedDate != null) {
       setState(() {
-        _birthdateController.text = "${pickedDate.toLocal()}".split(' ')[0];
+        _birthdateController?.text = "${pickedDate.toLocal()}".split(' ')[0];
         birthdateError = null;
       });
     }
@@ -216,12 +216,12 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
         onPressed: () {
           setState(() {
             nameError = _validateName(_nameController.text);
-            birthdateError = _birthdateController.text.isEmpty ? l10n.selectDate : null;
+            birthdateError = _birthdateController!.text.isEmpty ? l10n.selectDate : null;
           });
           if (nameError == null && birthdateError == null) {
             Navigator.of(context).pop({
               'name': _nameController.text,
-              'birthdate': _birthdateController.text,
+              'birthdate': _birthdateController?.text,
               'image': _selectedImage,
             });
           }

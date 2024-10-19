@@ -23,35 +23,14 @@ class HomePageState extends State<HomePage> {
   late SharedPreferences prefs;
   String? anniversaryDate;
 
-  // 현재 날짜와 D-day 계산
-  final String today =
-      DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
-
   @override
   void initState() {
     super.initState();
-    _loadPreferences();
-  }
-
-  Future<void> _loadPreferences() async {
-    prefs = await SharedPreferences.getInstance();
-    setState(() {
-      anniversaryDate = prefs.getString('couple_anniversary');
-    });
-  }
-
-  int dday = 0;
-
-  void calculateDday() {
-    if (anniversaryDate != null) {
-      final anniversary = DateFormat('yyyy-MM-dd').parse(anniversaryDate!);
-      dday = DateTime.now().difference(anniversary).inDays;
-    }
   }
 
   // 각 탭에서 표시할 위젯들을 정의
   late final List<Widget> _widgetOptions = <Widget>[
-    MainDdayView(today: today, dday: dday), // Home 버튼에서 MainDdayView를 표시
+    const MainDdayView(), // Home 버튼에서 MainDdayView를 표시
     Center(
       child: Transform.translate(
         offset: const Offset(0, -3), // X축 0, Y축 -2 (위로 2px 이동)
