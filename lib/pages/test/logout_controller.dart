@@ -1,7 +1,6 @@
-import 'package:couple_book/env/environment.dart';
+import 'package:couple_book/api/auth_api/auth_api.dart';
 import 'package:couple_book/router.dart';
 import 'package:couple_book/utils/constants/login_platform.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,24 +9,16 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../utils/security/auth_security.dart';
+
 class LogoutController {
   final BuildContext context;
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   final Logger logger = Logger();
-  late Dio _dio;
+  final authApi = AuthApi();
   late LoginPlatform? currentPlatform;
 
-  LogoutController(this.context) {
-    _dio = _createDioClient();
-  }
-
-  Dio _createDioClient() {
-    return Dio(BaseOptions(
-      baseUrl: Environment.restApiUrl,
-      connectTimeout: const Duration(milliseconds: 60000),
-      receiveTimeout: const Duration(milliseconds: 30000),
-    ));
-  }
+  LogoutController(this.context);
 
   Future<void> loadCurrentPlatform() async {
     final prefs = await SharedPreferences.getInstance();
@@ -68,14 +59,11 @@ class LogoutController {
   }
 
   Future<void> _logoutBackend() async {
-    final accessToken = await secureStorage.read(key: "accessToken");
+    final accessToken = await getAccessToken();
 
-    if (accessToken != null) {
+    if (accessToken.isNotEmpty) {
       try {
-        final response = await _dio.delete(
-          '/api/v1/logout',
-          options: Options(headers: {'Authorization': accessToken}),
-        );
+        final response = authApi.logout();
         logger.d('백엔드 로그아웃 성공: $response');
       } catch (e) {
         logger.e('백엔드 로그아웃 실패: $e');
@@ -107,7 +95,7 @@ class LogoutController {
   }
 
   Future<void> _clearLocalToken() async {
-    await secureStorage.delete(key: "accessToken");
+    await logout();
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('platform');
     logger.d('로컬 토큰 삭제 완료');

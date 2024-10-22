@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
@@ -37,6 +35,6 @@ class AuthApi {
   /// SNS 로그인 API
   /// ************************************************
   Future<void> logout() async {
-    await _dio.post('${Environment.restApiUrl}/api/v1/logout');
+    await _dio.delete('${Environment.restApiUrl}/api/v1/logout');
   }
 }

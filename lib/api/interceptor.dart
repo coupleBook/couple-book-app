@@ -11,6 +11,7 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
   onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
     final accessToken = await getAccessToken();
     logger.d('REQUEST[PATH]: ${options.uri.path}');
+    logger.d('accessToken: $accessToken');
 
     options.headers['Authorization'] = 'Bearer $accessToken';
     return handler.next(options);
