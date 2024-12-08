@@ -54,24 +54,7 @@ class LogoutController {
         break;
     }
 
-    await _logoutBackend();
     await _clearLocalToken();
-  }
-
-  Future<void> _logoutBackend() async {
-    final accessToken = await getAccessToken();
-
-    if (accessToken.isNotEmpty) {
-      try {
-        final response = authApi.logout();
-        logger.d('백엔드 로그아웃 성공: $response');
-      } catch (e) {
-        logger.e('백엔드 로그아웃 실패: $e');
-        rethrow;
-      }
-    } else {
-      logger.w('액세스 토큰이 없습니다. 로그아웃을 진행할 수 없습니다.');
-    }
   }
 
   Future<void> _naverSignOut() async {

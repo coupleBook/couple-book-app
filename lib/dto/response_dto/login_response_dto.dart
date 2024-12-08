@@ -7,16 +7,18 @@ class LoginResponseDto extends ApiResponse {
   MyInfoDto me;
   CoupleInfoDto? coupleInfo;
   String accessToken;
+  String refreshToken;
 
-  LoginResponseDto({
-      required super.status
-    , required super.error
-    , required this.me
-    , this.coupleInfo
-    , required this.accessToken
-  });
+  LoginResponseDto(
+      {required super.status,
+      required super.error,
+      required this.me,
+      this.coupleInfo,
+      required this.accessToken,
+      required this.refreshToken});
 
-  factory LoginResponseDto.fromJson(Map<String, dynamic> json, String accessToken) {
+  factory LoginResponseDto.fromJson(
+      Map<String, dynamic> json, String accessToken, String refreshToken) {
     return LoginResponseDto(
       status: json['status'],
       error: json['error'],
@@ -25,6 +27,7 @@ class LoginResponseDto extends ApiResponse {
           ? CoupleInfoDto.fromJson(json['data']['coupleInfo'])
           : null,
       accessToken: accessToken,
+      refreshToken: refreshToken,
     );
   }
 

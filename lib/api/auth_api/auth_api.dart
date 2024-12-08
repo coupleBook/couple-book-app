@@ -24,17 +24,11 @@ class AuthApi {
       queryParameters: {'access_token': token},
     );
     final accessToken = response.headers["Authorization"]!.first;
+    final refreshToken = response.headers["Refresh-Token"]!.first;
 
     logger.d('response :: $response');
     logger.d('accessToken :: $accessToken');
 
-    return LoginResponseDto.fromJson(response.data, accessToken);
-  }
-
-  /// ************************************************
-  /// SNS 로그인 API
-  /// ************************************************
-  Future<void> logout() async {
-    await _dio.delete('${Environment.restApiUrl}/api/v1/logout');
+    return LoginResponseDto.fromJson(response.data, accessToken, refreshToken);
   }
 }
