@@ -75,7 +75,7 @@ Future<void> logout() async {
     await secureStorage.delete(key: 'ACCESS_TOKEN');
     await secureStorage.delete(key: 'REFRESH_TOKEN');
     await secureStorage.delete(key: 'MY_INFO');
-    await secureStorage.delete(key: 'ANNIVERSARY_KEY');
+    // await secureStorage.delete(key: 'ANNIVERSARY_KEY');
     logger.d('모든 토큰과 사용자 데이터가 삭제되었습니다.');
   } catch (e) {
     logger.e('logout error: $e');

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert'; // jsonDecode 사용을 위해 필요
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,7 +8,7 @@ import '../../router.dart';
 import '../../utils/security/couple_security.dart';
 
 class SignupAnimationPage extends StatefulWidget {
-  const SignupAnimationPage({Key? key}) : super(key: key);
+  const SignupAnimationPage({super.key});
 
   @override
   State<SignupAnimationPage> createState() => SignupAnimationPageState();
@@ -25,15 +25,20 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
 
   Future<void> _initAsync() async {
     await _loadUserName(); // 유저 정보 불러오기
+    final anniversary = await getAnniversary();
     Timer(const Duration(milliseconds: 3700), () {
-      context.goNamed(ViewRoute.coupleAnniversary.name);
+      if (anniversary.isEmpty) {
+        context.goNamed(ViewRoute.coupleAnniversary.name);
+      } else {
+        context.goNamed(ViewRoute.home.name);
+      }
     });
   }
 
   Future<void> _loadUserName() async {
     try {
       MyInfoDto? myInfo = await getMyInfo();
-      if (myInfo != null && myInfo.name != null) {
+      if (myInfo != null) {
         setState(() {
           userName = myInfo.name; // userName에 값 할당
         });

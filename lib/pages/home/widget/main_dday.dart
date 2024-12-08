@@ -63,7 +63,7 @@ class MainDdayViewState extends State<MainDdayView> {
   }
 
   void calculateDday() {
-    if (anniversaryDate != null) {
+    if (anniversaryDate.isNotEmpty) {
       final anniversary = DateFormat('yyyy-MM-dd').parse(anniversaryDate);
       int calculateDday = DateTime.now().difference(anniversary).inDays + 1;
       dday = calculateDday.toString();
