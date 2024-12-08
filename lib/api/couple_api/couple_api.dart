@@ -62,6 +62,4 @@ class CoupleApi {
 
     return ChangeDatingDateResponseDto.fromJson(response.data);
   }
-
-
 }
