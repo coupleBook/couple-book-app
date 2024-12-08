@@ -5,7 +5,7 @@ final logger = Logger();
 
 /// 앱 내부에 저장하는 데이터
 const secureStorage = FlutterSecureStorage(
-  aOptions: const AndroidOptions(
+  aOptions: AndroidOptions(
     encryptedSharedPreferences: true,
   ),
 );

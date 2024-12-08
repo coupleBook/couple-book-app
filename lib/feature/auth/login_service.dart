@@ -1,5 +1,4 @@
 import 'package:couple_book/api/auth_api/token_manager.dart';
-import 'package:couple_book/dto/auth/my_info_dto.dart';
 import 'package:couple_book/utils/constants/login_platform.dart';
 import 'package:couple_book/utils/security/couple_security.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
@@ -37,15 +36,13 @@ class LoginService {
       }
 
       final response = await authApi.signIn('naver', token.accessToken);
-      final myInfo = response.me;
 
       await tokenManager.saveTokens(
           response.accessToken, response.refreshToken);
-      await setMyInfo(MyInfoDto(
-          name: myInfo.name,
-          gender: myInfo.gender,
-          birthday: myInfo.birthday,
-          provider: LoginPlatform.naver.name));
+      await setMyInfo(response.me);
+      if (response.coupleInfo != null) {
+        await setCoupleInfo(response.coupleInfo!);
+      }
 
       return FlutterNaverLogin.isLoggedIn;
     } catch (error) {
@@ -78,15 +75,13 @@ class LoginService {
           authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
 
       final response = await authApi.signIn('google', googleToken!);
-      final myInfo = response.me;
 
       await tokenManager.saveTokens(
           response.accessToken, response.refreshToken);
-      await setMyInfo(MyInfoDto(
-          name: myInfo.name,
-          gender: myInfo.gender,
-          birthday: myInfo.birthday,
-          provider: LoginPlatform.google.name));
+      await setMyInfo(response.me);
+      if (response.coupleInfo != null) {
+        await setCoupleInfo(response.coupleInfo!);
+      }
 
       return googleSignIn.isSignedIn();
     } catch (error) {

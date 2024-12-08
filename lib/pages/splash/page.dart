@@ -2,6 +2,7 @@ import 'package:couple_book/utils/constants/login_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
+import '../../api/user_api/user_profile_api.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../utils/security/auth_security.dart';
@@ -23,8 +24,11 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView>
     with SingleTickerProviderStateMixin {
+  final userProfileApi = UserProfileApi();
+
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
+
   bool showTargetPage = false; // 대상 페이지 표시 여부
   bool hideSplash = false; // 스플래시 화면을 완전히 제거할지 여부
   bool existToken = false; // 토큰이 존재하는지 여부
@@ -57,6 +61,11 @@ class _SplashViewState extends State<SplashView>
       logger.d("ANNIVERSARY isNotEmpty: ${anniversary.isNotEmpty}");
 
       if (accessToken.isNotEmpty) {
+        var userProfile = await userProfileApi.getUserProfile();
+        await setMyInfo(userProfile.me);
+        if (userProfile.coupleInfo != null) {
+          await setCoupleInfo(userProfile.coupleInfo!);
+        }
         setState(() {
           existToken = true;
         });

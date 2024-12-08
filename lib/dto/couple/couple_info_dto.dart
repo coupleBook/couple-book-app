@@ -13,6 +13,15 @@ class CoupleInfoDto {
     , required this.partner
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'coupleId': coupleId,
+      'datingAnniversary': datingAnniversary.toIso8601String(),
+      'updatedAt': updatedAt,
+      'partner': partner.toJson(),
+    };
+  }
+
   factory CoupleInfoDto.fromJson(Map<String, dynamic> json) {
     return CoupleInfoDto(
       coupleId: json['coupleId'],

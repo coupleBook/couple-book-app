@@ -4,6 +4,7 @@
 import 'dart:convert';
 
 import 'package:couple_book/dto/auth/my_info_dto.dart';
+import 'package:couple_book/dto/couple/couple_info_dto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -16,7 +17,6 @@ const secureStorage = FlutterSecureStorage(
     encryptedSharedPreferences: true,
   ),
 );
-
 
 /// ************************************************
 /// 처음 만난 날 로컬 스토리지에 저장 하는 함수
@@ -55,7 +55,6 @@ Future<String> getAnniversary() async {
   }
 }
 
-
 /// ************************************************
 /// 내정보 로컬 스토리지에 저장하는 함수
 /// ************************************************
@@ -74,7 +73,6 @@ Future<void> setMyInfo(MyInfoDto myInfo) async {
   }
 }
 
-
 /// ************************************************
 /// 내정보 로컬 스토리지에서 가져오는 함수
 /// ************************************************
@@ -90,6 +88,50 @@ Future<MyInfoDto?> getMyInfo() async {
       } catch (e) {
         logger.e('JSON Parsing Error: $e');
         logger.e('Invalid JSON: $myInfo');
+        return null;
+      }
+    } else {
+      return null;
+    }
+  } catch (e) {
+    logger.e('getMyInfo error: $e');
+    return null;
+  }
+}
+
+/// ************************************************
+/// 내정보 로컬 스토리지에 저장하는 함수
+/// ************************************************
+Future<void> setCoupleInfo(CoupleInfoDto coupleInfo) async {
+  String key = 'COUPLE_INFO';
+  String value = jsonEncode(coupleInfo.toJson());
+
+  try {
+    await secureStorage.write(
+      key: key,
+      value: value,
+    );
+    logger.d('setCoupleInfo: $value 저장 완료');
+  } catch (e) {
+    logger.e('setCoupleInfo error: $e');
+  }
+}
+
+/// ************************************************
+/// 내정보 로컬 스토리지에서 가져오는 함수
+/// ************************************************
+Future<CoupleInfoDto?> getCoupleInfo() async {
+  String key = 'COUPLE_INFO';
+  try {
+    String? coupleInfo = await secureStorage.read(key: key);
+
+    if (coupleInfo != null) {
+      try {
+        Map<String, dynamic> json = jsonDecode(coupleInfo);
+        return CoupleInfoDto.fromJson(json);
+      } catch (e) {
+        logger.e('JSON Parsing Error: $e');
+        logger.e('Invalid JSON: $coupleInfo');
         return null;
       }
     } else {

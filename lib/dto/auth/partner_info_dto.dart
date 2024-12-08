@@ -16,6 +16,17 @@ class PartnerInfoDto {
       required this.profileImageVersion,
       required this.provider});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'birthday': birthday,
+      'gender': gender,
+      'profileImageVersion': profileImageVersion,
+      'provider': provider,
+    };
+  }
+
   factory PartnerInfoDto.fromJson(Map<String, dynamic> json) {
     return PartnerInfoDto(
       id: json['id'],

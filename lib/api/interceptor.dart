@@ -1,8 +1,10 @@
 import 'package:couple_book/api/session.dart';
 import 'package:dio/dio.dart';
+import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 import '../env/environment.dart';
+import '../main.dart';
 import '../utils/security/auth_security.dart';
 import 'auth_api/token_manager.dart';
 
@@ -24,7 +26,8 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
     return handler.next(response);
   },
   onError: (DioException e, ErrorInterceptorHandler handler) async {
-    logger.d('ON ERROR REQUEST[${e.requestOptions.method}]: ${e.requestOptions.path}');
+    logger.d(
+        'ON ERROR REQUEST[${e.requestOptions.method}]: ${e.requestOptions.path}');
     logger.d('ON ERROR RESPONSE: ${e.response}');
     logger.d('ON ERROR STATUS CODE: ${e.response?.statusCode}');
     logger.d('ON ERROR HEADER: ${e.response?.headers}');
@@ -49,7 +52,8 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
           receiveTimeout: const Duration(milliseconds: 30000),
         ));
         final refreshResponse = await dio.post(
-          '${Environment.restApiUrl}/api/v1/auth/refresh-token', // 리프레시 토큰 API 경로
+          '${Environment.restApiUrl}/api/v1/auth/refresh-token',
+          // 리프레시 토큰 API 경로
           options: Options(headers: {'Refresh-Token': refreshToken}),
         );
 
@@ -64,11 +68,16 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
         await tokenManager.saveTokens(newAccessToken, newRefreshToken);
 
         // 요청 재시도
-        final retryRequest = await _retryRequest(e.requestOptions, newAccessToken);
+        final retryRequest =
+            await _retryRequest(e.requestOptions, newAccessToken);
         return handler.resolve(retryRequest);
       } catch (error) {
         logger.e('Failed to refresh token: $error');
-        return handler.reject(e); // 토큰 갱신 실패 시 원래 에러로 처리
+
+        GoRouter.of(CoupleBookApp.navKey.currentContext!).go('/Login');
+
+        // 에러를 계속 처리
+        return handler.reject(e);
       }
     }
 
@@ -80,7 +89,8 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
 /// ************************************************
 /// 요청 재시도 함수
 /// ************************************************
-Future<Response> _retryRequest(RequestOptions requestOptions, String newAccessToken) async {
+Future<Response> _retryRequest(
+    RequestOptions requestOptions, String newAccessToken) async {
   final dio = Session().dio;
   return await dio.fetch(requestOptions);
 }
