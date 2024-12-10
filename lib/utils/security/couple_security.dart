@@ -1,6 +1,3 @@
-
-
-
 import 'dart:convert';
 
 import 'package:couple_book/dto/auth/my_info_dto.dart';
@@ -9,11 +6,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
+import 'my_profile_image_dto.dart';
+
 final logger = Logger();
 
 /// 앱 내부에 저장하는 데이터
 const secureStorage = FlutterSecureStorage(
-  aOptions: const AndroidOptions(
+  aOptions: AndroidOptions(
     encryptedSharedPreferences: true,
   ),
 );
@@ -44,7 +43,8 @@ Future<String> getAnniversary() async {
     String? anniversary = await secureStorage.read(key: 'ANNIVERSARY_KEY');
     if (anniversary != null) {
       final dateTimeAnniversary = DateFormat('yyyy-MM-dd').parse(anniversary);
-      final formattedDate = DateFormat('yyyy-MM-dd').format(dateTimeAnniversary);
+      final formattedDate =
+          DateFormat('yyyy-MM-dd').format(dateTimeAnniversary);
       return formattedDate;
     } else {
       return '';
@@ -140,5 +140,63 @@ Future<CoupleInfoDto?> getCoupleInfo() async {
   } catch (e) {
     logger.e('getMyInfo error: $e');
     return null;
+  }
+}
+
+/// ************************************************
+/// 프로필 이미지 로컬 스토리지에 저장하는 함수
+/// ************************************************
+Future<void> setProfileImage(MyProfileImageDTO profileImage) async {
+  String key = 'PROFILE_IMAGE';
+  String value = jsonEncode(profileImage.toJson());
+
+  try {
+    await secureStorage.write(
+      key: key,
+      value: value,
+    );
+    logger.d('setProfileImage: $value 저장 완료');
+  } catch (e) {
+    logger.e('setProfileImage error: $e');
+  }
+}
+
+/// ************************************************
+/// 프로필 이미지 로컬 스토리지에서 가져오는 함수
+/// ************************************************
+Future<MyProfileImageDTO?> getProfileImage() async {
+  String key = 'PROFILE_IMAGE';
+  try {
+    String? profileImage = await secureStorage.read(key: key);
+
+    if (profileImage != null) {
+      try {
+        Map<String, dynamic> json = jsonDecode(profileImage);
+        return MyProfileImageDTO.fromJson(json);
+      } catch (e) {
+        logger.e('JSON Parsing Error: $e');
+        logger.e('Invalid JSON: $profileImage');
+        return null;
+      }
+    } else {
+      return null;
+    }
+  } catch (e) {
+    logger.e('getProfileImage error: $e');
+    return null;
+  }
+}
+
+/// ************************************************
+/// 프로필 이미지 로컬 스토리지에서 삭제하는 함수
+/// ************************************************
+Future<void> deleteProfileImage() async {
+  String key = 'PROFILE_IMAGE';
+
+  try {
+    await secureStorage.delete(key: key);
+    logger.d('deleteProfileImage: PROFILE_IMAGE 삭제 완료');
+  } catch (e) {
+    logger.e('deleteProfileImage error: $e');
   }
 }

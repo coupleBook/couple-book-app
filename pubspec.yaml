@@ -35,6 +35,7 @@ dependencies:
   flutter_timezone: ^1.0.8
   url_launcher: ^6.2.6
   google_mobile_ads: ^5.1.0
+  flutter_image_compress: ^2.3.0
   image_picker: ^0.8.4+3
   permission_handler: ^10.2.0
 
