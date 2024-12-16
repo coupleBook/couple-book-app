@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
 import '../../dto/response_dto/login_response_dto.dart';
-import '../../env/environment.dart';
+import '../../core/constants/app_constants.dart';
 import '../session.dart';
 
 class AuthApi {
@@ -14,13 +14,13 @@ class AuthApi {
   /// ************************************************
   Future<LoginResponseDto> signIn(String platform, String token) async {
     var dio = Dio(BaseOptions(
-      baseUrl: Environment.restApiUrl,
+      baseUrl: AppConstants.restApiUrl,
       connectTimeout: const Duration(milliseconds: 60000),
       receiveTimeout: const Duration(milliseconds: 30000),
     ));
 
     final Response<dynamic> response = await dio.post(
-      '${Environment.restApiUrl}/api/v1/login/$platform',
+      '${AppConstants.restApiUrl}/api/v1/login/$platform',
       queryParameters: {'access_token': token},
     );
     final accessToken = response.headers["Authorization"]!.first;

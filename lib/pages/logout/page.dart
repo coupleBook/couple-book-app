@@ -1,4 +1,4 @@
-import 'package:couple_book/env/environment.dart';
+import 'package:couple_book/core/constants/app_constants.dart';
 import 'package:couple_book/utils/constants/login_platform.dart';
 import 'package:couple_book/router.dart';
 import 'package:dio/dio.dart';
@@ -27,7 +27,7 @@ class _LogoutViewState extends State<LogoutPage> {
 
   _LogoutViewState() {
     _dio = Dio(BaseOptions(
-      baseUrl: Environment.restApiUrl,
+      baseUrl: AppConstants.restApiUrl,
       connectTimeout: const Duration(milliseconds: 60000),
       receiveTimeout: const Duration(milliseconds: 30000),
     ));

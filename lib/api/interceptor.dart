@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
-import '../env/environment.dart';
+import '../core/constants/app_constants.dart';
 import '../main.dart';
 import '../utils/security/auth_security.dart';
 import 'auth_api/token_manager.dart';
@@ -47,12 +47,12 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
 
         // 리프레시 토큰으로 새 토큰 요청
         final dio = Dio(BaseOptions(
-          baseUrl: Environment.restApiUrl,
+          baseUrl: AppConstants.restApiUrl,
           connectTimeout: const Duration(milliseconds: 60000),
           receiveTimeout: const Duration(milliseconds: 30000),
         ));
         final refreshResponse = await dio.post(
-          '${Environment.restApiUrl}/api/v1/auth/refresh-token',
+          '${AppConstants.restApiUrl}/api/v1/auth/refresh-token',
           // 리프레시 토큰 API 경로
           options: Options(headers: {'Refresh-Token': refreshToken}),
         );

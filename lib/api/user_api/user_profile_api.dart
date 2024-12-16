@@ -6,7 +6,7 @@ import 'package:couple_book/dto/response_dto/user_profile_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-import '../../env/environment.dart';
+import '../../core/constants/app_constants.dart';
 import '../session.dart';
 
 class UserProfileApi {
@@ -18,7 +18,7 @@ class UserProfileApi {
   /// ************************************************
   Future<UserProfileDto> getUserProfile() async {
     final Response<dynamic> response =
-        await _dio.get('${Environment.restApiUrl}/api/v1/user/profile');
+        await _dio.get('${AppConstants.restApiUrl}/api/v1/user/profile');
 
     return UserProfileDto.fromJson(response.data);
   }
@@ -32,7 +32,7 @@ class UserProfileApi {
     String? gender,
   ) async {
     final Response<dynamic> response = await _dio.put(
-        '${Environment.restApiUrl}/api/v1/user/profile',
+        '${AppConstants.restApiUrl}/api/v1/user/profile',
         data: {"name": name, "birthday": birthday, "gender": gender});
 
     if (response.statusCode == 200) {
@@ -59,7 +59,7 @@ class UserProfileApi {
 
       // POST 요청
       final Response<dynamic> response = await _dio.post(
-        '${Environment.restApiUrl}/api/v1/user/profile/image',
+        '${AppConstants.restApiUrl}/api/v1/user/profile/image',
         data: formData,
         options: Options(
           headers: {'Content-Type': 'multipart/form-data'},

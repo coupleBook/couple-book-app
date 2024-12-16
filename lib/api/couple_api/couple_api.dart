@@ -7,7 +7,7 @@ import '../../dto/response_dto/change_dating_date_response_dto.dart';
 import '../../dto/response_dto/couple_info_response_dto.dart';
 import '../../dto/response_dto/create_couple_code_response_dto.dart';
 import '../../dto/response_dto/couple_code_creator_info_response.dart';
-import '../../env/environment.dart';
+import '../../core/constants/app_constants.dart';
 import '../session.dart';
 
 class CoupleApi {
@@ -19,7 +19,7 @@ class CoupleApi {
   /// ************************************************
   Future<CreateCoupleCodeResponseDto> createCoupleCode(String datingAnniversary) async {
     final Response<dynamic> response = await _dio.put(
-      '${Environment.restApiUrl}/api/v1/couple/linkcode',
+      '${AppConstants.restApiUrl}/api/v1/couple/linkcode',
       data: {"datingAnniversary" : datingAnniversary}
     );
 
@@ -31,7 +31,7 @@ class CoupleApi {
   /// ************************************************
   Future<CoupleCodeCreatorInfoResponse> findUserInfoByCode(String coupleCode) async {
     final Response<dynamic> response = await _dio.get(
-      '${Environment.restApiUrl}/api/v1/couple/linkcode',
+      '${AppConstants.restApiUrl}/api/v1/couple/linkcode',
       queryParameters: {"code" : coupleCode}
     );
 
@@ -44,7 +44,7 @@ class CoupleApi {
   /// ************************************************
   Future<CoupleInfoResponse> linkCouple(String coupleCode) async {
     final Response<dynamic> response = await _dio.post(
-      '${Environment.restApiUrl}/api/v1/couple/link',
+      '${AppConstants.restApiUrl}/api/v1/couple/link',
       data: {"code" : coupleCode}
     );
 
@@ -56,7 +56,7 @@ class CoupleApi {
   /// ************************************************
   Future<ChangeDatingDateResponseDto> changeDatingDate(String datingAnniversary) async {
     final Response<dynamic> response = await _dio.put(
-      '${Environment.restApiUrl}/api/v1/couple/anniversary/dating',
+      '${AppConstants.restApiUrl}/api/v1/couple/anniversary/dating',
       data: {"datingAnniversary" : datingAnniversary}
     );
 
