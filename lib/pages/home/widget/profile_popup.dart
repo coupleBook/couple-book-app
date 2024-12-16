@@ -2,11 +2,9 @@ import 'dart:io'; // 파일 관련 작업을 위해 추가
 
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
-import 'package:couple_book/utils/security/couple_security.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 
-import '../../../feature/auth/user_profile_service.dart';
 import '../../../l10n/l10n.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
@@ -14,12 +12,14 @@ import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 class ProfilePopupForm extends StatefulWidget {
   final String name;
   final String? birthdate;
+  final String? gender;
   final File? selectedImage; // 프로필 사진 필드 추가
 
   const ProfilePopupForm({
     super.key,
     required this.name,
     this.birthdate,
+    this.gender,
     this.selectedImage, // 프로필 사진 필드 추가
   });
 
@@ -28,20 +28,14 @@ class ProfilePopupForm extends StatefulWidget {
 }
 
 class _ProfilePopupFormState extends State<ProfilePopupForm> {
-  final UserProfileService userProfileService = UserProfileService();
-
+  final ImagePicker _picker = ImagePicker(); // ImagePicker 인스턴스 생성
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
+  String? _selectedGender; // 선택한 성별 ("M" 또는 "F")
+  File? _selectedImage; // 선택한 이미지를 저장할 변수
+
   String? nameError;
   String? birthdateError;
-
-  File? _selectedImage; // 선택한 이미지를 저장할 변수
-  final ImagePicker _picker = ImagePicker(); // ImagePicker 인스턴스 생성
-
-  late String _originalName; // 초기 이름
-  late String? _originalBirthdate; // 초기 생일
-  late String _originalGender; // 초기 성별
-  String? _selectedGender; // 선택한 성별 ("M" 또는 "F")
 
   @override
   void initState() {
@@ -49,21 +43,7 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
     _nameController.text = widget.name; // 전달된 이름을 설정
     _birthdateController.text = widget.birthdate ?? ""; // 전달된 생일을 설정
     _selectedImage = widget.selectedImage; // 전달된 프로필 사진 설정
-
-    _originalName = widget.name; // 초기 이름 설정
-    _originalBirthdate = widget.birthdate; // 초기 생일 설정
-
-    _initGender(); // 성별 초기화 함수 호출
-  }
-
-  void _initGender() {
-    Future.microtask(() async {
-      final myInfo = await getMyInfo();
-      setState(() {
-        _selectedGender = myInfo!.gender;
-        _originalGender = _selectedGender ?? ""; // 초기 성별 설정
-      });
-    });
+    _selectedGender = widget.gender;
   }
 
   @override
@@ -293,23 +273,10 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
                 _birthdateController.text.isEmpty ? l10n.selectDate : null;
           });
           if (nameError == null && birthdateError == null) {
-            if (_nameController.text != _originalName ||
-                _birthdateController.text != _originalBirthdate ||
-                _selectedGender != _originalGender) {
-              await userProfileService.updateUserProfile(
-                _nameController.text,
-                _birthdateController.text,
-                _selectedGender,
-              );
-            }
-
-            if (_selectedImage != widget.selectedImage) {
-              await userProfileService.updateUserProfileImage(_selectedImage!);
-            }
-
             Navigator.of(context).pop({
               'name': _nameController.text,
               'birthdate': _birthdateController.text,
+              'gender': _selectedGender,
               'image': _selectedImage,
             });
           }

@@ -1,36 +1,47 @@
 import 'dart:io';
 
+import 'package:couple_book/feature/auth/user_profile_service.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/utils/security/couple_security.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 import '../../../../gen/assets.gen.dart';
+import '../../../feature/auth/image_storage_service.dart';
 import '../../../l10n/l10n.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import
 
 class MainDdayView extends StatefulWidget {
-  const MainDdayView({super.key,});
+  const MainDdayView({
+    super.key,
+  });
 
   @override
   MainDdayViewState createState() => MainDdayViewState();
 }
 
 class MainDdayViewState extends State<MainDdayView> {
-  final String todayDate = DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
+  final ImageStorageService imageStorageService = ImageStorageService();
+  final logger = Logger();
+  final String todayDate =
+      DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
+  final UserProfileService userProfileService = UserProfileService();
   String anniversaryDate = '';
   String dday = '';
 
   late PermissionHandlerWidget permissionHandlerWidget;
   String leftProfileName = "Honey";
   String? leftProfileBirthdate = "";
+  String? leftProfileGender;
   File? leftProfileImage;
   int? leftProfileImageVersion;
 
   String rightProfileName = "Honey";
   String? rightProfileBirthdate = "";
+  String? rightProfileGender;
   File? rightProfileImage;
   int? rightProfileImageVersion;
 
@@ -72,10 +83,13 @@ class MainDdayViewState extends State<MainDdayView> {
 
   getMyData() async {
     final myInfo = await getMyInfo();
+    final profileImage = await imageStorageService.getImage();
     if (myInfo != null) {
       leftProfileName = myInfo.name;
       leftProfileBirthdate = myInfo.birthday!;
-      leftProfileImageVersion = myInfo.profileImageVersion;
+      leftProfileGender = myInfo.gender;
+      leftProfileImage = profileImage;
+      leftProfileImageVersion = myInfo.profileImageVersion!;
     }
   }
 
@@ -191,6 +205,7 @@ class MainDdayViewState extends State<MainDdayView> {
                                   child: ProfilePopupForm(
                                     name: leftProfileName,
                                     birthdate: leftProfileBirthdate,
+                                    gender: leftProfileGender,
                                     selectedImage: leftProfileImage,
                                   ),
                                 ),
@@ -198,10 +213,8 @@ class MainDdayViewState extends State<MainDdayView> {
                             },
                           );
                           if (result != null) {
-                            setState(() {
-                              leftProfileName = result['name'];
-                              leftProfileBirthdate = result['birthdate'];
-                              leftProfileImage = result['image'];
+                            Future.microtask(() async {
+                              await _handleMyProfileUpdate(result);
                             });
                           }
                         },
@@ -229,40 +242,41 @@ class MainDdayViewState extends State<MainDdayView> {
                       ),
                       const SizedBox(width: 20.0),
                       GestureDetector(
-                        onTap: () async {
-                          var result = await showModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            isScrollControlled: true,
-                            builder: (BuildContext context) {
-                              return FractionallySizedBox(
-                                heightFactor: 0.86,
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20.0),
-                                      topRight: Radius.circular(20.0),
-                                    ),
-                                  ),
-                                  child: ProfilePopupForm(
-                                    name: rightProfileName,
-                                    birthdate: rightProfileBirthdate,
-                                    selectedImage: rightProfileImage,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                          if (result != null) {
-                            setState(() {
-                              rightProfileName = result['name'];
-                              rightProfileBirthdate = result['birthdate'];
-                              rightProfileImage = result['image'];
-                            });
-                          }
-                        },
+                        // onTap: () async {
+                        //   var result = await showModalBottomSheet(
+                        //     context: context,
+                        //     backgroundColor: Colors.transparent,
+                        //     isScrollControlled: true,
+                        //     builder: (BuildContext context) {
+                        //       return FractionallySizedBox(
+                        //         heightFactor: 0.86,
+                        //         child: Container(
+                        //           width: MediaQuery.of(context).size.width,
+                        //           decoration: const BoxDecoration(
+                        //             color: Colors.white,
+                        //             borderRadius: BorderRadius.only(
+                        //               topLeft: Radius.circular(20.0),
+                        //               topRight: Radius.circular(20.0),
+                        //             ),
+                        //           ),
+                        //           child: ProfilePopupForm(
+                        //             name: rightProfileName,
+                        //             birthdate: rightProfileBirthdate,
+                        //             gender: rightProfileGender,
+                        //             selectedImage: rightProfileImage,
+                        //           ),
+                        //         ),
+                        //       );
+                        //     },
+                        //   );
+                        //   if (result != null) {
+                        //     setState(() {
+                        //       rightProfileName = result['name'];
+                        //       rightProfileBirthdate = result['birthdate'];
+                        //       rightProfileImage = result['image'];
+                        //     });
+                        //   }
+                        // },
                         child: _buildProfileColumn(
                           rightProfileName,
                           rightProfileBirthdate!,
@@ -292,7 +306,8 @@ class MainDdayViewState extends State<MainDdayView> {
     );
   }
 
-  Widget _buildProfileColumn(String name, String? birthdate, Widget profileIcon) {
+  Widget _buildProfileColumn(
+      String name, String? birthdate, Widget profileIcon) {
     return Column(
       children: [
         profileIcon,
@@ -308,5 +323,50 @@ class MainDdayViewState extends State<MainDdayView> {
         ),
       ],
     );
+  }
+
+  Future<void> _handleMyProfileUpdate(Map<String, dynamic> result) async {
+    try {
+      final String updatedName = result['name'];
+      final String? updatedBirthdate = result['birthdate'];
+      final File updatedImage = result['image'];
+      final String? updatedGender = result['gender'];
+
+      // 이름, 생일, 성별 변경 API 호출
+      if (validUpdateProfile(updatedName, updatedBirthdate, updatedGender)) {
+        await userProfileService.updateUserProfile(
+          updatedName,
+          updatedBirthdate,
+          updatedGender,
+        );
+      }
+
+      // 이미지 변경 API 호출
+      int updatedLeftProfileImageVersion = leftProfileImageVersion!;
+      if (updatedImage != leftProfileImage) {
+        var profileImageModificationResponseDto =
+            await userProfileService.updateUserProfileImage(updatedImage);
+        updatedLeftProfileImageVersion =
+            profileImageModificationResponseDto.profileImageVersion;
+      }
+
+      // 상태 업데이트
+      setState(() {
+        leftProfileName = updatedName;
+        leftProfileBirthdate = updatedBirthdate;
+        leftProfileGender = updatedGender;
+        leftProfileImage = updatedImage;
+        leftProfileImageVersion = updatedLeftProfileImageVersion;
+      });
+    } catch (e) {
+      // 에러 처리 로직
+      logger.e('Failed to update profile: $e');
+    }
+  }
+
+  bool validUpdateProfile(updatedName, updatedBirthdate, updatedGender) {
+    return updatedName != leftProfileName ||
+        updatedBirthdate != leftProfileBirthdate ||
+        updatedGender != leftProfileGender;
   }
 }
