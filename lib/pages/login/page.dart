@@ -1,5 +1,5 @@
 import 'package:couple_book/gen/colors.gen.dart';
-import 'package:couple_book/utils/constants/login_platform.dart';
+import 'package:couple_book/core/constants/login_platform.dart';
 import 'package:couple_book/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

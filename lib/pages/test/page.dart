@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/l10n.dart';
 import '../../router.dart';
-import '../../utils/constants/login_platform.dart';
+import '../../core/constants/login_platform.dart';
 import '../../utils/security/auth_security.dart';
 import 'couple_controller.dart';
 import 'logout_controller.dart';

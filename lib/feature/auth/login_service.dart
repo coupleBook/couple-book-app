@@ -1,5 +1,5 @@
 import 'package:couple_book/api/auth_api/token_manager.dart';
-import 'package:couple_book/utils/constants/login_platform.dart';
+import 'package:couple_book/core/constants/login_platform.dart';
 import 'package:couple_book/utils/security/couple_security.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';

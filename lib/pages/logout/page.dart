@@ -1,5 +1,5 @@
 import 'package:couple_book/core/constants/app_constants.dart';
-import 'package:couple_book/utils/constants/login_platform.dart';
+import 'package:couple_book/core/constants/login_platform.dart';
 import 'package:couple_book/router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

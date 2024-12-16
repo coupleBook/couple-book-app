@@ -1,6 +1,6 @@
 import 'package:couple_book/api/auth_api/auth_api.dart';
 import 'package:couple_book/router.dart';
-import 'package:couple_book/utils/constants/login_platform.dart';
+import 'package:couple_book/core/constants/login_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
