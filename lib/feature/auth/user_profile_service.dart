@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
 import 'package:couple_book/api/user_api/user_profile_api.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -15,8 +14,6 @@ class UserProfileService {
   final userProfileApi = UserProfileApi();
   final imageStorageService = ImageStorageService();
   final logger = Logger();
-
-  final ImagePicker _picker = ImagePicker();
 
   Future<void> updateUserProfile(
     String name,
