@@ -8,5 +8,5 @@ class LocalUserEntity {
   };
 
   factory LocalUserEntity.fromJson(Map<String, dynamic> json) =>
-      LocalUserEntity(anniversary: json['anniversary']);
+      LocalUserEntity(anniversary: DateTime.parse(json['anniversary']));
 }

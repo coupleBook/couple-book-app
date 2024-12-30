@@ -21,7 +21,7 @@ class UserEntity {
         'name': name,
         'birthday': birthday,
         'gender': gender?.toServerValue(),
-        'lastUpdated': updatedAt,
+        'lastUpdated': updatedAt.toIso8601String(),
       };
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(

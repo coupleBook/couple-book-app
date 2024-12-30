@@ -14,6 +14,6 @@ class LastLoginEntity {
   factory LastLoginEntity.fromJson(Map<String, dynamic> json) =>
       LastLoginEntity(
         loginId: json['loginId'],
-        platform: LoginPlatform.values[json['platform']],
+        platform: LoginPlatform.fromServerValue(json['platform']),
       );
 }

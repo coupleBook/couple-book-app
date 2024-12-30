@@ -329,7 +329,7 @@ class MainDdayViewState extends State<MainDdayView> {
     try {
       final String updatedName = result['name'];
       final String? updatedBirthdate = result['birthdate'];
-      final File updatedImage = result['image'];
+      final File? updatedImage = result['image'];
       final String? updatedGender = result['gender'];
 
       // 이름, 생일, 성별 변경 API 호출
@@ -343,7 +343,7 @@ class MainDdayViewState extends State<MainDdayView> {
 
       // 이미지 변경 API 호출
       int updatedLeftProfileImageVersion = leftProfileImageVersion!;
-      if (updatedImage != leftProfileImage) {
+      if (updatedImage != null && updatedImage != leftProfileImage) {
         var profileImageModificationResponseDto =
             await userProfileService.updateUserProfileImage(updatedImage);
         updatedLeftProfileImageVersion =

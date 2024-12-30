@@ -19,7 +19,7 @@ class CoupleApi {
   /// ************************************************
   Future<CreateCoupleCodeResponseDto> createCoupleCode(String datingAnniversary) async {
     final Response<dynamic> response = await _dio.put(
-      '${AppConstants.restApiUrl}/api/v1/couple/linkcode',
+      '/api/v1/couple/linkcode',
       data: {"datingAnniversary" : datingAnniversary}
     );
 
@@ -31,7 +31,7 @@ class CoupleApi {
   /// ************************************************
   Future<CoupleCodeCreatorInfoResponse> findUserInfoByCode(String coupleCode) async {
     final Response<dynamic> response = await _dio.get(
-      '${AppConstants.restApiUrl}/api/v1/couple/linkcode',
+      '/api/v1/couple/linkcode',
       queryParameters: {"code" : coupleCode}
     );
 
@@ -44,7 +44,7 @@ class CoupleApi {
   /// ************************************************
   Future<CoupleInfoResponseModel> linkCouple(String coupleCode) async {
     final Response<dynamic> response = await _dio.post(
-      '${AppConstants.restApiUrl}/api/v1/couple/link',
+      '/api/v1/couple/link',
       data: {"code" : coupleCode}
     );
 
@@ -56,7 +56,7 @@ class CoupleApi {
   /// ************************************************
   Future<ChangeDatingDateResponseDto> changeDatingDate(String datingAnniversary) async {
     final Response<dynamic> response = await _dio.put(
-      '${AppConstants.restApiUrl}/api/v1/couple/anniversary/dating',
+      '/api/v1/couple/anniversary/dating',
       data: {"datingAnniversary" : datingAnniversary}
     );
 

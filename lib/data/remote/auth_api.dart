@@ -28,7 +28,7 @@ class AuthApi {
     String token,
   ) async {
     final response = await _dio.post(
-      '${AppConstants.restApiUrl}/api/v1/login/$platform',
+      '/api/v1/login/${platform.name}',
       queryParameters: {'access_token': token},
     );
 

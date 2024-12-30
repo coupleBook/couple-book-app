@@ -55,7 +55,7 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
           receiveTimeout: const Duration(milliseconds: 30000),
         ));
         final refreshResponse = await dio.post(
-          '${AppConstants.restApiUrl}/api/v1/auth/refresh-token',
+          '/api/v1/auth/refresh-token',
           // 리프레시 토큰 API 경로
           options: Options(headers: {'Refresh-Token': refreshToken}),
         );
