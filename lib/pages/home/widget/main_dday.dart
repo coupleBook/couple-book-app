@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:couple_book/feature/auth/user_profile_service.dart';
 import 'package:couple_book/gen/colors.gen.dart';
-import 'package:couple_book/utils/security/couple_security.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../gen/assets.gen.dart';
+import '../../../core/utils/security/couple_security.dart';
 import '../../../feature/auth/image_storage_service.dart';
-import '../../../l10n/l10n.dart';
+import '../../../core/l10n/l10n.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import

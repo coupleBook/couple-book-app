@@ -4,11 +4,10 @@ import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/pages/home/widget/home_app_bar.dart';
 import 'package:couple_book/pages/home/widget/main_dday.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // intl 패키지 추가
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/l10n/l10n.dart';
 import '../../gen/assets.gen.dart';
-import '../../l10n/l10n.dart';
 import '../timeline/page.dart';
 
 class HomePage extends StatefulWidget {

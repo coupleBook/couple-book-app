@@ -4,11 +4,10 @@ import 'package:couple_book/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/l10n/l10n.dart';
 import '../../data/service/login_service.dart';
 import '../../gen/assets.gen.dart';
-import '../../l10n/l10n.dart';
 import '../../style/text_style.dart';
 
 class LoginPage extends StatefulWidget {

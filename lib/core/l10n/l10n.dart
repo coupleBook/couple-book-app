@@ -1,6 +1,7 @@
-import 'package:couple_book/l10n/app_localizations.dart';
-import 'package:couple_book/l10n/app_localizations_en.dart';
 import 'package:couple_book/main.dart';
+
+import 'app_localizations.dart';
+import 'app_localizations_en.dart';
 
 AppLocalizations get l10n {
   final context = CoupleBookApp.navKey.currentContext;

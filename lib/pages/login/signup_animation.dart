@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/utils/security/couple_security.dart';
 import '../../data/models/response/common/my_info_response.dart';
 import '../../router.dart';
-import '../../utils/security/couple_security.dart';
 
 class SignupAnimationPage extends StatefulWidget {
   const SignupAnimationPage({super.key});

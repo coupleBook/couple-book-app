@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:flutter/cupertino.dart';
-import '../../gen/colors.gen.dart';
+
+import '../../../gen/colors.gen.dart';
 
 class Calendar extends StatefulWidget {
   final DateTime? selectedDate;
@@ -55,8 +56,10 @@ class _CalendarState extends State<Calendar> {
             initialDateTime: DateTime(selectedYear, selectedMonth),
             onDateTimeChanged: (DateTime newDate) {
               setState(() {
-                _focusedDate = DateTime(newDate.year, newDate.month, newDate.day);
-                _selectedDate = DateTime(newDate.year, newDate.month, newDate.day);
+                _focusedDate =
+                    DateTime(newDate.year, newDate.month, newDate.day);
+                _selectedDate =
+                    DateTime(newDate.year, newDate.month, newDate.day);
                 // focusedDate가 firstDay보다 이전인 경우 firstDay로 설정
                 if (_focusedDate!.isBefore(_firstDay)) {
                   _focusedDate = _firstDay;
@@ -104,43 +107,43 @@ class _CalendarState extends State<Calendar> {
         _isYearMonthPickerVisible
             ? _buildYearMonthPicker()
             : Expanded(
-          child: TableCalendar(
-            locale: 'ko_KR',
-            firstDay: _firstDay,
-            lastDay: _lastDay,
-            focusedDay: _focusedDate!,
-            headerVisible: _isYearMonthPickerVisible,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDate, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDate = selectedDay;
-                _focusedDate = focusedDay;
+                child: TableCalendar(
+                  locale: 'ko_KR',
+                  firstDay: _firstDay,
+                  lastDay: _lastDay,
+                  focusedDay: _focusedDate!,
+                  headerVisible: _isYearMonthPickerVisible,
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDate, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDate = selectedDay;
+                      _focusedDate = focusedDay;
 
-                if (_focusedDate!.isBefore(_firstDay)) {
-                  _focusedDate = _firstDay;
-                }
-              });
-            },
-            headerStyle: const HeaderStyle(
-              formatButtonVisible: false,
-              titleCentered: true,
-              titleTextStyle: TextStyle(
-                fontSize: 20.0,
-                color: Colors.blue,
+                      if (_focusedDate!.isBefore(_firstDay)) {
+                        _focusedDate = _firstDay;
+                      }
+                    });
+                  },
+                  headerStyle: const HeaderStyle(
+                    formatButtonVisible: false,
+                    titleCentered: true,
+                    titleTextStyle: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.blue,
+                    ),
+                    leftChevronIcon: Icon(
+                      Icons.arrow_left,
+                      size: 40.0,
+                    ),
+                    rightChevronIcon: Icon(
+                      Icons.arrow_right,
+                      size: 40.0,
+                    ),
+                  ),
+                ),
               ),
-              leftChevronIcon: Icon(
-                Icons.arrow_left,
-                size: 40.0,
-              ),
-              rightChevronIcon: Icon(
-                Icons.arrow_right,
-                size: 40.0,
-              ),
-            ),
-          ),
-        ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: ColorName.pointBtnBg,

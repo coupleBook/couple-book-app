@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/l10n.dart';
 import '../../data/local/entities/enums/login_platform.dart';
-import '../../l10n/l10n.dart';
 import '../../router.dart';
 import 'couple_controller.dart';
 import 'logout_controller.dart';

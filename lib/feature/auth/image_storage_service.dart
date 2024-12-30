@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
-import '../../utils/security/couple_security.dart';
-import '../../utils/security/my_profile_image_dto.dart';
+import '../../core/utils/security/couple_security.dart';
+import '../../core/utils/security/my_profile_image_dto.dart';
 
 class ImageStorageService {
   /// 이미지 저장

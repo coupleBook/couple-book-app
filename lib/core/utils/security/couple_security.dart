@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
-import '../../data/models/response/common/my_info_response.dart';
+import '../../../data/models/response/common/my_info_response.dart';
 import 'my_profile_image_dto.dart';
 
 final logger = Logger();

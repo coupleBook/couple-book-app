@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/user_api/user_profile_api.dart';
+import '../../core/utils/security/couple_security.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
-import '../../utils/security/couple_security.dart';
 import '../couple_anniversary/page.dart';
 import '../home/page.dart';
 import '../login/page.dart';

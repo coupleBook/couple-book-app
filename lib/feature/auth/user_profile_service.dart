@@ -6,8 +6,8 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../core/utils/security/couple_security.dart';
 import '../../data/models/response/common/my_info_response.dart';
-import '../../utils/security/couple_security.dart';
 import 'image_storage_service.dart';
 
 class UserProfileService {

@@ -5,7 +5,7 @@ import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 
-import '../../../l10n/l10n.dart';
+import '../../../core/l10n/l10n.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
