@@ -1,23 +1,25 @@
 import 'package:couple_book/api/session.dart';
+import 'package:couple_book/data/local/auth_local_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 import '../core/constants/app_constants.dart';
+import '../core/utils/token_cleaner.dart';
+import '../data/local/entities/auth_entity.dart';
 import '../main.dart';
-import '../utils/security/auth_security.dart';
-import 'auth_api/token_manager.dart';
 
 final logger = Logger();
-final tokenManager = TokenManager();
+final AuthLocalDataSource authLocalDataSource = AuthLocalDataSource();
 
 InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
   onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
-    final accessToken = await getAccessToken();
+    final authInfo = await authLocalDataSource.getAuthInfo();
+    final accessToken = authInfo?.accessToken;
     logger.d('REQUEST[PATH]: ${options.uri.path}');
     logger.d('accessToken: $accessToken');
 
-    if (accessToken.isNotEmpty) {
+    if (accessToken != null) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
     return handler.next(options);
@@ -39,7 +41,8 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
       logger.d('INVALID_ACCESS_TOKEN detected. Attempting to refresh token.');
 
       try {
-        final refreshToken = await getRefreshToken();
+        final authInfo = await authLocalDataSource.getAuthInfo();
+        final refreshToken = authInfo?.refreshToken ?? '';
 
         if (refreshToken.isEmpty) {
           throw Exception("No refresh token available.");
@@ -64,8 +67,16 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
           throw Exception("Failed to retrieve new tokens.");
         }
 
+        final cleanNewAccessToken = TokenCleaner.cleanToken(newAccessToken);
+        final cleanNewRefreshToken = TokenCleaner.cleanToken(newRefreshToken);
+
         // 새 토큰 저장
-        await tokenManager.saveTokens(newAccessToken, newRefreshToken);
+        await authLocalDataSource.saveAuthInfo(
+          AuthEntity(
+            accessToken: cleanNewAccessToken,
+            refreshToken: cleanNewRefreshToken,
+          ),
+        );
 
         // 요청 재시도
         final retryRequest =

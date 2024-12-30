@@ -1,10 +1,10 @@
+import '../../data/models/response/common/couple_info_response.dart';
+import '../../data/models/response/common/my_info_response.dart';
 import '../api_dto.dart';
-import '../auth/my_info_dto.dart';
-import '../couple/couple_info_dto.dart';
 
 class UserProfileDto extends ApiResponse {
-  MyInfoDto me;
-  CoupleInfoDto? coupleInfo;
+  MyInfoResponse me;
+  CoupleInfoResponse? coupleInfo;
 
   UserProfileDto({
     required super.status,
@@ -17,9 +17,9 @@ class UserProfileDto extends ApiResponse {
     return UserProfileDto(
       status: json['status'],
       error: json['error'],
-      me: MyInfoDto.fromJson(json['data']['me']),
+      me: MyInfoResponse.fromJson(json['data']['me']),
       coupleInfo: json['data']['coupleInfo'] != null
-          ? CoupleInfoDto.fromJson(json['data']['coupleInfo'])
+          ? CoupleInfoResponse.fromJson(json['data']['coupleInfo'])
           : null,
     );
   }

@@ -1,11 +1,11 @@
 import 'package:couple_book/dto/api_dto.dart';
-import 'package:couple_book/dto/auth/my_info_dto.dart';
 
-import '../couple/couple_info_dto.dart';
+import '../../data/models/response/common/couple_info_response.dart';
+import '../../data/models/response/common/my_info_response.dart';
 
 class LoginResponseDto extends ApiResponse {
-  MyInfoDto me;
-  CoupleInfoDto? coupleInfo;
+  MyInfoResponse me;
+  CoupleInfoResponse? coupleInfo;
   String accessToken;
   String refreshToken;
 
@@ -22,9 +22,9 @@ class LoginResponseDto extends ApiResponse {
     return LoginResponseDto(
       status: json['status'],
       error: json['error'],
-      me: MyInfoDto.fromJson(json['data']['me']),
+      me: MyInfoResponse.fromJson(json['data']['me']),
       coupleInfo: json['data']['coupleInfo'] != null
-          ? CoupleInfoDto.fromJson(json['data']['coupleInfo'])
+          ? CoupleInfoResponse.fromJson(json['data']['coupleInfo'])
           : null,
       accessToken: accessToken,
       refreshToken: refreshToken,

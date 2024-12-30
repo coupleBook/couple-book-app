@@ -42,13 +42,13 @@ class CoupleApi {
   /// 커플 코드 연결 API
   /// TODO: DTO 를 ResponseDto 를 만들었는데 굳이 ResponseDto 가 필요한가? CoupleInfoDto와 공통 으로 묶을 순 없을까
   /// ************************************************
-  Future<CoupleInfoResponse> linkCouple(String coupleCode) async {
+  Future<CoupleInfoResponseModel> linkCouple(String coupleCode) async {
     final Response<dynamic> response = await _dio.post(
       '${AppConstants.restApiUrl}/api/v1/couple/link',
       data: {"code" : coupleCode}
     );
 
-    return CoupleInfoResponse.fromJson(response.data);
+    return CoupleInfoResponseModel.fromJson(response.data);
   }
 
   /// ************************************************

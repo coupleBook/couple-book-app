@@ -1,20 +1,20 @@
 import 'package:couple_book/dto/api_dto.dart';
-import 'package:couple_book/dto/couple/couple_info_dto.dart';
+import 'package:couple_book/data/models/response/common/couple_info_response.dart';
 
-class CoupleInfoResponse extends ApiResponse {
-  CoupleInfoDto coupleInfo;
+class CoupleInfoResponseModel extends ApiResponse {
+  CoupleInfoResponse coupleInfo;
 
-  CoupleInfoResponse({
+  CoupleInfoResponseModel({
       required super.status
     , required super.error
     , required this.coupleInfo
   });
 
-  factory CoupleInfoResponse.fromJson(Map<String, dynamic> json) {
-    return CoupleInfoResponse(
+  factory CoupleInfoResponseModel.fromJson(Map<String, dynamic> json) {
+    return CoupleInfoResponseModel(
         status: json['status'],
         error: json['error'],
-        coupleInfo: CoupleInfoDto.fromJson(json['data']['coupleInfo'])
+        coupleInfo: CoupleInfoResponse.fromJson(json['data']['coupleInfo'])
     );
   }
 }

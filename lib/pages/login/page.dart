@@ -1,15 +1,15 @@
+import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:couple_book/gen/colors.gen.dart';
-import 'package:couple_book/core/constants/login_platform.dart';
 import 'package:couple_book/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../data/service/login_service.dart';
 import '../../gen/assets.gen.dart';
 import '../../l10n/l10n.dart';
 import '../../style/text_style.dart';
-import '../../feature/auth/login_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,8 +29,6 @@ class _LoginViewState extends State<LoginPage> {
   Future<void> _handleSignIn(LoginPlatform platform) async {
     try {
       bool isLoggedIn = await _loginService.signIn(platform);
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString("platform", platform.name);
       if (isLoggedIn && mounted) {
         context.goNamed(ViewRoute.signupAnimation.name);
       }

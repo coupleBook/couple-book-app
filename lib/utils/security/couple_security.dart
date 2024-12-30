@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:couple_book/dto/auth/my_info_dto.dart';
-import 'package:couple_book/dto/couple/couple_info_dto.dart';
+import 'package:couple_book/data/models/response/common/couple_info_response.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
+import '../../data/models/response/common/my_info_response.dart';
 import 'my_profile_image_dto.dart';
 
 final logger = Logger();
@@ -58,7 +58,7 @@ Future<String> getAnniversary() async {
 /// ************************************************
 /// 내정보 로컬 스토리지에 저장하는 함수
 /// ************************************************
-Future<void> setMyInfo(MyInfoDto myInfo) async {
+Future<void> setMyInfo(MyInfoResponse myInfo) async {
   String key = 'MY_INFO';
   String value = jsonEncode(myInfo.toJson());
 
@@ -76,7 +76,7 @@ Future<void> setMyInfo(MyInfoDto myInfo) async {
 /// ************************************************
 /// 내정보 로컬 스토리지에서 가져오는 함수
 /// ************************************************
-Future<MyInfoDto?> getMyInfo() async {
+Future<MyInfoResponse?> getMyInfo() async {
   String key = 'MY_INFO';
   try {
     String? myInfo = await secureStorage.read(key: key);
@@ -84,7 +84,7 @@ Future<MyInfoDto?> getMyInfo() async {
     if (myInfo != null) {
       try {
         Map<String, dynamic> json = jsonDecode(myInfo);
-        return MyInfoDto.fromJson(json);
+        return MyInfoResponse.fromJson(json);
       } catch (e) {
         logger.e('JSON Parsing Error: $e');
         logger.e('Invalid JSON: $myInfo');
@@ -102,7 +102,7 @@ Future<MyInfoDto?> getMyInfo() async {
 /// ************************************************
 /// 내정보 로컬 스토리지에 저장하는 함수
 /// ************************************************
-Future<void> setCoupleInfo(CoupleInfoDto coupleInfo) async {
+Future<void> setCoupleInfo(CoupleInfoResponse coupleInfo) async {
   String key = 'COUPLE_INFO';
   String value = jsonEncode(coupleInfo.toJson());
 
@@ -120,7 +120,7 @@ Future<void> setCoupleInfo(CoupleInfoDto coupleInfo) async {
 /// ************************************************
 /// 내정보 로컬 스토리지에서 가져오는 함수
 /// ************************************************
-Future<CoupleInfoDto?> getCoupleInfo() async {
+Future<CoupleInfoResponse?> getCoupleInfo() async {
   String key = 'COUPLE_INFO';
   try {
     String? coupleInfo = await secureStorage.read(key: key);
@@ -128,7 +128,7 @@ Future<CoupleInfoDto?> getCoupleInfo() async {
     if (coupleInfo != null) {
       try {
         Map<String, dynamic> json = jsonDecode(coupleInfo);
-        return CoupleInfoDto.fromJson(json);
+        return CoupleInfoResponse.fromJson(json);
       } catch (e) {
         logger.e('JSON Parsing Error: $e');
         logger.e('Invalid JSON: $coupleInfo');

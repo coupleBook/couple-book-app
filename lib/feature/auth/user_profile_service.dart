@@ -6,7 +6,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../dto/auth/my_info_dto.dart';
+import '../../data/models/response/common/my_info_response.dart';
 import '../../utils/security/couple_security.dart';
 import 'image_storage_service.dart';
 
@@ -33,7 +33,7 @@ class UserProfileService {
           await userProfileApi.updateUserProfile(name, birthday, gender);
 
       // 서버에서 받은 DTO 데이터를 MyInfoDto로 변환
-      final updatedProfile = MyInfoDto(
+      final updatedProfile = MyInfoResponse(
         id: responseDto.id,
         name: responseDto.name,
         birthday: responseDto.birthDate,

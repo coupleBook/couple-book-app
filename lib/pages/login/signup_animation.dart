@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../dto/auth/my_info_dto.dart';
+import '../../data/models/response/common/my_info_response.dart';
 import '../../router.dart';
 import '../../utils/security/couple_security.dart';
 
@@ -37,7 +37,7 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
 
   Future<void> _loadUserName() async {
     try {
-      MyInfoDto? myInfo = await getMyInfo();
+      MyInfoResponse? myInfo = await getMyInfo();
       if (myInfo != null) {
         setState(() {
           userName = myInfo.name; // userName에 값 할당

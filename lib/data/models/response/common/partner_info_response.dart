@@ -1,4 +1,4 @@
-class PartnerInfoDto {
+class PartnerInfoResponse {
   String id;
   String name;
   String? birthday; // 날짜
@@ -7,7 +7,7 @@ class PartnerInfoDto {
   int profileImageVersion;
   String provider;
 
-  PartnerInfoDto(
+  PartnerInfoResponse(
       {required this.id,
       required this.name,
       this.birthday,
@@ -27,8 +27,8 @@ class PartnerInfoDto {
     };
   }
 
-  factory PartnerInfoDto.fromJson(Map<String, dynamic> json) {
-    return PartnerInfoDto(
+  factory PartnerInfoResponse.fromJson(Map<String, dynamic> json) {
+    return PartnerInfoResponse(
       id: json['id'],
       name: json['name'],
       birthday: json['birthday'],

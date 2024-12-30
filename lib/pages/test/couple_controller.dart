@@ -44,7 +44,7 @@ class CoupleController {
   }
 
   // 커플 연동하기 (입력된 코드 사용)
-  Future<CoupleInfoResponse?> coupleLink(String code) async {
+  Future<CoupleInfoResponseModel?> coupleLink(String code) async {
     try {
       final response = await coupleApi.linkCouple(code);
       logger.d('커플 연동 성공: $response');

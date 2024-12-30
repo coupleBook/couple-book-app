@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/local/entities/enums/login_platform.dart';
 import '../../l10n/l10n.dart';
 import '../../router.dart';
-import '../../core/constants/login_platform.dart';
-import '../../utils/security/auth_security.dart';
 import 'couple_controller.dart';
 import 'logout_controller.dart';
 
@@ -147,9 +146,7 @@ class _ApiTestViewState extends State<ApiTestPage> {
                   _buildLogoutButton(), // 로그아웃 버튼
                   const SizedBox(height: 20), // 간격 추가
                   ElevatedButton(
-                    onPressed: () async => {
-                      await logout()
-                    },
+                    onPressed: () => {},
                     child: const Text('스토리지 전체삭제'),
                   ),
                   const SizedBox(height: 10), // 간격 추가

@@ -1,17 +1,15 @@
-import 'package:couple_book/core/constants/login_platform.dart';
+import 'package:couple_book/data/local/auth_local_data_source.dart';
+import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/user_api/user_profile_api.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
-import '../../utils/security/auth_security.dart';
 import '../../utils/security/couple_security.dart';
 import '../couple_anniversary/page.dart';
 import '../home/page.dart';
 import '../login/page.dart';
-import '../home/page.dart'; // HomePage import
-import '../couple_anniversary/page.dart'; // CoupleAnniversaryPage import
 
 final logger = Logger();
 
@@ -34,6 +32,10 @@ class _SplashViewState extends State<SplashView>
   bool existToken = false; // 토큰이 존재하는지 여부
   bool existAnniversary = false; // 기념일이 존재하는지 여부
 
+  final AuthLocalDataSource authLocalDataSource = AuthLocalDataSource();
+  final LocalUserLocalDataSource localUserLocalDataSource =
+      LocalUserLocalDataSource();
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +54,9 @@ class _SplashViewState extends State<SplashView>
 
   Future<void> _initializeSplash() async {
     try {
-      final accessToken = await getAccessToken();
+      final auth = await authLocalDataSource.getAuthInfo();
+      final accessToken = auth?.accessToken ?? '';
+
       final anniversary = await getAnniversary();
 
       logger.d("LOGIN TOKEN: $accessToken");
@@ -99,7 +103,8 @@ class _SplashViewState extends State<SplashView>
   /// -- access token이 존재하고 기념일이 존재하지 않는 경우: CoupleAnniversaryPage
   /// -- access token이 존재하지 않는 경우: LoginPage
   Widget _getTargetPage() {
-    logger.d('_getTargetPage: existToken: $existToken, existAnniversary: $existAnniversary');
+    logger.d(
+        '_getTargetPage: existToken: $existToken, existAnniversary: $existAnniversary');
     if (existToken && existAnniversary) {
       return const HomePage();
     } else if (existToken && !existAnniversary) {

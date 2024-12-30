@@ -1,5 +1,5 @@
-class MyInfoDto {
-  String? id;
+class MyInfoResponse {
+  String id;
   String name;
   String? birthday; // 날짜 ex) 1997-03-10
   String? gender;
@@ -7,15 +7,14 @@ class MyInfoDto {
   String? provider;
   String? updatedAt; // 날짜 timestamp
 
-  MyInfoDto({
-      this.id
-    , required this.name
-    , this.birthday
-    , this.gender
-    , this.profileImageVersion
-    , this.provider
-    , this.updatedAt
-  });
+  MyInfoResponse(
+      {required this.id,
+      required this.name,
+      this.birthday,
+      this.gender,
+      this.profileImageVersion,
+      this.provider,
+      this.updatedAt});
 
   Map<String, dynamic> toJson() {
     return {
@@ -29,8 +28,8 @@ class MyInfoDto {
     };
   }
 
-  factory MyInfoDto.fromJson(Map<String, dynamic> json) {
-    return MyInfoDto(
+  factory MyInfoResponse.fromJson(Map<String, dynamic> json) {
+    return MyInfoResponse(
       id: json['id'],
       name: json['name'],
       birthday: json['birthday'],
