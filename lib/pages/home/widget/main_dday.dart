@@ -29,7 +29,7 @@ class MainDdayViewState extends State<MainDdayView> {
   final String todayDate =
       DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
   final UserProfileService userProfileService = UserProfileService();
-  String anniversaryDate = '';
+  DateTime? anniversaryDate;
   String dday = '';
 
   late PermissionHandlerWidget permissionHandlerWidget;
@@ -67,17 +67,18 @@ class MainDdayViewState extends State<MainDdayView> {
   /// TODO: 처음만날날, D-day 계산 로직 서비스로 분리 예정
   /// getAnniversaryDate, calculateDday
   getAnniversaryDate() async {
-    String anniversary = await getAnniversary();
+    DateTime? anniversary = await getAnniversaryToDatetime();
     setState(() {
       anniversaryDate = anniversary;
     });
   }
 
   void calculateDday() {
-    if (anniversaryDate.isNotEmpty) {
-      final anniversary = DateFormat('yyyy-MM-dd').parse(anniversaryDate);
-      int calculateDday = DateTime.now().difference(anniversary).inDays + 1;
-      dday = calculateDday.toString();
+    if (anniversaryDate != null) {
+      int calculateDday = DateTime.now().difference(anniversaryDate!).inDays + 1;
+      setState(() {
+        dday = calculateDday.toString();
+      });
     }
   }
 
@@ -85,11 +86,13 @@ class MainDdayViewState extends State<MainDdayView> {
     final myInfo = await getMyInfo();
     final profileImage = await imageStorageService.getImage();
     if (myInfo != null) {
-      leftProfileName = myInfo.name;
-      leftProfileBirthdate = myInfo.birthday!;
-      leftProfileGender = myInfo.gender;
-      leftProfileImage = profileImage;
-      leftProfileImageVersion = myInfo.profileImageVersion!;
+      setState(() {
+        leftProfileName = myInfo.name;
+        leftProfileBirthdate = myInfo.birthday!;
+        leftProfileGender = myInfo.gender;
+        leftProfileImage = profileImage;
+        leftProfileImageVersion = myInfo.profileImageVersion!;
+      });
     }
   }
 
@@ -159,7 +162,7 @@ class MainDdayViewState extends State<MainDdayView> {
                 ),
                 const SizedBox(width: 4.0),
                 AppText(
-                  '처음 만난 날: $anniversaryDate',
+                  '처음 만난 날: ${anniversaryDate != null ? DateFormat('yyyy-MM-dd').format(anniversaryDate!) : ''}',
                   style: TypoStyle.notoSansR19_1_4.copyWith(fontSize: 12),
                   color: ColorName.defaultGray,
                 ),

@@ -1,3 +1,4 @@
+import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:couple_book/dto/response_dto/couple_info_response_dto.dart';
 import 'package:couple_book/dto/response_dto/create_couple_code_response_dto.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/couple_api/couple_api.dart';
+import '../../core/utils/security/couple_security.dart';
 import '../../dto/response_dto/couple_code_creator_info_response.dart'; // FindUserInfoResponse 클래스 임포트
 
 class CoupleController {
@@ -12,13 +14,21 @@ class CoupleController {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   final Logger logger = Logger();
   final coupleApi = CoupleApi();
+  final LocalUserLocalDataSource localUserLocalDataSource = LocalUserLocalDataSource.instance;
 
   CoupleController(this.context);
 
   // 커플 연동 코드 생성
   Future<CreateCoupleCodeResponseDto?> generateCoupleLinkCode() async {
     try {
-      final response = await coupleApi.createCoupleCode('2021-10-10');
+      var localUser = await getAnniversary();
+      if (localUser == '') {
+        logger.e('LocalUser 정보가 없습니다.');
+        _showSnackBar('LocalUser 정보가 없습니다.');
+        return Future.value(null);
+      }
+
+      final response = await coupleApi.createCoupleCode(localUser);
       logger.d('커플 연동 코드 생성 성공: $response');
       _showSnackBar('커플 연동 코드가 생성되었습니다.');
       return response;
