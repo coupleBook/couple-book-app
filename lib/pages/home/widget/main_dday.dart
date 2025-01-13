@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:couple_book/data/local/partner_profile_image_local_data_source.dart';
 import 'package:couple_book/feature/auth/user_profile_service.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,11 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../gen/assets.gen.dart';
-import '../../../core/utils/security/couple_security.dart';
-import '../../../feature/auth/image_storage_service.dart';
 import '../../../core/l10n/l10n.dart';
+import '../../../core/utils/security/couple_security.dart';
+import '../../../data/local/entities/enums/gender_enum.dart';
+import '../../../data/local/partner_local_data_source.dart';
+import '../../../feature/auth/image_storage_service.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import
@@ -24,7 +27,11 @@ class MainDdayView extends StatefulWidget {
 }
 
 class MainDdayViewState extends State<MainDdayView> {
-  final ImageStorageService imageStorageService = ImageStorageService();
+  final imageStorageService = ImageStorageService();
+  final partnerLocalDataSource = PartnerLocalDataSource.instance;
+  final partnerProfileImageLocalDataSource =
+      PartnerProfileImageLocalDataSource.instance;
+
   final logger = Logger();
   final String todayDate =
       DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
@@ -40,8 +47,8 @@ class MainDdayViewState extends State<MainDdayView> {
   int? leftProfileImageVersion;
 
   String rightProfileName = "Honey";
-  String? rightProfileBirthdate = "";
-  String? rightProfileGender;
+  String rightProfileBirthdate = "";
+  Gender? rightProfileGender;
   File? rightProfileImage;
   int? rightProfileImageVersion;
 
@@ -60,7 +67,9 @@ class MainDdayViewState extends State<MainDdayView> {
 
   _asyncMethod() async {
     await getAnniversaryDate();
-    await getMyData();
+    await setMyInfo();
+    await setPartnerInfo();
+
     calculateDday();
   }
 
@@ -75,14 +84,15 @@ class MainDdayViewState extends State<MainDdayView> {
 
   void calculateDday() {
     if (anniversaryDate != null) {
-      int calculateDday = DateTime.now().difference(anniversaryDate!).inDays + 1;
+      int calculateDday =
+          DateTime.now().difference(anniversaryDate!).inDays + 1;
       setState(() {
         dday = calculateDday.toString();
       });
     }
   }
 
-  getMyData() async {
+  setMyInfo() async {
     final myInfo = await getMyInfo();
     final profileImage = await imageStorageService.getImage();
     if (myInfo != null) {
@@ -92,6 +102,22 @@ class MainDdayViewState extends State<MainDdayView> {
         leftProfileGender = myInfo.gender;
         leftProfileImage = profileImage;
         leftProfileImageVersion = myInfo.profileImageVersion!;
+      });
+    }
+  }
+
+  setPartnerInfo() async {
+    final partnerInfo = await partnerLocalDataSource.getPartner();
+    final profileImage =
+        await partnerProfileImageLocalDataSource.getPartnerProfileImage();
+    if (partnerInfo != null) {
+      setState(() {
+        rightProfileName = partnerInfo.name;
+        rightProfileBirthdate = partnerInfo.birthday ?? '';
+        rightProfileGender = partnerInfo.gender;
+        if (profileImage != null) {
+          rightProfileImageVersion = profileImage.version;
+        }
       });
     }
   }

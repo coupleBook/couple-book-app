@@ -21,7 +21,7 @@ class PartnerEntity {
         'name': name,
         'birthday': birthday,
         'gender': gender?.toServerValue(),
-        'lastUpdated': updatedAt,
+        'updatedAt': updatedAt.toIso8601String(),
       };
 
   factory PartnerEntity.fromJson(Map<String, dynamic> json) => PartnerEntity(
@@ -40,6 +40,6 @@ class PartnerEntity {
         gender: response.gender != null
             ? Gender.fromServerValue(response.gender!)
             : null,
-        updatedAt: DateTime.now(),
+          updatedAt: DateTime.parse(response.updatedAt!)
       );
 }

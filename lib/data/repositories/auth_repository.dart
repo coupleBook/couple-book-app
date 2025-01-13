@@ -5,6 +5,7 @@ import 'package:couple_book/data/local/last_login_local_data_source.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/partner_local_data_source.dart';
 import 'package:couple_book/data/local/user_local_data_source.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/utils/token_cleaner.dart';
 import '../local/auth_local_data_source.dart';
@@ -54,8 +55,9 @@ class AuthRepository {
     // 커플 정보 저장
     if (response.coupleInfo != null) {
       // 기념일 저장
-      await localUserLocalDataSource.saveLocalUser(
-          LocalUserEntity(anniversary: response.coupleInfo!.datingAnniversary));
+      await localUserLocalDataSource.saveLocalUser(LocalUserEntity(
+          anniversary: DateFormat('yyyy-MM-dd')
+              .format(response.coupleInfo!.datingAnniversary)));
       // 커플 정보 저장
       await partnerLocalDataSource.savePartner(
           PartnerEntity.fromMyInfoResponse(response.coupleInfo!.partner));
