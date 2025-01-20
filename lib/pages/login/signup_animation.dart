@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/utils/security/couple_security.dart';
+import '../../data/local/local_user_local_data_source.dart';
 import '../../data/models/response/common/my_info_response.dart';
 import '../../router.dart';
 
@@ -15,7 +16,9 @@ class SignupAnimationPage extends StatefulWidget {
 }
 
 class SignupAnimationPageState extends State<SignupAnimationPage> {
+  final localUserLocalDataSource = LocalUserLocalDataSource.instance;
   String userName = ''; // userName을 State 클래스의 상태로 선언
+
 
   @override
   void initState() {
@@ -25,7 +28,7 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
 
   Future<void> _initAsync() async {
     await _loadUserName(); // 유저 정보 불러오기
-    final anniversary = await getAnniversary();
+    final anniversary = await localUserLocalDataSource.getAnniversary();
     Timer(const Duration(milliseconds: 3700), () {
       if (anniversary.isEmpty) {
         context.goNamed(ViewRoute.coupleAnniversary.name);

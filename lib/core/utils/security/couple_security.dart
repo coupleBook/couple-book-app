@@ -38,26 +38,6 @@ Future<void> setAnniversary(DateTime? anniversary) async {
 /// ************************************************
 /// 처음 만난 날 로컬 스토리지에서 가져오는 함수
 /// ************************************************
-Future<String> getAnniversary() async {
-  try {
-    String? anniversary = await secureStorage.read(key: 'ANNIVERSARY_KEY');
-    if (anniversary != null) {
-      final dateTimeAnniversary = DateFormat('yyyy-MM-dd').parse(anniversary);
-      final formattedDate =
-          DateFormat('yyyy-MM-dd').format(dateTimeAnniversary);
-      return formattedDate;
-    } else {
-      return '';
-    }
-  } catch (e) {
-    logger.e('getAnniversary error: $e');
-    return '';
-  }
-}
-
-/// ************************************************
-/// 처음 만난 날 로컬 스토리지에서 가져오는 함수
-/// ************************************************
 Future<DateTime?> getAnniversaryToDatetime() async {
   try {
     String? anniversary = await secureStorage.read(key: 'ANNIVERSARY_KEY');

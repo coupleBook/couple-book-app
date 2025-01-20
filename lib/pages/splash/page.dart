@@ -57,7 +57,7 @@ class _SplashViewState extends State<SplashView>
       final auth = await authLocalDataSource.getAuthInfo();
       final accessToken = auth?.accessToken ?? '';
 
-      final anniversary = await getAnniversary();
+      final anniversary = await localUserLocalDataSource.getAnniversary();
 
       logger.d("LOGIN TOKEN: $accessToken");
       logger.d("LOGIN TOKEN isNotEmpty: ${accessToken.isNotEmpty}");

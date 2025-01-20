@@ -21,7 +21,7 @@ class CoupleController {
   // 커플 연동 코드 생성
   Future<CreateCoupleCodeResponseDto?> generateCoupleLinkCode() async {
     try {
-      var localUser = await getAnniversary();
+      var localUser = await localUserLocalDataSource.getAnniversary();
       if (localUser == '') {
         logger.e('LocalUser 정보가 없습니다.');
         _showSnackBar('LocalUser 정보가 없습니다.');
