@@ -4,11 +4,11 @@ import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/l10n/l10n.dart';
-import '../../core/utils/security/couple_security.dart';
 import '../../core/utils/widgets/calendar.dart';
+import '../../data/local/entities/local_user_entity.dart';
+import '../../data/local/local_user_local_data_source.dart';
 import '../../gen/assets.gen.dart';
 
 final logger = Logger();
@@ -17,10 +17,11 @@ class CoupleAnniversaryPage extends StatefulWidget {
   const CoupleAnniversaryPage({super.key});
 
   @override
-  _CoupleAnniversaryPageState createState() => _CoupleAnniversaryPageState();
+  CoupleAnniversaryPageState createState() => CoupleAnniversaryPageState();
 }
 
-class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
+class CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
+  final localUserLocalDataSource = LocalUserLocalDataSource.instance;
   DateTime? _selectedDate;
 
   /// ************************************************
@@ -60,10 +61,9 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
   /// ************************************************
   Future<void> _saveDateAndNavigate() async {
     if (_selectedDate != null) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(
-          'couple_anniversary', _selectedDate!.toIso8601String());
-      await setAnniversary(_selectedDate);
+      await localUserLocalDataSource.saveLocalUser(
+        LocalUserEntity(anniversary: _selectedDate!.toIso8601String()),
+      );
 
       if (mounted) {
         context.goNamed(ViewRoute.home.name);
@@ -97,7 +97,8 @@ class _CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 7), // 하단에서 10px 패딩 추가
+                    padding: const EdgeInsets.only(bottom: 7),
+                    // 하단에서 10px 패딩 추가
                     child: AppText(
                       '처음 만난 날 설정하기',
                       style: TypoStyle.notoSansR19_1_4.copyWith(
