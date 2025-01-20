@@ -8,11 +8,11 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../core/utils/security/couple_security.dart';
 import '../../data/models/response/common/my_info_response.dart';
-import 'image_storage_service.dart';
+import '../../data/service/my_image_storage_service.dart';
 
 class UserProfileService {
   final userProfileApi = UserProfileApi();
-  final imageStorageService = ImageStorageService();
+  final myImageStorageService = MyImageStorageService();
   final logger = Logger();
 
   Future<void> updateUserProfile(
@@ -70,7 +70,7 @@ class UserProfileService {
           await userProfileApi.updateUserProfileImage(uploadImage);
 
       // TODO - 파일명 고정
-      imageStorageService.saveImage(
+      myImageStorageService.saveImage(
           uploadImage, "myProfileImage", responseDto.profileImageVersion);
 
       return responseDto;

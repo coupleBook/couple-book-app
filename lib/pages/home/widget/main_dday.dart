@@ -12,7 +12,7 @@ import '../../../core/l10n/l10n.dart';
 import '../../../core/utils/security/couple_security.dart';
 import '../../../data/local/entities/enums/gender_enum.dart';
 import '../../../data/local/partner_local_data_source.dart';
-import '../../../feature/auth/image_storage_service.dart';
+import '../../../data/local/user_profile_image_local_data_source.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import
@@ -27,7 +27,9 @@ class MainDdayView extends StatefulWidget {
 }
 
 class MainDdayViewState extends State<MainDdayView> {
-  final imageStorageService = ImageStorageService();
+  final userProfileImageLocalDataSource =
+      UserProfileImageLocalDataSource.instance;
+
   final partnerLocalDataSource = PartnerLocalDataSource.instance;
   final partnerProfileImageLocalDataSource =
       PartnerProfileImageLocalDataSource.instance;
@@ -44,13 +46,13 @@ class MainDdayViewState extends State<MainDdayView> {
   String? leftProfileBirthdate = "";
   String? leftProfileGender;
   File? leftProfileImage;
-  int? leftProfileImageVersion;
+  int leftProfileImageVersion = 0;
 
   String rightProfileName = "Honey";
   String rightProfileBirthdate = "";
   Gender? rightProfileGender;
   File? rightProfileImage;
-  int? rightProfileImageVersion;
+  int rightProfileImageVersion = 0;
 
   @override
   void initState() {
@@ -94,14 +96,21 @@ class MainDdayViewState extends State<MainDdayView> {
 
   setMyInfo() async {
     final myInfo = await getMyInfo();
-    final profileImage = await imageStorageService.getImage();
+
     if (myInfo != null) {
       setState(() {
         leftProfileName = myInfo.name;
         leftProfileBirthdate = myInfo.birthday!;
         leftProfileGender = myInfo.gender;
-        leftProfileImage = profileImage;
-        leftProfileImageVersion = myInfo.profileImageVersion!;
+      });
+    }
+
+    final userProfileImageEntity =
+        await userProfileImageLocalDataSource.getProfileImage();
+    if (userProfileImageEntity != null) {
+      setState(() {
+        leftProfileImage = File(userProfileImageEntity.fileName);
+        leftProfileImageVersion = userProfileImageEntity.version;
       });
     }
   }
@@ -371,12 +380,18 @@ class MainDdayViewState extends State<MainDdayView> {
       }
 
       // 이미지 변경 API 호출
-      int updatedLeftProfileImageVersion = leftProfileImageVersion!;
+      int updatedLeftProfileImageVersion = leftProfileImageVersion;
       if (updatedImage != null && updatedImage != leftProfileImage) {
         var profileImageModificationResponseDto =
             await userProfileService.updateUserProfileImage(updatedImage);
         updatedLeftProfileImageVersion =
             profileImageModificationResponseDto.profileImageVersion;
+
+        // 상태 업데이트
+        setState(() {
+          leftProfileImage = updatedImage;
+          leftProfileImageVersion = updatedLeftProfileImageVersion;
+        });
       }
 
       // 상태 업데이트
@@ -384,8 +399,6 @@ class MainDdayViewState extends State<MainDdayView> {
         leftProfileName = updatedName;
         leftProfileBirthdate = updatedBirthdate;
         leftProfileGender = updatedGender;
-        leftProfileImage = updatedImage;
-        leftProfileImageVersion = updatedLeftProfileImageVersion;
       });
     } catch (e) {
       // 에러 처리 로직

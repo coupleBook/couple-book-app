@@ -1,11 +1,17 @@
 import 'dart:io';
 
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../core/utils/security/couple_security.dart';
-import '../../core/utils/security/my_profile_image_dto.dart';
+import '../local/entities/user_profile_image_entity.dart';
+import '../local/user_profile_image_local_data_source.dart';
 
-class ImageStorageService {
+class MyImageStorageService {
+  final userProfileImageLocalDataSource =
+      UserProfileImageLocalDataSource.instance;
+  final logger = Logger();
+
   /// 이미지 저장
   Future<String> saveImage(File imageFile, String fileName, int version) async {
     try {
@@ -15,8 +21,8 @@ class ImageStorageService {
       final savedImage = await imageFile.copy(path);
 
       // SecureStorage에 메타데이터 저장
-      setProfileImage(
-          MyProfileImageDTO(fileName: fileName, profileImageVersion: version));
+      userProfileImageLocalDataSource.saveProfileImage(
+          UserProfileImageEntity(fileName: fileName, version: version));
 
       return savedImage.path; // 저장된 이미지 경로 반환
     } catch (e) {
@@ -27,7 +33,7 @@ class ImageStorageService {
   /// 이미지 읽기
   Future<File?> getImage() async {
     try {
-      final metadata = await getProfileImage();
+      final metadata = await userProfileImageLocalDataSource.getProfileImage();
       if (metadata == null) {
         return null;
       }
@@ -42,14 +48,15 @@ class ImageStorageService {
 
       return null; // 파일이 없으면 null 반환
     } catch (e) {
-      throw Exception("Failed to get image: $e");
+      logger.e("Failed to get image: $e");
+      return null;
     }
   }
 
   /// 이미지 삭제
   Future<void> deleteImage() async {
     try {
-      final metadata = await getProfileImage();
+      final metadata = await userProfileImageLocalDataSource.getProfileImage();
       if (metadata == null) {
         return;
       }
@@ -64,7 +71,8 @@ class ImageStorageService {
 
       deleteProfileImage();
     } catch (e) {
-      throw Exception("Failed to delete image: $e");
+      logger.e("Failed to delete image: $e");
+      return;
     }
   }
 }
