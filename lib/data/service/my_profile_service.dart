@@ -55,7 +55,7 @@ class MyProfileService {
       await userProfileImageLocalDataSource.saveProfileImage(
         UserProfileImageEntity(
           filePath: path,
-          version: version,
+          version: profileImageResponseDto.profileImageVersion,
         ),
       );
       return true;

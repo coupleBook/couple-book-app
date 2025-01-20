@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
 import 'package:couple_book/api/user_api/profile_image_response_dto.dart';
-import 'package:couple_book/api/user_api/profile_modification_response_dto.dart';
 import 'package:couple_book/api/user_api/user_profile_response_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
@@ -54,7 +53,7 @@ class UserProfileApi {
     );
 
     if (response.statusCode == 200) {
-      return MyInfoResponse.fromJson(response.data);
+      return MyInfoResponse.fromJson(response.data['data']);
     } else {
       throw Exception(
           "Failed to update user profile: ${response.statusCode}, ${response.data}");

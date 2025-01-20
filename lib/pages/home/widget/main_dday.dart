@@ -327,7 +327,7 @@ class MainDdayViewState extends State<MainDdayView> {
                         // },
                         child: _buildProfileColumn(
                           rightProfileName,
-                          rightProfileBirthdate!,
+                          rightProfileBirthdate,
                           rightProfileImage != null
                               ? CircleAvatar(
                                   radius: 40,
@@ -378,9 +378,7 @@ class MainDdayViewState extends State<MainDdayView> {
       final String updatedName = result['name'];
       final String? updatedBirthdate = result['birthdate'];
       final File? updatedImage = result['image'];
-      final Gender? updatedGender = result['gender'] != null
-          ? Gender.fromServerValue(result['gender'])
-          : null;
+      final Gender? updatedGender = result['gender'];
 
       // 이름, 생일, 성별 변경 API 호출
       if (validUpdateProfile(updatedName, updatedBirthdate, updatedGender)) {
