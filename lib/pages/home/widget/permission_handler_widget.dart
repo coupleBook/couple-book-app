@@ -11,17 +11,17 @@ class PermissionHandlerWidget extends StatefulWidget {
   final String callLocation;
 
   const PermissionHandlerWidget({
-    Key? key,
+    super.key,
     required this.onPermissionGranted,
     required this.appName,
     required this.callLocation,
-  }) : super(key: key);
+  });
 
   @override
-  _PermissionHandlerWidgetState createState() => _PermissionHandlerWidgetState();
+  PermissionHandlerWidgetState createState() => PermissionHandlerWidgetState();
 }
 
-class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
+class PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
   @override
   void initState() {
     super.initState();
@@ -33,37 +33,42 @@ class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
   Future<void> checkAndRequestPermissions(BuildContext context) async {
     PermissionStatus status = await Permission.photos.status;
 
-    if(Platform.isIOS) {
+    if (Platform.isIOS) {
       PermissionStatus status = await Permission.photos.request();
-      if(status.isGranted) {
-        widget.onPermissionGranted();
-      } else if (status.isLimited) {
-        // 제한된 접근이 허용된 경우
-        widget.onPermissionGranted();
-      } else if (status.isPermanentlyDenied && widget.callLocation == 'PHOTO_ACTION') {
+      if (status.isGranted || status.isLimited) {
+        if (context.mounted) {
+          widget.onPermissionGranted();
+        }
+      } else if (status.isPermanentlyDenied &&
+          widget.callLocation == 'PHOTO_ACTION') {
         // 사용자가 허용 안함을 선택한 경우 설정 페이지로 이동하는 다이얼로그 표시
-        _showSettingsDialog(context);
+        if (context.mounted) {
+          _showSettingsDialog(context);
+        }
       }
-
       return;
     }
 
-    if (status.isGranted) {
-      // 전체 접근이 허용된 경우
-      widget.onPermissionGranted();
-    } else if (status.isDenied) {
+    // 전체 접근이 허용된 경우
+    if (status.isGranted || status.isLimited) {
+      if (context.mounted) {
+        widget.onPermissionGranted();
+      }
       // 권한이 거부된 경우
-      _showPermissionRequestPopup(context);
-    } else if (status.isLimited) {
-      // 제한된 접근이 허용된 경우
-      widget.onPermissionGranted();
-    } else if (status.isPermanentlyDenied) {
+    } else if (status.isDenied) {
+      if (context.mounted) {
+        _showPermissionRequestPopup(context);
+      }
       // 사용자가 허용 안함을 선택한 경우 설정 페이지로 이동하는 다이얼로그 표시
-      _showSettingsDialog(context);
+    } else if (status.isPermanentlyDenied) {
+      if (context.mounted) {
+        _showSettingsDialog(context);
+      }
     }
   }
 
   void _showPermissionRequestPopup(BuildContext context) {
+    if (!context.mounted) return;
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -184,23 +189,28 @@ class _PermissionHandlerWidgetState extends State<PermissionHandlerWidget> {
   }
 
   void _showSettingsDialog(BuildContext context) {
+    if (!context.mounted) return;
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Text(l10n.needAccessPermission),
           content: Text(l10n.accessPermissionDescription),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                if (dialogContext.mounted) {
+                  Navigator.of(dialogContext).pop();
+                }
               },
               child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () {
                 openAppSettings();
-                Navigator.of(context).pop();
+                if (dialogContext.mounted) {
+                  Navigator.of(dialogContext).pop();
+                }
               },
               child: Text(l10n.moveToSetting),
             ),
