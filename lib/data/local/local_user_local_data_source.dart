@@ -26,14 +26,24 @@ class LocalUserLocalDataSource {
   }
 
   Future<String> getAnniversary() async {
-    final localUserEntity = await getLocalUser();
-    if (localUserEntity == null) {
+    final dateTimeAnniversary = await _getAnniversary();
+    if (dateTimeAnniversary == null) {
       return '';
     }
-
-    var anniversary = localUserEntity.anniversary;
-    final dateTimeAnniversary = DateFormat('yyyy-MM-dd').parse(anniversary);
     return DateFormat('yyyy-MM-dd').format(dateTimeAnniversary);
+  }
+
+  Future<DateTime?> getAnniversaryToDatetime() async {
+    return _getAnniversary();
+  }
+
+  Future<DateTime?> _getAnniversary() async {
+    final localUserEntity = await getLocalUser();
+    if (localUserEntity == null) {
+      return null;
+    }
+    final anniversary = localUserEntity.anniversary;
+    return DateFormat('yyyy-MM-dd').parse(anniversary);
   }
 
   Future<void> clearLocalUser() async {

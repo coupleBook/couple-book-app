@@ -18,24 +18,6 @@ const secureStorage = FlutterSecureStorage(
 );
 
 /// ************************************************
-/// 처음 만난 날 로컬 스토리지에서 가져오는 함수
-/// ************************************************
-Future<DateTime?> getAnniversaryToDatetime() async {
-  try {
-    String? anniversary = await secureStorage.read(key: 'ANNIVERSARY_KEY');
-    if (anniversary != null) {
-      final dateTimeAnniversary = DateFormat('yyyy-MM-dd').parse(anniversary);
-      return dateTimeAnniversary;
-    } else {
-      return null;
-    }
-  } catch (e) {
-    logger.e('getAnniversary error: $e');
-    return null;
-  }
-}
-
-/// ************************************************
 /// 내정보 로컬 스토리지에 저장하는 함수
 /// ************************************************
 Future<void> setMyInfo(MyInfoResponse myInfo) async {

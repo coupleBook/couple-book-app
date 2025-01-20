@@ -11,6 +11,7 @@ import '../../../../gen/assets.gen.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../core/utils/security/couple_security.dart';
 import '../../../data/local/entities/enums/gender_enum.dart';
+import '../../../data/local/local_user_local_data_source.dart';
 import '../../../data/local/partner_local_data_source.dart';
 import '../../../data/local/user_profile_image_local_data_source.dart';
 import '../../../style/text_style.dart';
@@ -29,6 +30,7 @@ class MainDdayView extends StatefulWidget {
 class MainDdayViewState extends State<MainDdayView> {
   final userProfileImageLocalDataSource =
       UserProfileImageLocalDataSource.instance;
+  final localUserLocalDataSource = LocalUserLocalDataSource.instance;
 
   final partnerLocalDataSource = PartnerLocalDataSource.instance;
   final partnerProfileImageLocalDataSource =
@@ -78,7 +80,8 @@ class MainDdayViewState extends State<MainDdayView> {
   /// TODO: 처음만날날, D-day 계산 로직 서비스로 분리 예정
   /// getAnniversaryDate, calculateDday
   getAnniversaryDate() async {
-    DateTime? anniversary = await getAnniversaryToDatetime();
+    DateTime? anniversary =
+        await localUserLocalDataSource.getAnniversaryToDatetime();
     setState(() {
       anniversaryDate = anniversary;
     });
