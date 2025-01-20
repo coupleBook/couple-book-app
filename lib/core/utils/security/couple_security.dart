@@ -20,24 +20,6 @@ const secureStorage = FlutterSecureStorage(
 /// ************************************************
 /// 내정보 로컬 스토리지에 저장하는 함수
 /// ************************************************
-Future<void> setMyInfo(MyInfoResponse myInfo) async {
-  String key = 'MY_INFO';
-  String value = jsonEncode(myInfo.toJson());
-
-  try {
-    await secureStorage.write(
-      key: key,
-      value: value,
-    );
-    logger.d('setMyInfo: $value 저장 완료');
-  } catch (e) {
-    logger.e('setMyInfo error: $e');
-  }
-}
-
-/// ************************************************
-/// 내정보 로컬 스토리지에 저장하는 함수
-/// ************************************************
 Future<void> setCoupleInfo(CoupleInfoResponse coupleInfo) async {
   String key = 'COUPLE_INFO';
   String value = jsonEncode(coupleInfo.toJson());
