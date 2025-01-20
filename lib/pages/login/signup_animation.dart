@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:couple_book/data/local/user_local_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/utils/security/couple_security.dart';
 import '../../data/local/local_user_local_data_source.dart';
-import '../../data/models/response/common/my_info_response.dart';
 import '../../router.dart';
 
 class SignupAnimationPage extends StatefulWidget {
@@ -17,8 +16,8 @@ class SignupAnimationPage extends StatefulWidget {
 
 class SignupAnimationPageState extends State<SignupAnimationPage> {
   final localUserLocalDataSource = LocalUserLocalDataSource.instance;
+  final UserLocalDataSource userLocalDataSource = UserLocalDataSource.instance;
   String userName = ''; // userName을 State 클래스의 상태로 선언
-
 
   @override
   void initState() {
@@ -40,10 +39,10 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
 
   Future<void> _loadUserName() async {
     try {
-      MyInfoResponse? myInfo = await getMyInfo();
-      if (myInfo != null) {
+      var userEntity = await userLocalDataSource.getUser();
+      if (userEntity != null) {
         setState(() {
-          userName = myInfo.name; // userName에 값 할당
+          userName = userEntity.name;
         });
       }
     } catch (e) {

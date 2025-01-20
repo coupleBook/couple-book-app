@@ -7,6 +7,7 @@ import 'package:couple_book/dto/response_dto/user_profile_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
+import '../../data/local/entities/enums/gender_enum.dart';
 import '../session.dart';
 
 class UserProfileApi {
@@ -17,14 +18,14 @@ class UserProfileApi {
   /// 유저 프로필 조회 API
   /// ************************************************
   Future<UserProfileDto> getUserProfile() async {
-    final Response<dynamic> response =
-        await _dio.get('/api/v1/user/profile');
+    final Response<dynamic> response = await _dio.get('/api/v1/user/profile');
 
     return UserProfileDto.fromJson(response.data);
   }
 
   Future<ProfileImageResponseDto> getUserProfileImage() async {
-    final Response<dynamic> response = await _dio.get('/api/v1/user/profile/image');
+    final Response<dynamic> response =
+        await _dio.get('/api/v1/user/profile/image');
 
     if (response.statusCode == 200) {
       return ProfileImageResponseDto.fromJson(response.data);
@@ -40,11 +41,16 @@ class UserProfileApi {
   Future<ProfileModificationResponseDto> updateUserProfile(
     String name,
     String? birthday,
-    String? gender,
+    Gender? gender,
   ) async {
     final Response<dynamic> response = await _dio.put(
-        '/api/v1/user/profile',
-        data: {"name": name, "birthday": birthday, "gender": gender});
+      '/api/v1/user/profile',
+      data: {
+        "name": name,
+        "birthday": birthday,
+        "gender": gender?.toServerValue(),
+      },
+    );
 
     if (response.statusCode == 200) {
       return ProfileModificationResponseDto.fromJson(response.data);

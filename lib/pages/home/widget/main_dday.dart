@@ -9,11 +9,12 @@ import 'package:logger/logger.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../core/l10n/l10n.dart';
-import '../../../core/utils/security/couple_security.dart';
 import '../../../data/local/entities/enums/gender_enum.dart';
 import '../../../data/local/local_user_local_data_source.dart';
 import '../../../data/local/partner_local_data_source.dart';
+import '../../../data/local/user_local_data_source.dart';
 import '../../../data/local/user_profile_image_local_data_source.dart';
+import '../../../data/service/my_profile_service.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import
@@ -28,6 +29,9 @@ class MainDdayView extends StatefulWidget {
 }
 
 class MainDdayViewState extends State<MainDdayView> {
+  final logger = Logger();
+
+  final userLocalDataSource = UserLocalDataSource.instance;
   final userProfileImageLocalDataSource =
       UserProfileImageLocalDataSource.instance;
   final localUserLocalDataSource = LocalUserLocalDataSource.instance;
@@ -36,17 +40,17 @@ class MainDdayViewState extends State<MainDdayView> {
   final partnerProfileImageLocalDataSource =
       PartnerProfileImageLocalDataSource.instance;
 
-  final logger = Logger();
   final String todayDate =
       DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
   final UserProfileService userProfileService = UserProfileService();
+  final myProfileService = MyProfileService();
   DateTime? anniversaryDate;
   String dday = '';
 
   late PermissionHandlerWidget permissionHandlerWidget;
   String leftProfileName = "Honey";
   String? leftProfileBirthdate = "";
-  String? leftProfileGender;
+  Gender? leftProfileGender;
   File? leftProfileImage;
   int leftProfileImageVersion = 0;
 
@@ -98,22 +102,22 @@ class MainDdayViewState extends State<MainDdayView> {
   }
 
   setMyInfo() async {
-    final myInfo = await getMyInfo();
+    final user = await userLocalDataSource.getUser();
 
-    if (myInfo != null) {
+    if (user != null) {
       setState(() {
-        leftProfileName = myInfo.name;
-        leftProfileBirthdate = myInfo.birthday!;
-        leftProfileGender = myInfo.gender;
+        leftProfileName = user.name;
+        leftProfileBirthdate = user.birthday!;
+        leftProfileGender = user.gender;
       });
     }
 
-    final userProfileImageEntity =
+    final userProfileImage =
         await userProfileImageLocalDataSource.getProfileImage();
-    if (userProfileImageEntity != null) {
+    if (userProfileImage != null) {
       setState(() {
-        leftProfileImage = File(userProfileImageEntity.filePath);
-        leftProfileImageVersion = userProfileImageEntity.version;
+        leftProfileImage = File(userProfileImage.filePath);
+        leftProfileImageVersion = userProfileImage.version;
       });
     }
   }
@@ -371,15 +375,13 @@ class MainDdayViewState extends State<MainDdayView> {
       final String updatedName = result['name'];
       final String? updatedBirthdate = result['birthdate'];
       final File? updatedImage = result['image'];
-      final String? updatedGender = result['gender'];
+      final Gender? updatedGender = result['gender'] != null
+          ? Gender.fromServerValue(result['gender'])
+          : null;
 
       // 이름, 생일, 성별 변경 API 호출
       if (validUpdateProfile(updatedName, updatedBirthdate, updatedGender)) {
-        await userProfileService.updateUserProfile(
-          updatedName,
-          updatedBirthdate,
-          updatedGender,
-        );
+        myProfileService.saveProfile22(updatedName, updatedBirthdate, updatedGender);
       }
 
       // 이미지 변경 API 호출

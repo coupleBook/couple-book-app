@@ -1,3 +1,4 @@
+import '../../../api/user_api/profile_modification_response_dto.dart';
 import '../../models/response/common/my_info_response.dart';
 import 'enums/gender_enum.dart';
 
@@ -40,5 +41,16 @@ class UserEntity {
       gender: response.gender != null
           ? Gender.fromServerValue(response.gender!)
           : null,
-      updatedAt: DateTime.parse(response.updatedAt!));
+      updatedAt: DateTime.parse(response.updatedAt));
+
+  factory UserEntity.fromProfileModificationResponseDto(
+          ProfileModificationResponseDto response) =>
+      UserEntity(
+          id: response.id,
+          name: response.name,
+          birthday: response.birthDate,
+          gender: response.gender != null
+              ? Gender.fromServerValue(response.gender!)
+              : null,
+          updatedAt: response.updatedAt);
 }

@@ -6,50 +6,12 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../core/utils/security/couple_security.dart';
-import '../../data/models/response/common/my_info_response.dart';
 import '../../data/service/my_image_storage_service.dart';
 
 class UserProfileService {
   final userProfileApi = UserProfileApi();
   final myImageStorageService = MyImageStorageService();
   final logger = Logger();
-
-  Future<void> updateUserProfile(
-    String name,
-    String? birthday,
-    String? gender,
-  ) async {
-    try {
-      // 현재 로컬에 저장된 사용자 정보 가져오기
-      final currentProfile = await getMyInfo();
-
-      if (currentProfile == null) {
-        logger.e("No current profile found in local storage.");
-        throw Exception("Cannot update profile: No current profile found.");
-      }
-
-      var responseDto =
-          await userProfileApi.updateUserProfile(name, birthday, gender);
-
-      // 서버에서 받은 DTO 데이터를 MyInfoDto로 변환
-      final updatedProfile = MyInfoResponse(
-        id: responseDto.id,
-        name: responseDto.name,
-        birthday: responseDto.birthDate,
-        gender: responseDto.gender,
-        profileImageVersion: currentProfile.profileImageVersion,
-        provider: currentProfile.provider,
-        updatedAt: responseDto.updatedAt.toIso8601String(),
-      );
-
-      await setMyInfo(updatedProfile);
-      logger.d("User profile successfully updated and synced.");
-    } catch (e) {
-      logger.e("Failed to update user profile: $e");
-      rethrow;
-    }
-  }
 
   Future<ProfileImageModificationResponseDto> updateUserProfileImage(
       File imageFile) async {

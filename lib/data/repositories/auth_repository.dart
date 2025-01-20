@@ -21,6 +21,7 @@ import '../local/entities/user_profile_image_entity.dart';
 import '../local/user_profile_image_local_data_source.dart';
 import '../remote/auth_api.dart';
 import '../service/my_image_storage_service.dart';
+import '../service/my_profile_service.dart';
 
 class AuthRepository {
   final AuthApi authApi;
@@ -38,6 +39,7 @@ class AuthRepository {
       UserProfileImageLocalDataSource.instance;
 
   final MyImageStorageService myImageStorageService = MyImageStorageService();
+  final myProfileService = MyProfileService();
 
   AuthRepository(
     this.authApi,
@@ -63,28 +65,9 @@ class AuthRepository {
     // 마지막 로그인 정보 저장
     await lastLoginLocalDataSource.saveLastLogin(
         LastLoginEntity(loginId: response.me.id, platform: platform));
-    // 유저 정보 저장
-    await userLocalDataSource
-        .saveUser(UserEntity.fromMyInfoResponse(response.me));
 
-    if (response.me.profileImageVersion != null &&
-        response.me.profileImageVersion! > 0) {
-      final profileImageResponseDto = await userProfileApi.getUserProfileImage();
-
-      final profileImageResponse =
-          await http.get(Uri.parse(profileImageResponseDto.profileImageUrl));
-
-      var path = await getProfileImagePath("myProfileImage");
-      var file = File(path);
-      file.writeAsBytes(profileImageResponse.bodyBytes);
-
-      userProfileImageLocalDataSource.saveProfileImage(
-        UserProfileImageEntity(
-          filePath: path,
-          version: response.me.profileImageVersion!,
-        ),
-      );
-    }
+    // 본인 프로필 저장
+    await myProfileService.saveProfile(response.me);
 
     // 커플 정보 저장
     if (response.coupleInfo != null) {

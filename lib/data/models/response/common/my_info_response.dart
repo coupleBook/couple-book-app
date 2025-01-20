@@ -3,18 +3,18 @@ class MyInfoResponse {
   String name;
   String? birthday; // 날짜 ex) 1997-03-10
   String? gender;
-  int? profileImageVersion;
-  String? provider;
-  String? updatedAt; // 날짜 timestamp
+  int profileImageVersion;
+  String provider;
+  String updatedAt; // 날짜 timestamp
 
   MyInfoResponse(
       {required this.id,
       required this.name,
       this.birthday,
       this.gender,
-      this.profileImageVersion,
-      this.provider,
-      this.updatedAt});
+      required this.profileImageVersion,
+      required this.provider,
+      required this.updatedAt});
 
   Map<String, dynamic> toJson() {
     return {

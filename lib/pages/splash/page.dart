@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 
 import '../../api/user_api/user_profile_api.dart';
 import '../../core/utils/security/couple_security.dart';
+import '../../data/service/my_profile_service.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../couple_anniversary/page.dart';
@@ -32,9 +33,9 @@ class _SplashViewState extends State<SplashView>
   bool existToken = false; // 토큰이 존재하는지 여부
   bool existAnniversary = false; // 기념일이 존재하는지 여부
 
-  final AuthLocalDataSource authLocalDataSource = AuthLocalDataSource();
-  final LocalUserLocalDataSource localUserLocalDataSource =
-      LocalUserLocalDataSource();
+  final authLocalDataSource = AuthLocalDataSource();
+  final localUserLocalDataSource = LocalUserLocalDataSource();
+  final myProfileService = MyProfileService();
 
   @override
   void initState() {
@@ -65,8 +66,9 @@ class _SplashViewState extends State<SplashView>
       logger.d("ANNIVERSARY isNotEmpty: ${anniversary.isNotEmpty}");
 
       if (accessToken.isNotEmpty) {
-        var userProfile = await userProfileApi.getUserProfile();
-        await setMyInfo(userProfile.me);
+        final userProfile = await userProfileApi.getUserProfile();
+        myProfileService.saveProfile(userProfile.me);
+
         if (userProfile.coupleInfo != null) {
           await setCoupleInfo(userProfile.coupleInfo!);
         }

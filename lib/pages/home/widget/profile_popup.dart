@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 
 import '../../../core/l10n/l10n.dart';
+import '../../../data/local/entities/enums/gender_enum.dart';
 import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
 class ProfilePopupForm extends StatefulWidget {
   final String name;
   final String? birthdate;
-  final String? gender;
+  final Gender? gender;
   final File? selectedImage; // 프로필 사진 필드 추가
 
   const ProfilePopupForm({
@@ -24,14 +25,14 @@ class ProfilePopupForm extends StatefulWidget {
   });
 
   @override
-  _ProfilePopupFormState createState() => _ProfilePopupFormState();
+  ProfilePopupFormState createState() => ProfilePopupFormState();
 }
 
-class _ProfilePopupFormState extends State<ProfilePopupForm> {
+class ProfilePopupFormState extends State<ProfilePopupForm> {
   final ImagePicker _picker = ImagePicker(); // ImagePicker 인스턴스 생성
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
-  String? _selectedGender; // 선택한 성별 ("M" 또는 "F")
+  Gender? _selectedGender; // 선택한 성별 ("M" 또는 "F")
   File? _selectedImage; // 선택한 이미지를 저장할 변수
 
   String? nameError;
@@ -106,29 +107,29 @@ class _ProfilePopupFormState extends State<ProfilePopupForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildGenderButton("남", "M"),
-        _buildGenderButton("여", "F"),
+        _buildGenderButton(Gender.male),
+        _buildGenderButton(Gender.female),
       ],
     );
   }
 
-  Widget _buildGenderButton(String label, String value) {
-    final isSelected = _selectedGender == value;
+  Widget _buildGenderButton(Gender gender) {
+    final isSelected = _selectedGender == gender;
     return ElevatedButton(
       onPressed: () {
         setState(() {
-          _selectedGender = value;
+          _selectedGender = gender;
         });
       },
       style: ElevatedButton.styleFrom(
         backgroundColor:
-            isSelected ? ColorName.defaultBlack : ColorName.lightGray,
+        isSelected ? ColorName.defaultBlack : ColorName.lightGray,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
       child: Text(
-        label,
+        gender.toDisplayValue(),
         style: TextStyle(
           color: isSelected ? Colors.white : Colors.black,
           fontWeight: FontWeight.bold,

@@ -36,32 +36,6 @@ Future<void> setMyInfo(MyInfoResponse myInfo) async {
 }
 
 /// ************************************************
-/// 내정보 로컬 스토리지에서 가져오는 함수
-/// ************************************************
-Future<MyInfoResponse?> getMyInfo() async {
-  String key = 'MY_INFO';
-  try {
-    String? myInfo = await secureStorage.read(key: key);
-
-    if (myInfo != null) {
-      try {
-        Map<String, dynamic> json = jsonDecode(myInfo);
-        return MyInfoResponse.fromJson(json);
-      } catch (e) {
-        logger.e('JSON Parsing Error: $e');
-        logger.e('Invalid JSON: $myInfo');
-        return null;
-      }
-    } else {
-      return null;
-    }
-  } catch (e) {
-    logger.e('getMyInfo error: $e');
-    return null;
-  }
-}
-
-/// ************************************************
 /// 내정보 로컬 스토리지에 저장하는 함수
 /// ************************************************
 Future<void> setCoupleInfo(CoupleInfoResponse coupleInfo) async {

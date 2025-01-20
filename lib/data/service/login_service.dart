@@ -78,4 +78,5 @@ class LoginService {
 
     return googleToken;
   }
+
 }
