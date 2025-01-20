@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../gen/assets.gen.dart';
+import '../../../api/user_api/user_profile_api.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../data/local/entities/enums/gender_enum.dart';
 import '../../../data/local/local_user_local_data_source.dart';
@@ -44,6 +45,8 @@ class MainDdayViewState extends State<MainDdayView> {
       DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
   final UserProfileService userProfileService = UserProfileService();
   final myProfileService = MyProfileService();
+
+  final userProfileApi = UserProfileApi();
   DateTime? anniversaryDate;
   String dday = '';
 
@@ -381,7 +384,8 @@ class MainDdayViewState extends State<MainDdayView> {
 
       // 이름, 생일, 성별 변경 API 호출
       if (validUpdateProfile(updatedName, updatedBirthdate, updatedGender)) {
-        myProfileService.saveProfile22(updatedName, updatedBirthdate, updatedGender);
+        final updateUserProfile =  await userProfileApi.updateUserProfile(updatedName, updatedBirthdate, updatedGender);
+        myProfileService.saveProfile(updateUserProfile);
       }
 
       // 이미지 변경 API 호출

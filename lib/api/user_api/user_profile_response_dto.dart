@@ -1,20 +1,20 @@
 import '../../data/models/response/common/couple_info_response.dart';
 import '../../data/models/response/common/my_info_response.dart';
-import '../api_dto.dart';
+import '../../dto/api_dto.dart';
 
-class UserProfileDto extends ApiResponse {
+class UserProfileResponseDto extends ApiResponse {
   MyInfoResponse me;
   CoupleInfoResponse? coupleInfo;
 
-  UserProfileDto({
+  UserProfileResponseDto({
     required super.status,
     required super.error,
     required this.me,
     this.coupleInfo,
   });
 
-  factory UserProfileDto.fromJson(Map<String, dynamic> json) {
-    return UserProfileDto(
+  factory UserProfileResponseDto.fromJson(Map<String, dynamic> json) {
+    return UserProfileResponseDto(
       status: json['status'],
       error: json['error'],
       me: MyInfoResponse.fromJson(json['data']['me']),

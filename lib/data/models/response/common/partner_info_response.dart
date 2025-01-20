@@ -6,7 +6,7 @@ class PartnerInfoResponse {
   String? profileImageUrl;
   int profileImageVersion;
   String provider;
-  String? updatedAt; // 날짜 timestamp
+  String updatedAt; // 날짜 timestamp
 
   PartnerInfoResponse(
       {required this.id,
@@ -16,7 +16,7 @@ class PartnerInfoResponse {
       this.profileImageUrl,
       required this.profileImageVersion,
       required this.provider,
-        this.updatedAt});
+      required this.updatedAt});
 
   Map<String, dynamic> toJson() {
     return {

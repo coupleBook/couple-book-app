@@ -6,7 +6,7 @@ class PartnerEntity {
   final String name;
   final String? birthday;
   final Gender? gender;
-  final DateTime updatedAt;
+  final String updatedAt;
 
   PartnerEntity({
     required this.id,
@@ -21,7 +21,7 @@ class PartnerEntity {
         'name': name,
         'birthday': birthday,
         'gender': gender?.toServerValue(),
-        'updatedAt': updatedAt.toIso8601String(),
+        'updatedAt': updatedAt,
       };
 
   factory PartnerEntity.fromJson(Map<String, dynamic> json) => PartnerEntity(
@@ -29,7 +29,7 @@ class PartnerEntity {
         name: json['name'],
         birthday: json['birthday'],
         gender: Gender.fromServerValue(json['gender']),
-        updatedAt: DateTime.parse(json['updatedAt']),
+        updatedAt: json['updatedAt'],
       );
 
   factory PartnerEntity.fromMyInfoResponse(PartnerInfoResponse response) =>
@@ -40,6 +40,6 @@ class PartnerEntity {
         gender: response.gender != null
             ? Gender.fromServerValue(response.gender!)
             : null,
-          updatedAt: DateTime.parse(response.updatedAt!)
+        updatedAt: response.updatedAt!,
       );
 }

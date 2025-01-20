@@ -3,7 +3,7 @@ import '../../dto/api_dto.dart';
 class ProfileModificationResponseDto extends ApiResponse {
   String id;
   String name;
-  String? birthDate;
+  String? birthdate;
   String? gender;
   DateTime updatedAt;
 
@@ -12,7 +12,7 @@ class ProfileModificationResponseDto extends ApiResponse {
     required super.error,
     required this.id,
     required this.name,
-    this.birthDate,
+    this.birthdate,
     this.gender,
     required this.updatedAt,
   });
@@ -23,7 +23,7 @@ class ProfileModificationResponseDto extends ApiResponse {
       error: json['error'],
       id: json['data']['id'],
       name: json['data']['name'],
-      birthDate: json['data']['birthDate'],
+      birthdate: json['data']['birthdate'],
       gender: json['data']['gender'],
       updatedAt: DateTime.parse(json['data']['updatedAt']),
     );

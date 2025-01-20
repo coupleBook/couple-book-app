@@ -6,7 +6,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/couple_api/couple_api.dart';
-import '../../core/utils/security/couple_security.dart';
 import '../../dto/response_dto/couple_code_creator_info_response.dart'; // FindUserInfoResponse 클래스 임포트
 
 class CoupleController {
@@ -14,7 +13,8 @@ class CoupleController {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   final Logger logger = Logger();
   final coupleApi = CoupleApi();
-  final LocalUserLocalDataSource localUserLocalDataSource = LocalUserLocalDataSource.instance;
+  final LocalUserLocalDataSource localUserLocalDataSource =
+      LocalUserLocalDataSource.instance;
 
   CoupleController(this.context);
 

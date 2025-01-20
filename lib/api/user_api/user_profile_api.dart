@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
 import 'package:couple_book/api/user_api/profile_image_response_dto.dart';
 import 'package:couple_book/api/user_api/profile_modification_response_dto.dart';
-import 'package:couple_book/dto/response_dto/user_profile_dto.dart';
+import 'package:couple_book/api/user_api/user_profile_response_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
 import '../../data/local/entities/enums/gender_enum.dart';
+import '../../data/models/response/common/my_info_response.dart';
 import '../session.dart';
 
 class UserProfileApi {
@@ -17,10 +18,10 @@ class UserProfileApi {
   /// ************************************************
   /// 유저 프로필 조회 API
   /// ************************************************
-  Future<UserProfileDto> getUserProfile() async {
+  Future<UserProfileResponseDto> getUserProfile() async {
     final Response<dynamic> response = await _dio.get('/api/v1/user/profile');
 
-    return UserProfileDto.fromJson(response.data);
+    return UserProfileResponseDto.fromJson(response.data);
   }
 
   Future<ProfileImageResponseDto> getUserProfileImage() async {
@@ -38,7 +39,7 @@ class UserProfileApi {
   /// ************************************************
   /// 유저 프로필 변경 API
   /// ************************************************
-  Future<ProfileModificationResponseDto> updateUserProfile(
+  Future<MyInfoResponse> updateUserProfile(
     String name,
     String? birthday,
     Gender? gender,
@@ -53,7 +54,7 @@ class UserProfileApi {
     );
 
     if (response.statusCode == 200) {
-      return ProfileModificationResponseDto.fromJson(response.data);
+      return MyInfoResponse.fromJson(response.data);
     } else {
       throw Exception(
           "Failed to update user profile: ${response.statusCode}, ${response.data}");

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/user_api/user_profile_api.dart';
-import '../../core/utils/security/couple_security.dart';
 import '../../data/service/my_profile_service.dart';
+import '../../data/service/partner_profile_service.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../couple_anniversary/page.dart';
@@ -36,6 +36,7 @@ class _SplashViewState extends State<SplashView>
   final authLocalDataSource = AuthLocalDataSource();
   final localUserLocalDataSource = LocalUserLocalDataSource();
   final myProfileService = MyProfileService();
+  final partnerProfileService = PartnerProfileService();
 
   @override
   void initState() {
@@ -70,7 +71,7 @@ class _SplashViewState extends State<SplashView>
         myProfileService.saveProfile(userProfile.me);
 
         if (userProfile.coupleInfo != null) {
-          await setCoupleInfo(userProfile.coupleInfo!);
+          partnerProfileService.saveProfile(userProfile.coupleInfo!.partner);
         }
         setState(() {
           existToken = true;

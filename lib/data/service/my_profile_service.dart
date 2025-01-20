@@ -1,17 +1,12 @@
 import 'dart:io';
 
-import 'package:couple_book/data/local/last_login_local_data_source.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-import '../../api/user_api/profile_modification_response_dto.dart';
 import '../../api/user_api/user_profile_api.dart';
 import '../../core/utils/profile_image_path.dart';
-import '../local/auth_local_data_source.dart';
-import '../local/entities/enums/gender_enum.dart';
 import '../local/entities/user_entity.dart';
 import '../local/entities/user_profile_image_entity.dart';
-import '../local/partner_local_data_source.dart';
 import '../local/user_local_data_source.dart';
 import '../local/user_profile_image_local_data_source.dart';
 import '../models/response/common/my_info_response.dart';
@@ -19,24 +14,11 @@ import '../models/response/common/my_info_response.dart';
 class MyProfileService {
   final logger = Logger();
 
-  final localDataSource = AuthLocalDataSource.instance;
-  final lastLoginLocalDataSource = LastLoginLocalDataSource.instance;
   final userLocalDataSource = UserLocalDataSource.instance;
-  final partnerLocalDataSource = PartnerLocalDataSource.instance;
   final userProfileImageLocalDataSource =
       UserProfileImageLocalDataSource.instance;
 
   final userProfileApi = UserProfileApi();
-
-  Future<ProfileModificationResponseDto> saveProfile22(
-      String name, String? birthday, Gender? gender) async {
-    final response =
-        await userProfileApi.updateUserProfile(name, birthday, gender);
-
-    userLocalDataSource
-        .saveUser(UserEntity.fromProfileModificationResponseDto(response));
-    return response;
-  }
 
   Future<bool> saveProfile(MyInfoResponse response) async {
     await userLocalDataSource.saveUser(UserEntity.fromMyInfoResponse(response));
