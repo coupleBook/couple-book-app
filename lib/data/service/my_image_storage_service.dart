@@ -1,28 +1,30 @@
 import 'dart:io';
 
 import 'package:logger/logger.dart';
-import 'package:path_provider/path_provider.dart';
 
+import '../../api/user_api/user_profile_api.dart';
+import '../../core/utils/profile_image_path.dart';
 import '../../core/utils/security/couple_security.dart';
 import '../local/entities/user_profile_image_entity.dart';
 import '../local/user_profile_image_local_data_source.dart';
 
 class MyImageStorageService {
+  final logger = Logger();
+
   final userProfileImageLocalDataSource =
       UserProfileImageLocalDataSource.instance;
-  final logger = Logger();
+  final userProfileApi = UserProfileApi();
 
   /// 이미지 저장
   Future<String> saveImage(File imageFile, String fileName, int version) async {
     try {
       // 파일 저장
-      final directory = await getApplicationDocumentsDirectory();
-      final path = "${directory.path}/$fileName";
-      final savedImage = await imageFile.copy(path);
+      final imagePath = await getProfileImagePath(fileName);
+      final savedImage = await imageFile.copy(imagePath);
 
       // SecureStorage에 메타데이터 저장
       userProfileImageLocalDataSource.saveProfileImage(
-          UserProfileImageEntity(fileName: fileName, version: version));
+          UserProfileImageEntity(filePath: imagePath, version: version));
 
       return savedImage.path; // 저장된 이미지 경로 반환
     } catch (e) {
@@ -38,9 +40,8 @@ class MyImageStorageService {
         return null;
       }
 
-      final directory = await getApplicationDocumentsDirectory();
-      final path = "${directory.path}/${metadata.fileName}";
-      final file = File(path);
+      final imagePath = await getProfileImagePath(metadata.filePath);
+      final file = File(imagePath);
 
       if (await file.exists()) {
         return file;
@@ -61,9 +62,8 @@ class MyImageStorageService {
         return;
       }
 
-      final directory = await getApplicationDocumentsDirectory();
-      final path = "${directory.path}/${metadata.fileName}";
-      final file = File(path);
+      final imagePath = await getProfileImagePath(metadata.filePath);
+      final file = File(imagePath);
 
       if (await file.exists()) {
         await file.delete();

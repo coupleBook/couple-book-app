@@ -54,7 +54,7 @@ class UserProfileService {
   Future<ProfileImageModificationResponseDto> updateUserProfileImage(
       File imageFile) async {
     try {
-      var compressedImage = await compressImage(imageFile);
+      var compressedImage = await _compressImage(imageFile);
 
       if (compressedImage == null) {
         logger.e("이미지 압축 실패");
@@ -80,7 +80,7 @@ class UserProfileService {
     }
   }
 
-  Future<XFile?> compressImage(File file) async {
+  Future<XFile?> _compressImage(File file) async {
     try {
       final dir = await getTemporaryDirectory();
       final targetPath =

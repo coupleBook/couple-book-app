@@ -1,3 +1,4 @@
+import 'package:couple_book/api/user_api/user_profile_api.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,6 +17,7 @@ class LoginService {
   final AuthApi authApi = AuthApi();
   final AuthRepository authRepository = AuthRepository(
     AuthApi(),
+    UserProfileApi(),
     AuthLocalDataSource(),
     LastLoginLocalDataSource(),
     LocalUserLocalDataSource(),

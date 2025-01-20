@@ -1,17 +1,17 @@
 class UserProfileImageEntity {
-  final String fileName;
+  final String filePath;
   final int version;
 
-  UserProfileImageEntity({required this.fileName, required this.version});
+  UserProfileImageEntity({required this.filePath, required this.version});
 
   Map<String, dynamic> toJson() => {
-    'fileName': fileName,
+    'filePath': filePath,
     'version': version,
   };
 
   factory UserProfileImageEntity.fromJson(Map<String, dynamic> json) =>
       UserProfileImageEntity(
-        fileName: json['fileName'],
+        filePath: json['filePath'],
         version: json['version'],
       );
 }

@@ -109,7 +109,7 @@ class MainDdayViewState extends State<MainDdayView> {
         await userProfileImageLocalDataSource.getProfileImage();
     if (userProfileImageEntity != null) {
       setState(() {
-        leftProfileImage = File(userProfileImageEntity.fileName);
+        leftProfileImage = File(userProfileImageEntity.filePath);
         leftProfileImageVersion = userProfileImageEntity.version;
       });
     }

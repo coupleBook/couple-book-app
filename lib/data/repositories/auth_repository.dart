@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:couple_book/api/user_api/user_profile_api.dart';
+import 'package:couple_book/core/utils/profile_image_path.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:couple_book/data/local/entities/local_user_entity.dart';
 import 'package:couple_book/data/local/entities/user_entity.dart';
@@ -5,6 +9,7 @@ import 'package:couple_book/data/local/last_login_local_data_source.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/partner_local_data_source.dart';
 import 'package:couple_book/data/local/user_local_data_source.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../core/utils/token_cleaner.dart';
@@ -12,10 +17,14 @@ import '../local/auth_local_data_source.dart';
 import '../local/entities/auth_entity.dart';
 import '../local/entities/last_login_entity.dart';
 import '../local/entities/partner_entity.dart';
+import '../local/entities/user_profile_image_entity.dart';
+import '../local/user_profile_image_local_data_source.dart';
 import '../remote/auth_api.dart';
+import '../service/my_image_storage_service.dart';
 
 class AuthRepository {
   final AuthApi authApi;
+  final UserProfileApi userProfileApi;
 
   final AuthLocalDataSource localDataSource;
   final LastLoginLocalDataSource lastLoginLocalDataSource;
@@ -25,8 +34,14 @@ class AuthRepository {
   final UserLocalDataSource userLocalDataSource;
   final PartnerLocalDataSource partnerLocalDataSource;
 
+  final UserProfileImageLocalDataSource userProfileImageLocalDataSource =
+      UserProfileImageLocalDataSource.instance;
+
+  final MyImageStorageService myImageStorageService = MyImageStorageService();
+
   AuthRepository(
     this.authApi,
+    this.userProfileApi,
     this.localDataSource,
     this.lastLoginLocalDataSource,
     this.localUserLocalDataSource,
@@ -51,6 +66,25 @@ class AuthRepository {
     // 유저 정보 저장
     await userLocalDataSource
         .saveUser(UserEntity.fromMyInfoResponse(response.me));
+
+    if (response.me.profileImageVersion != null &&
+        response.me.profileImageVersion! > 0) {
+      final profileImageResponseDto = await userProfileApi.getUserProfileImage();
+
+      final profileImageResponse =
+          await http.get(Uri.parse(profileImageResponseDto.profileImageUrl));
+
+      var path = await getProfileImagePath("myProfileImage");
+      var file = File(path);
+      file.writeAsBytes(profileImageResponse.bodyBytes);
+
+      userProfileImageLocalDataSource.saveProfileImage(
+        UserProfileImageEntity(
+          filePath: path,
+          version: response.me.profileImageVersion!,
+        ),
+      );
+    }
 
     // 커플 정보 저장
     if (response.coupleInfo != null) {

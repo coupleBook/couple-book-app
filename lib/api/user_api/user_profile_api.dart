@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
+import 'package:couple_book/api/user_api/profile_image_response_dto.dart';
 import 'package:couple_book/api/user_api/profile_modification_response_dto.dart';
 import 'package:couple_book/dto/response_dto/user_profile_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../session.dart';
 
 class UserProfileApi {
@@ -21,6 +21,17 @@ class UserProfileApi {
         await _dio.get('/api/v1/user/profile');
 
     return UserProfileDto.fromJson(response.data);
+  }
+
+  Future<ProfileImageResponseDto> getUserProfileImage() async {
+    final Response<dynamic> response = await _dio.get('/api/v1/user/profile/image');
+
+    if (response.statusCode == 200) {
+      return ProfileImageResponseDto.fromJson(response.data);
+    } else {
+      throw Exception(
+          "Failed to get user profile image: ${response.statusCode}, ${response.data}");
+    }
   }
 
   /// ************************************************
