@@ -127,16 +127,21 @@ class MainDdayViewState extends State<MainDdayView> {
 
   setPartnerInfo() async {
     final partnerInfo = await partnerLocalDataSource.getPartner();
-    final profileImage =
-        await partnerProfileImageLocalDataSource.getPartnerProfileImage();
+
     if (partnerInfo != null) {
       setState(() {
         rightProfileName = partnerInfo.name;
         rightProfileBirthdate = partnerInfo.birthday ?? '';
         rightProfileGender = partnerInfo.gender;
-        if (profileImage != null) {
-          rightProfileImageVersion = profileImage.version;
-        }
+      });
+    }
+
+    final partnerProfileImage =
+    await partnerProfileImageLocalDataSource.getPartnerProfileImage();
+    if (partnerProfileImage != null) {
+      setState(() {
+        rightProfileImage = File(partnerProfileImage.filePath);
+        rightProfileImageVersion = partnerProfileImage.version;
       });
     }
   }
