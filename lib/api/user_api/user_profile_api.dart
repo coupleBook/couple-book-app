@@ -23,6 +23,9 @@ class UserProfileApi {
     return UserProfileResponseDto.fromJson(response.data);
   }
 
+  /// ************************************************
+  /// 유저 프로필 이미지 조회 API
+  /// ************************************************
   Future<ProfileImageResponseDto> getUserProfileImage() async {
     final Response<dynamic> response =
         await _dio.get('/api/v1/user/profile/image');
