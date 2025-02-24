@@ -1,17 +1,17 @@
 class PartnerProfileImageEntity {
-  final String fileName;
+  final String filePath;
   final int version;
 
-  PartnerProfileImageEntity({required this.fileName, required this.version});
+  PartnerProfileImageEntity({required this.filePath, required this.version});
 
   Map<String, dynamic> toJson() => {
-    'fileName': fileName,
+    'filePath': filePath,
     'version': version,
   };
 
   factory PartnerProfileImageEntity.fromJson(Map<String, dynamic> json) =>
       PartnerProfileImageEntity(
-        fileName: json['fileName'],
+        filePath: json['filePath'],
         version: json['version'],
       );
 }

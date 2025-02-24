@@ -1,4 +1,4 @@
-import '../api_dto.dart';
+import '../../dto/api_dto.dart';
 
 class CreateCoupleCodeResponseDto extends ApiResponse {
   String code;

@@ -1,13 +1,15 @@
 import 'dart:async';
 
+import 'package:couple_book/data/service/couple_code_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/l10n.dart';
+import '../../api/couple_api/couple_code_creator_info_response.dart';
+import '../../api/partner_api/partner_profile_api.dart';
+import '../../data/local/couple_code_local_data_source.dart';
 import '../../data/local/entities/enums/login_platform.dart';
 import '../../router.dart';
-import 'couple_controller.dart';
 import 'logout_controller.dart';
 
 class ApiTestPage extends StatefulWidget {
@@ -19,20 +21,24 @@ class ApiTestPage extends StatefulWidget {
 
 class _ApiTestViewState extends State<ApiTestPage> {
   late LogoutController _logoutController;
-  late CoupleController _coupleController;
+  late CoupleCodeService _coupleCodeService;
   bool isPlatformLoaded = false;
 
   String? coupleCode; // 커플 연동 코드 저장 변수
   DateTime? expirationTime; // 만료 시간 저장 변수
   Timer? _timer;
   String timeRemaining = ''; // 남은 시간 표시용 변수
-  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+
+  final coupleCodeLocalDataSource = CoupleCodeLocalDataSource.instance;
+
+  final _partnerProfileApi = PartnerProfileApi();
 
   @override
   void initState() {
     super.initState();
     _logoutController = LogoutController(context);
-    _coupleController = CoupleController(context);
+    _coupleCodeService = CoupleCodeService(context);
+
     _loadPlatform(); // 로그아웃 시 플랫폼 로드
     _loadCoupleCode(); // 페이지에 들어올 때 저장된 커플 코드 로드
   }
@@ -46,17 +52,13 @@ class _ApiTestViewState extends State<ApiTestPage> {
 
   Future<void> _loadCoupleCode() async {
     // 저장된 커플 코드와 만료 시간 로드
-    final storedCode = await secureStorage.read(key: 'coupleCode');
-    final storedExpiration = await secureStorage.read(key: 'expirationTime');
+    final coupleCodeEntity = await coupleCodeLocalDataSource.getCoupleCode();
 
-    if (storedCode != null && storedExpiration != null) {
-      final expiration = DateTime.parse(storedExpiration);
-      final now = DateTime.now();
-
-      if (expiration.isAfter(now)) {
+    if (coupleCodeEntity != null) {
+      if (coupleCodeEntity.isValid()) {
         setState(() {
-          coupleCode = storedCode;
-          expirationTime = expiration;
+          coupleCode = coupleCodeEntity.code;
+          expirationTime = coupleCodeEntity.expirationAt;
         });
         _startTimer();
       } else {
@@ -95,8 +97,11 @@ class _ApiTestViewState extends State<ApiTestPage> {
   }
 
   Future<void> _clearStoredData() async {
-    await secureStorage.delete(key: 'coupleCode');
-    await secureStorage.delete(key: 'expirationTime');
+    await coupleCodeLocalDataSource.clearCoupleCode();
+    setState(() {
+      coupleCode = null;
+      expirationTime = null;
+    });
   }
 
   String _formatDuration(Duration duration) {
@@ -107,26 +112,20 @@ class _ApiTestViewState extends State<ApiTestPage> {
   }
 
   Future<void> _generateCoupleLinkCode() async {
-    final response = await _coupleController.generateCoupleLinkCode();
+    final response = await _coupleCodeService.generateCoupleLinkCode();
     if (response != null) {
       setState(() {
-        coupleCode = response.code; // 커플 연동 코드 저장
-        expirationTime = DateTime.now().add(
-          Duration(seconds: response.expirationTimeInSeconds),
-        ); // 만료 시간 설정
+        coupleCode = response.code;
+        expirationTime = response.expirationAt;
       });
-      await secureStorage.write(key: 'coupleCode', value: coupleCode);
-      await secureStorage.write(
-          key: 'expirationTime', value: expirationTime.toString());
       _startTimer(); // 타이머 시작
     }
   }
 
   Future<void> _coupleLink(String coupleCode) async {
-    final response = await _coupleController.coupleLink(coupleCode);
+    final response = await _coupleCodeService.coupleLink(coupleCode);
     if (response != null) {
       setState(() {
-        // TODO: 커플 연동 성공 시 처리 (파트너 response 활용)
         _clearStoredData();
       });
     }
@@ -157,8 +156,13 @@ class _ApiTestViewState extends State<ApiTestPage> {
                   const SizedBox(height: 10), // 간격 추가
                   ElevatedButton(
                     onPressed: () {
-                      _showInputDialog('커플 연동 코드 조회', (coupleCode) {
-                        _coupleController.getCoupleLinkCode(coupleCode);
+                      _showInputDialog('커플 연동 코드 조회', (coupleCode) async {
+                        final coupleLinkCode = await _coupleCodeService
+                            .getCoupleLinkCode(coupleCode);
+
+                        if (coupleLinkCode != null) {
+                          _showPopup(coupleLinkCode);
+                        }
                       });
                     },
                     child: const Text('커플 연동 코드 조회'),
@@ -171,6 +175,13 @@ class _ApiTestViewState extends State<ApiTestPage> {
                       });
                     },
                     child: const Text('커플 연동하기'),
+                  ),
+                  const SizedBox(height: 10), // 간격 추가
+                  ElevatedButton(
+                    onPressed: () {
+                      _partnerProfileApi.getPartnerProfileImage();
+                    },
+                    child: const Text('커플 이미지조회(테스트)'),
                   ),
                   const SizedBox(height: 20),
                   if (coupleCode != null)
@@ -256,6 +267,47 @@ class _ApiTestViewState extends State<ApiTestPage> {
                 Navigator.of(context).pop();
               },
               child: const Text('취소'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // 팝업 창으로 데이터를 보여주는 함수
+  void _showPopup(CoupleCodeCreatorInfoResponseDto userInfo) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: true, // 바깥 클릭 시 닫기 허용
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('커플 연동 코드 조회 결과'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('코드: ${userInfo.code}'),
+                const SizedBox(height: 10),
+                Text('이름: ${userInfo.username}'),
+                if (userInfo.birthday != null) ...[
+                  const SizedBox(height: 10),
+                  Text('생일: ${userInfo.birthday}'),
+                ],
+                if (userInfo.gender != null) ...[
+                  const SizedBox(height: 10),
+                  Text('성별: ${userInfo.gender}'),
+                ],
+                const SizedBox(height: 10),
+                Text('기념일: ${userInfo.datingAnniversary}'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 팝업 창 닫기
+              },
+              child: const Text('확인'),
             ),
           ],
         );

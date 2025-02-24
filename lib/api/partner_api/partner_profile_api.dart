@@ -11,7 +11,7 @@ class PartnerProfileApi {
   /// ************************************************
   /// 파트너 프로필 이미지 조회 API
   /// ************************************************
-  Future<ProfileImageResponseDto> getUserProfileImage() async {
+  Future<ProfileImageResponseDto> getPartnerProfileImage() async {
     final Response<dynamic> response =
         await _dio.get('/api/v1/partner/profile/image');
 

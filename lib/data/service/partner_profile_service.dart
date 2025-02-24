@@ -1,14 +1,27 @@
-import 'package:couple_book/data/local/partner_local_data_source.dart';
+import 'dart:io';
 
+import 'package:couple_book/data/local/partner_local_data_source.dart';
+import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
+
+import '../../api/partner_api/partner_profile_api.dart';
+import '../../core/utils/profile_image_path.dart';
 import '../local/entities/enums/gender_enum.dart';
 import '../local/entities/partner_entity.dart';
+import '../local/entities/partner_profile_image_entity.dart';
+import '../local/partner_profile_image_local_data_source.dart';
 import '../models/response/common/partner_info_response.dart';
 
 class PartnerProfileService {
-  final PartnerLocalDataSource _localDataSource =
-      PartnerLocalDataSource.instance;
+  final logger = Logger();
 
-  Future<PartnerEntity> saveProfile(PartnerInfoResponse response) async {
+  final _localDataSource = PartnerLocalDataSource.instance;
+  final _partnerProfileImageLocalDataSource =
+      PartnerProfileImageLocalDataSource.instance;
+
+  final _partnerProfileApi = PartnerProfileApi();
+
+  Future<bool> saveProfile(PartnerInfoResponse response) async {
     final gender = response.gender;
 
     final partnerEntity = PartnerEntity(
@@ -21,6 +34,46 @@ class PartnerProfileService {
 
     _localDataSource.savePartner(partnerEntity);
 
-    return partnerEntity;
+    if (response.profileImageVersion <= 0) {
+      if (response.profileImageVersion < 0) {
+        logger.e("partnerProfileImageVersion is negative");
+        return false;
+      }
+      return true;
+    }
+
+    final userProfileImageEntity =
+        await _partnerProfileImageLocalDataSource.getPartnerProfileImage();
+
+    if (userProfileImageEntity == null ||
+        userProfileImageEntity.version < response.profileImageVersion) {
+      return await _fetchAndSaveProfileImage(response.profileImageVersion);
+    }
+
+    return true;
+  }
+
+  Future<bool> _fetchAndSaveProfileImage(int version) async {
+    try {
+      final profileImageResponseDto =
+          await _partnerProfileApi.getPartnerProfileImage();
+      final profileImageResponse =
+          await http.get(Uri.parse(profileImageResponseDto.profileImageUrl));
+
+      final path = await getProfileImagePath("partnerProfileImage");
+      final file = File(path);
+      await file.writeAsBytes(profileImageResponse.bodyBytes);
+
+      await _partnerProfileImageLocalDataSource.savePartnerProfileImage(
+        PartnerProfileImageEntity(
+          filePath: path,
+          version: profileImageResponseDto.profileImageVersion,
+        ),
+      );
+      return true;
+    } catch (e) {
+      logger.e("Failed to fetch or save profile image: \$e");
+      return false;
+    }
   }
 }

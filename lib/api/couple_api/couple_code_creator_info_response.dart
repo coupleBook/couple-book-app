@@ -1,13 +1,13 @@
 import 'package:couple_book/dto/api_dto.dart';
 
-class CoupleCodeCreatorInfoResponse extends ApiResponse {
+class CoupleCodeCreatorInfoResponseDto extends ApiResponse {
   String code;
   String username;
   String? birthday;
   String? gender;
   String datingAnniversary;
 
-  CoupleCodeCreatorInfoResponse(
+  CoupleCodeCreatorInfoResponseDto(
       {required super.status,
       required super.error,
       required this.code,
@@ -16,8 +16,8 @@ class CoupleCodeCreatorInfoResponse extends ApiResponse {
       this.gender,
       required this.datingAnniversary});
 
-  factory CoupleCodeCreatorInfoResponse.fromJson(Map<String, dynamic> json) {
-    return CoupleCodeCreatorInfoResponse(
+  factory CoupleCodeCreatorInfoResponseDto.fromJson(Map<String, dynamic> json) {
+    return CoupleCodeCreatorInfoResponseDto(
         status: json['status'],
         error: json['error'],
         code: json['data']['code'],
