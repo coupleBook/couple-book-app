@@ -40,6 +40,6 @@ class PartnerEntity {
         gender: response.gender != null
             ? Gender.fromServerValue(response.gender!)
             : null,
-        updatedAt: response.updatedAt!,
+        updatedAt: response.updatedAt,
       );
 }
