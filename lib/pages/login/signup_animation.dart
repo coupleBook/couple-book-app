@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:couple_book/data/local/user_local_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 
 import '../../data/local/local_user_local_data_source.dart';
 import '../../router.dart';
@@ -15,6 +16,7 @@ class SignupAnimationPage extends StatefulWidget {
 }
 
 class SignupAnimationPageState extends State<SignupAnimationPage> {
+  final logger = Logger();
   final localUserLocalDataSource = LocalUserLocalDataSource.instance;
   final UserLocalDataSource userLocalDataSource = UserLocalDataSource.instance;
   String userName = ''; // userName을 State 클래스의 상태로 선언
@@ -46,7 +48,7 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
         });
       }
     } catch (e) {
-      print('Error loading user info: $e');
+      logger.d('Error loading user info: $e');
     }
   }
 
