@@ -40,7 +40,7 @@ dependencies:
   permission_handler: ^10.2.0
 
   shared_preferences: ^2.3.2
-  flutter_naver_login: ^1.8.0
+  flutter_naver_login: ^2.0.0
   google_sign_in: ^6.2.1
   flutter_secure_storage : ^9.2.2
   dio: ^5.7.0
