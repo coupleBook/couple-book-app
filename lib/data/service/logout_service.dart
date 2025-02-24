@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 
 import '../local/auth_local_data_source.dart';
 import '../local/entities/enums/login_platform.dart';
+import '../local/local_user_local_data_source.dart';
 import '../local/partner_local_data_source.dart';
 import '../local/partner_profile_image_local_data_source.dart';
 import '../local/user_local_data_source.dart';
@@ -18,6 +19,7 @@ class LogoutService {
   final partnerProfileImageLocalDataSource =
       PartnerProfileImageLocalDataSource();
   final userProfileImageLocalDataSource = UserProfileImageLocalDataSource();
+  final localUserLocalDataSource = LocalUserLocalDataSource();
 
   Future<void> signOut(LoginPlatform platform) async {
     switch (platform) {
@@ -59,6 +61,7 @@ class LogoutService {
       await partnerLocalDataSource.clearPartner();
       await userProfileImageLocalDataSource.clearProfileImage();
       await partnerProfileImageLocalDataSource.clearPartnerProfileImage();
+      await localUserLocalDataSource.clearLocalUser();
 
       logger.d('모든 토큰과 사용자 데이터가 삭제되었습니다.');
     } catch (e) {
