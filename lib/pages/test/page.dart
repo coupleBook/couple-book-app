@@ -143,11 +143,6 @@ class _ApiTestViewState extends State<ApiTestPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _buildLogoutButton(), // 로그아웃 버튼
-                  const SizedBox(height: 20), // 간격 추가
-                  ElevatedButton(
-                    onPressed: () => {},
-                    child: const Text('스토리지 전체삭제'),
-                  ),
                   const SizedBox(height: 10), // 간격 추가
                   ElevatedButton(
                     onPressed: _generateCoupleLinkCode,
@@ -175,13 +170,6 @@ class _ApiTestViewState extends State<ApiTestPage> {
                       });
                     },
                     child: const Text('커플 연동하기'),
-                  ),
-                  const SizedBox(height: 10), // 간격 추가
-                  ElevatedButton(
-                    onPressed: () {
-                      _partnerProfileApi.getPartnerProfileImage();
-                    },
-                    child: const Text('커플 이미지조회(테스트)'),
                   ),
                   const SizedBox(height: 20),
                   if (coupleCode != null)
