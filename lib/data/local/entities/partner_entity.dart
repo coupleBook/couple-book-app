@@ -11,26 +11,26 @@ class PartnerEntity {
   PartnerEntity({
     required this.id,
     required this.name,
-    required this.birthday,
-    required this.gender,
+    this.birthday,
+    this.gender,
     required this.updatedAt,
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'birthday': birthday,
-        'gender': gender?.toServerValue(),
-        'updatedAt': updatedAt,
-      };
+    'id': id,
+    'name': name,
+    'birthday': birthday,
+    'gender': gender?.toServerValue(),
+    'updatedAt': updatedAt,
+  };
 
   factory PartnerEntity.fromJson(Map<String, dynamic> json) => PartnerEntity(
-        id: json['id'],
-        name: json['name'],
-        birthday: json['birthday'],
-        gender: Gender.fromServerValue(json['gender']),
-        updatedAt: json['updatedAt'],
-      );
+    id: json['id'],
+    name: json['name'],
+    birthday: json['birthday'] as String?,
+    gender: json['gender'] != null ? Gender.fromServerValue(json['gender']) : null,
+    updatedAt: json['updatedAt'],
+  );
 
   factory PartnerEntity.fromMyInfoResponse(PartnerInfoResponse response) =>
       PartnerEntity(
