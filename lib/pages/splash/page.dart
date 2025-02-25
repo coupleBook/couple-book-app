@@ -1,6 +1,7 @@
 import 'package:couple_book/data/local/auth_local_data_source.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/user_api/user_profile_api.dart';
@@ -38,6 +39,8 @@ class _SplashViewState extends State<SplashView>
   final myProfileService = MyProfileService();
   final partnerProfileService = PartnerProfileService();
 
+  final storage = const FlutterSecureStorage();
+
   @override
   void initState() {
     super.initState();
@@ -56,6 +59,8 @@ class _SplashViewState extends State<SplashView>
 
   Future<void> _initializeSplash() async {
     try {
+      // TODO - 앱에 데이터 지우기용
+      // await storage.deleteAll();
       final auth = await authLocalDataSource.getAuthInfo();
       final accessToken = auth?.accessToken ?? '';
 
