@@ -110,7 +110,7 @@ class MainDdayViewState extends State<MainDdayView> {
     if (user != null) {
       setState(() {
         leftProfileName = user.name;
-        leftProfileBirthdate = user.birthday!;
+        leftProfileBirthdate = user.birthday ?? '';
         leftProfileGender = user.gender;
       });
     }
@@ -137,7 +137,7 @@ class MainDdayViewState extends State<MainDdayView> {
     }
 
     final partnerProfileImage =
-    await partnerProfileImageLocalDataSource.getPartnerProfileImage();
+        await partnerProfileImageLocalDataSource.getPartnerProfileImage();
     if (partnerProfileImage != null) {
       setState(() {
         rightProfileImage = File(partnerProfileImage.filePath);
@@ -370,7 +370,7 @@ class MainDdayViewState extends State<MainDdayView> {
           style: TypoStyle.seoyunR19_1_4.copyWith(fontSize: 16),
         ),
         AppText(
-          birthdate!,
+          birthdate ?? '',
           style: TypoStyle.notoSansR13_1_4.copyWith(fontSize: 10),
           color: ColorName.defaultGray,
         ),
@@ -387,7 +387,8 @@ class MainDdayViewState extends State<MainDdayView> {
 
       // 이름, 생일, 성별 변경 API 호출
       if (validUpdateProfile(updatedName, updatedBirthdate, updatedGender)) {
-        final updateUserProfile =  await userProfileApi.updateUserProfile(updatedName, updatedBirthdate, updatedGender);
+        final updateUserProfile = await userProfileApi.updateUserProfile(
+            updatedName, updatedBirthdate, updatedGender);
         myProfileService.saveProfile(updateUserProfile);
       }
 
