@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SplashView extends ConsumerStatefulWidget {
-  const SplashView({super.key});
+class SplashPage extends ConsumerStatefulWidget {
+  const SplashPage({super.key});
 
   @override
-  ConsumerState<SplashView> createState() => _SplashViewState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashViewState extends ConsumerState<SplashView> with SingleTickerProviderStateMixin {
+class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
 

@@ -1,48 +1,53 @@
 import 'dart:async';
 
-import 'package:couple_book/core/routes/view_route.dart';
-import 'package:couple_book/data/local/user_local_data_source.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/routes/view_route.dart';
+import '../../../data/local/local_user_local_data_source.dart';
+import '../../../data/local/user_local_data_source.dart';
 import 'package:logger/logger.dart';
 
-import '../../data/local/local_user_local_data_source.dart';
-
-class SignupAnimationPage extends StatefulWidget {
+class SignupAnimationPage extends ConsumerStatefulWidget {
   const SignupAnimationPage({super.key});
 
   @override
-  State<SignupAnimationPage> createState() => SignupAnimationPageState();
+  ConsumerState<SignupAnimationPage> createState() => SignupAnimationPageState();
 }
 
-class SignupAnimationPageState extends State<SignupAnimationPage> {
+class SignupAnimationPageState extends ConsumerState<SignupAnimationPage> {
   final logger = Logger();
   final localUserLocalDataSource = LocalUserLocalDataSource.instance;
-  final UserLocalDataSource userLocalDataSource = UserLocalDataSource.instance;
-  String userName = ''; // userName을 State 클래스의 상태로 선언
+  final userLocalDataSource = UserLocalDataSource.instance;
+  String userName = ''; // 사용자 이름 상태
 
   @override
   void initState() {
     super.initState();
-    _initAsync(); // 비동기 초기화 함수 호출
+    _initAsync();
   }
 
   Future<void> _initAsync() async {
-    await _loadUserName(); // 유저 정보 불러오기
+    await _loadUserName();
     final anniversary = await localUserLocalDataSource.getAnniversary();
-    Timer(const Duration(milliseconds: 3700), () {
-      if (anniversary.isEmpty) {
-        context.goNamed(ViewRoute.coupleAnniversary.name);
-      } else {
-        context.goNamed(ViewRoute.home.name);
-      }
-    });
+
+    if (mounted) {
+      Future.delayed(const Duration(milliseconds: 3700), () {
+        if (mounted) {
+          if (anniversary.isEmpty) {
+            context.goNamed(ViewRoute.coupleAnniversary.name);
+          } else {
+            context.goNamed(ViewRoute.home.name);
+          }
+        }
+      });
+    }
   }
 
   Future<void> _loadUserName() async {
     try {
       var userEntity = await userLocalDataSource.getUser();
-      if (userEntity != null) {
+      if (userEntity != null && mounted) {
         setState(() {
           userName = userEntity.name;
         });
@@ -55,12 +60,12 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFDE7), // 이미지 배경색
+      backgroundColor: const Color(0xFFFDFDE7),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(), // 상단 여백
+            const Spacer(),
             Image.asset(
               'assets/icons/signup.gif',
               width: 100,
@@ -81,7 +86,7 @@ class SignupAnimationPageState extends State<SignupAnimationPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Spacer(), // 하단 여백
+            const Spacer(),
           ],
         ),
       ),
