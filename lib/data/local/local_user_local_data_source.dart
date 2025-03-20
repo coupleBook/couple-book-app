@@ -1,13 +1,17 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 import '../../core/storage/secure_storage_helper.dart';
+import '../../core/storage/shared_preferences_helper.dart';
 import 'entities/local_user_entity.dart';
 
+final logger = Logger();
+
 class LocalUserLocalDataSource {
-  static final LocalUserLocalDataSource instance =
-      LocalUserLocalDataSource._internal();
+  static final instance = LocalUserLocalDataSource._internal();
 
   factory LocalUserLocalDataSource() => instance;
 
@@ -16,13 +20,27 @@ class LocalUserLocalDataSource {
   static const _localUserKey = 'LOCAL_USER_INFO';
 
   Future<void> saveLocalUser(LocalUserEntity localUser) async {
-    await SecureStorageHelper.setItem(
-        _localUserKey, jsonEncode(localUser.toJson()));
+    await SharedPreferencesHelper.setItem(_localUserKey, jsonEncode(localUser.toJson()));
   }
 
-  Future<LocalUserEntity?> getLocalUser() async {
-    final data = await SecureStorageHelper.getItem(_localUserKey);
-    return data != null ? LocalUserEntity.fromJson(jsonDecode(data)) : null;
+  Future<LocalUserEntity?> _getLocalUser() async {
+    final data = await SharedPreferencesHelper.getItem(_localUserKey);
+
+    if (data != null) {
+      return LocalUserEntity.fromJson(jsonDecode(data));
+    }
+
+    // SecureStorage에서 SharedPreferences로 변경
+    final item = await SecureStorageHelper.getItem(_localUserKey);
+    if (item != null) {
+      final localUserEntity = LocalUserEntity.fromJson(jsonDecode(item));
+      await saveLocalUser(localUserEntity);
+      await SecureStorageHelper.deleteItem(_localUserKey);
+
+      return localUserEntity;
+    }
+
+    return null;
   }
 
   Future<String> getAnniversary() async {
@@ -38,7 +56,7 @@ class LocalUserLocalDataSource {
   }
 
   Future<DateTime?> _getAnniversary() async {
-    final localUserEntity = await getLocalUser();
+    final localUserEntity = await _getLocalUser();
     if (localUserEntity == null) {
       return null;
     }
@@ -47,6 +65,6 @@ class LocalUserLocalDataSource {
   }
 
   Future<void> clearLocalUser() async {
-    await SecureStorageHelper.deleteItem(_localUserKey);
+    await SharedPreferencesHelper.deleteItem(_localUserKey);
   }
 }
