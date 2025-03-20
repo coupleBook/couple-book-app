@@ -33,4 +33,8 @@ enum Gender {
         throw Exception('Invalid gender value: $value');
     }
   }
+
+  bool isMale() {
+    return this == Gender.male;
+  }
 }
