@@ -1,7 +1,6 @@
 import 'package:couple_book/data/local/auth_local_data_source.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../api/user_api/user_profile_api.dart';
@@ -22,8 +21,7 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView>
-    with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin {
   final userProfileApi = UserProfileApi();
 
   late AnimationController _controller;
@@ -38,8 +36,6 @@ class _SplashViewState extends State<SplashView>
   final localUserLocalDataSource = LocalUserLocalDataSource();
   final myProfileService = MyProfileService();
   final partnerProfileService = PartnerProfileService();
-
-  final storage = const FlutterSecureStorage();
 
   @override
   void initState() {
@@ -61,8 +57,7 @@ class _SplashViewState extends State<SplashView>
     try {
       // TODO - 앱에 데이터 지우기용
       // await storage.deleteAll();
-      final auth = await authLocalDataSource.getAuthInfo();
-      final accessToken = auth?.accessToken ?? '';
+      final accessToken = (await authLocalDataSource.getAuthInfo())?.accessToken ?? '';
 
       final anniversary = await localUserLocalDataSource.getAnniversary();
 
@@ -72,12 +67,12 @@ class _SplashViewState extends State<SplashView>
       logger.d("ANNIVERSARY isNotEmpty: ${anniversary.isNotEmpty}");
 
       if (accessToken.isNotEmpty) {
-        final userProfile = await userProfileApi.getUserProfile();
-        myProfileService.saveProfile(userProfile.me);
-
-        if (userProfile.coupleInfo != null) {
-          partnerProfileService.saveProfile(userProfile.coupleInfo!.partner);
-        }
+        // final userProfile = await userProfileApi.getUserProfile();
+        // myProfileService.saveProfile(userProfile.me);
+        //
+        // if (userProfile.coupleInfo != null) {
+        //   partnerProfileService.saveProfile(userProfile.coupleInfo!.partner);
+        // }
         setState(() {
           existToken = true;
         });
@@ -111,8 +106,7 @@ class _SplashViewState extends State<SplashView>
   /// -- access token이 존재하고 기념일이 존재하지 않는 경우: CoupleAnniversaryPage
   /// -- access token이 존재하지 않는 경우: LoginPage
   Widget _getTargetPage() {
-    logger.d(
-        '_getTargetPage: existToken: $existToken, existAnniversary: $existAnniversary');
+    logger.d('_getTargetPage: existToken: $existToken, existAnniversary: $existAnniversary');
     if (existToken && existAnniversary) {
       return const HomePage();
     } else if (existToken && !existAnniversary) {
