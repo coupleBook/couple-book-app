@@ -1,14 +1,15 @@
+import 'package:couple_book/feature01/presentation/pages/splash_view.dart';
+import 'package:couple_book/main.dart';
+import 'package:couple_book/pages/couple_anniversary/page.dart';
+import 'package:couple_book/pages/home/page.dart';
+import 'package:couple_book/pages/login/page.dart';
+import 'package:couple_book/pages/login/signup_animation.dart';
+import 'package:couple_book/pages/logout/page.dart';
+import 'package:couple_book/pages/test/page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../main.dart';
-import '../../pages/couple_anniversary/page.dart';
-import '../../pages/home/page.dart';
-import '../../pages/login/page.dart';
-import '../../pages/login/signup_animation.dart';
-import '../../pages/logout/page.dart';
-import '../../pages/splash/page.dart';
-import '../../pages/test/page.dart';
+
 import 'view_route.dart';
 
 class AppRouter extends Notifier<GoRouter> {
