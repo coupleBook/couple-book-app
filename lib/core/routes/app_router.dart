@@ -1,9 +1,9 @@
+import 'package:couple_book/feature01/presentation/pages/home_page.dart';
 import 'package:couple_book/feature01/presentation/pages/login_page.dart';
 import 'package:couple_book/feature01/presentation/pages/signup_animation_page.dart';
 import 'package:couple_book/feature01/presentation/pages/splash_page.dart';
 import 'package:couple_book/main.dart';
 import 'package:couple_book/pages/couple_anniversary/page.dart';
-import 'package:couple_book/pages/home/page.dart';
 import 'package:couple_book/pages/logout/page.dart';
 import 'package:couple_book/pages/test/page.dart';
 import 'package:flutter/material.dart';
