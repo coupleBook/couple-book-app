@@ -173,13 +173,13 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (BuildContext context) {
+      builder: (BuildContext modalContext) {
         return PermissionHandlerWidget(
           appName: l10n.appName,
           onPermissionGranted: () async {
-            // 권한이 허용되면 이미지를 선택하고 모달을 닫음
             await _pickImageFromGallery();
-            Navigator.of(context).pop(); // 모달 닫기
+            if (!modalContext.mounted) return;
+            Navigator.of(modalContext).pop();
           },
           callLocation: 'PHOTO_ACTION',
         );
@@ -205,7 +205,6 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
     String? hintText,
     VoidCallback? onTap,
     bool readOnly = false, // 기본적으로 readOnly는 false
-    double? width, // 추가된 width 인자
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,14 +244,15 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
   }
 
   Future<void> _selectDate() async {
+    final BuildContext currentContext = context;
     DateTime? pickedDate = await showDatePicker(
-      context: context,
+      context: currentContext,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
 
-    if (pickedDate != null) {
+    if (pickedDate != null && mounted) {
       setState(() {
         _birthdateController.text = "${pickedDate.toLocal()}".split(' ')[0];
         birthdateError = null;
@@ -261,20 +261,18 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
   }
 
   Widget _buildSaveButton() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    double widthSize = screenWidth * 0.8;
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: ElevatedButton(
-        onPressed: () async {
+        onPressed: () {
+          final BuildContext currentContext = context;
           setState(() {
             nameError = _validateName(_nameController.text);
             birthdateError =
                 _birthdateController.text.isEmpty ? l10n.selectDate : null;
           });
           if (nameError == null && birthdateError == null) {
-            Navigator.of(context).pop({
+            Navigator.of(currentContext).pop({
               'name': _nameController.text,
               'birthdate': _birthdateController.text,
               'gender': _selectedGender,

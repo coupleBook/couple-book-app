@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/l10n.dart';
 import '../../api/couple_api/couple_code_creator_info_response.dart';
-import '../../api/partner_api/partner_profile_api.dart';
 import '../../data/local/couple_code_local_data_source.dart';
 import '../../data/local/entities/enums/login_platform.dart';
 import '../../router.dart';
@@ -30,8 +29,6 @@ class _ApiTestViewState extends State<ApiTestPage> {
   String timeRemaining = ''; // 남은 시간 표시용 변수
 
   final coupleCodeLocalDataSource = CoupleCodeLocalDataSource.instance;
-
-  final _partnerProfileApi = PartnerProfileApi();
 
   @override
   void initState() {

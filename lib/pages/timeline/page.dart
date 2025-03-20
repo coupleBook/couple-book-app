@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../gen/colors.gen.dart';
 import '../../style/text_style.dart';
@@ -7,11 +8,10 @@ class TimelinePage extends StatefulWidget {
   const TimelinePage({super.key});
 
   @override
-  _TimelinePageState createState() => _TimelinePageState();
+  TimelinePageState createState() => TimelinePageState();
 }
 
-class _TimelinePageState extends State<TimelinePage> with SingleTickerProviderStateMixin {
-  DateTime? _selectedDate;
+class TimelinePageState extends State<TimelinePage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -39,9 +39,9 @@ class _TimelinePageState extends State<TimelinePage> with SingleTickerProviderSt
               highlightColor: Colors.transparent,
               hoverColor: Colors.transparent,
               tabBarTheme: TabBarTheme(
-                overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.pressed)) {
+                overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.pressed)) {
                       return Colors.transparent;
                     }
                     return null;
@@ -67,7 +67,7 @@ class _TimelinePageState extends State<TimelinePage> with SingleTickerProviderSt
                 });
               },
               tabs: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 36,
                   child: Center(
@@ -80,7 +80,7 @@ class _TimelinePageState extends State<TimelinePage> with SingleTickerProviderSt
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 36,
                   child: Center(
@@ -109,8 +109,8 @@ class _TimelinePageState extends State<TimelinePage> with SingleTickerProviderSt
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.add),
         backgroundColor: Colors.orange,
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -271,12 +271,6 @@ class _TimelinePageState extends State<TimelinePage> with SingleTickerProviderSt
               ),
             ],
           );
-
-
-
-
-
-
         }
       },
     );

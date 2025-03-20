@@ -15,13 +15,12 @@ class Calendar extends StatefulWidget {
   });
 
   @override
-  _CalendarState createState() => _CalendarState();
+  CalendarState createState() => CalendarState();
 }
 
-class _CalendarState extends State<Calendar> {
+class CalendarState extends State<Calendar> {
   DateTime? _focusedDate;
   DateTime? _selectedDate;
-  bool _isYearMonthPickerVisible = false;
 
   /// TODO: 최소, 최대 날짜 재설정 필요 ( 설정이 필요 없는 방법은 없나 서칭 필요 )
   final DateTime _firstDay = DateTime.utc(1900, 1, 1);
@@ -57,6 +56,7 @@ class _CalendarState extends State<Calendar> {
             ),
             ElevatedButton(
               onPressed: () {
+                if (!mounted) return;
                 setState(() {
                   _focusedDate = tempDate;
                 });
