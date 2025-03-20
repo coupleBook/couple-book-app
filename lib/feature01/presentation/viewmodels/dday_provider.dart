@@ -11,6 +11,9 @@ import 'package:couple_book/data/service/my_profile_service.dart';
 import 'package:couple_book/feature/auth/user_profile_service.dart';
 import 'package:couple_book/feature01/presentation/viewmodels/dday_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class DdayNotifier extends StateNotifier<DdayState> {
   final LocalUserLocalDataSource localUserLocalDataSource;
@@ -51,7 +54,7 @@ class DdayNotifier extends StateNotifier<DdayState> {
         _loadPartnerInfo(),
       ]);
     } catch (e) {
-      print('❌ 초기 데이터 로드 실패: $e');
+      logger.e('❌ 초기 데이터 로드 실패: $e');
     }
   }
 
@@ -67,7 +70,7 @@ class DdayNotifier extends StateNotifier<DdayState> {
         );
       }
     } catch (e) {
-      print('❌ D-Day 로드 실패: $e');
+      logger.e('❌ D-Day 로드 실패: $e');
     }
   }
 
@@ -84,7 +87,7 @@ class DdayNotifier extends StateNotifier<DdayState> {
         leftProfileImage: userProfileImage != null ? File(userProfileImage.filePath) : null,
       );
     } catch (e) {
-      print('❌ 사용자 프로필 로드 실패: $e');
+      logger.e('❌ 사용자 프로필 로드 실패: $e');
     }
   }
 
@@ -101,7 +104,7 @@ class DdayNotifier extends StateNotifier<DdayState> {
         rightProfileImage: partnerProfileImage != null ? File(partnerProfileImage.filePath) : null,
       );
     } catch (e) {
-      print('❌ 파트너 프로필 로드 실패: $e');
+      logger.e('❌ 파트너 프로필 로드 실패: $e');
     }
   }
 
@@ -133,7 +136,7 @@ class DdayNotifier extends StateNotifier<DdayState> {
         leftProfileImage: newProfileImage,
       );
     } catch (e) {
-      print('❌ 프로필 업데이트 실패: $e');
+      logger.e('❌ 프로필 업데이트 실패: $e');
     }
   }
 
@@ -143,7 +146,7 @@ class DdayNotifier extends StateNotifier<DdayState> {
       final updatedUserProfile = await userProfileApi.updateUserProfile(name, birthdate, gender);
       myProfileService.saveProfile(updatedUserProfile);
     } catch (e) {
-      print('❌ 사용자 정보 업데이트 실패: $e');
+      logger.e('❌ 사용자 정보 업데이트 실패: $e');
     }
   }
 

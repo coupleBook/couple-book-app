@@ -2,6 +2,9 @@ import 'package:couple_book/core/providers/data_providers.dart';
 import 'package:couple_book/data/local/auth_local_data_source.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 final splashProvider = StateNotifierProvider<SplashNotifier, SplashState>((ref) {
   return SplashNotifier(
@@ -56,7 +59,7 @@ class SplashNotifier extends StateNotifier<SplashState> {
         existAnniversary: anniversary.isNotEmpty,
       );
     } catch (e) {
-      print("Error during splash initialization: $e");
+      logger.e("Error during splash initialization: $e");
     }
   }
 }
