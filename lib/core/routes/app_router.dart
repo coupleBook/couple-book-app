@@ -16,6 +16,7 @@ class AppRouter extends Notifier<GoRouter> {
   GoRouter build() {
     return GoRouter(
       navigatorKey: CoupleBookApp.navKey,
+      initialLocation: ViewRoute.splash.path,
       routes: _routes,
     );
   }
