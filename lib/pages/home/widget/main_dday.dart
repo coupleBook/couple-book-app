@@ -33,16 +33,13 @@ class MainDdayViewState extends State<MainDdayView> {
   final logger = Logger();
 
   final userLocalDataSource = UserLocalDataSource.instance;
-  final userProfileImageLocalDataSource =
-      UserProfileImageLocalDataSource.instance;
+  final userProfileImageLocalDataSource = UserProfileImageLocalDataSource.instance;
   final localUserLocalDataSource = LocalUserLocalDataSource.instance;
 
   final partnerLocalDataSource = PartnerLocalDataSource.instance;
-  final partnerProfileImageLocalDataSource =
-      PartnerProfileImageLocalDataSource.instance;
+  final partnerProfileImageLocalDataSource = PartnerProfileImageLocalDataSource.instance;
 
-  final String todayDate =
-      DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
+  final String todayDate = DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
   final UserProfileService userProfileService = UserProfileService();
   final myProfileService = MyProfileService();
 
@@ -87,8 +84,7 @@ class MainDdayViewState extends State<MainDdayView> {
   /// TODO: 처음만날날, D-day 계산 로직 서비스로 분리 예정
   /// getAnniversaryDate, calculateDday
   getAnniversaryDate() async {
-    DateTime? anniversary =
-        await localUserLocalDataSource.getAnniversaryToDatetime();
+    DateTime? anniversary = await localUserLocalDataSource.getAnniversaryToDatetime();
     setState(() {
       anniversaryDate = anniversary;
     });
@@ -96,8 +92,7 @@ class MainDdayViewState extends State<MainDdayView> {
 
   void calculateDday() {
     if (anniversaryDate != null) {
-      int calculateDday =
-          DateTime.now().difference(anniversaryDate!).inDays + 1;
+      int calculateDday = DateTime.now().difference(anniversaryDate!).inDays + 1;
       setState(() {
         dday = calculateDday.toString();
       });
@@ -115,13 +110,20 @@ class MainDdayViewState extends State<MainDdayView> {
       });
     }
 
-    final userProfileImage =
-        await userProfileImageLocalDataSource.getProfileImage();
+    final userProfileImage = await userProfileImageLocalDataSource.getProfileImage();
     if (userProfileImage != null) {
-      setState(() {
-        leftProfileImage = File(userProfileImage.filePath);
-        leftProfileImageVersion = userProfileImage.version;
-      });
+      File imageFile = File(userProfileImage.filePath);
+
+      if (imageFile.existsSync()) {
+        setState(() {
+          leftProfileImage = imageFile;
+          leftProfileImageVersion = userProfileImage.version;
+        });
+      } else {
+        setState(() {
+          leftProfileImage = null;
+        });
+      }
     }
   }
 
@@ -136,13 +138,20 @@ class MainDdayViewState extends State<MainDdayView> {
       });
     }
 
-    final partnerProfileImage =
-        await partnerProfileImageLocalDataSource.getPartnerProfileImage();
+    final partnerProfileImage = await partnerProfileImageLocalDataSource.getPartnerProfileImage();
     if (partnerProfileImage != null) {
-      setState(() {
-        rightProfileImage = File(partnerProfileImage.filePath);
-        rightProfileImageVersion = partnerProfileImage.version;
-      });
+      File imageFile = File(partnerProfileImage.filePath);
+
+      if (imageFile.existsSync()) {
+        setState(() {
+          rightProfileImage = imageFile;
+          rightProfileImageVersion = partnerProfileImage.version;
+        });
+      } else {
+        setState(() {
+          rightProfileImage = null;
+        });
+      }
     }
   }
 
@@ -283,8 +292,7 @@ class MainDdayViewState extends State<MainDdayView> {
                               : CircleAvatar(
                                   radius: 40,
                                   backgroundColor: Colors.transparent,
-                                  child: Assets.icons.profileMaleContent
-                                      .svg(width: 80, height: 80),
+                                  child: Assets.icons.profileMaleContent.svg(width: 80, height: 80),
                                 ),
                         ),
                       ),
@@ -336,15 +344,13 @@ class MainDdayViewState extends State<MainDdayView> {
                           rightProfileImage != null
                               ? CircleAvatar(
                                   radius: 40,
-                                  backgroundImage:
-                                      FileImage(rightProfileImage!),
+                                  backgroundImage: FileImage(rightProfileImage!),
                                   backgroundColor: Colors.transparent,
                                 )
                               : CircleAvatar(
                                   radius: 40,
                                   backgroundColor: Colors.transparent,
-                                  child: Assets.icons.profileFemaleContent
-                                      .svg(width: 80, height: 80),
+                                  child: Assets.icons.profileFemaleContent.svg(width: 80, height: 80),
                                 ),
                         ),
                       ),
@@ -359,8 +365,7 @@ class MainDdayViewState extends State<MainDdayView> {
     );
   }
 
-  Widget _buildProfileColumn(
-      String name, String? birthdate, Widget profileIcon) {
+  Widget _buildProfileColumn(String name, String? birthdate, Widget profileIcon) {
     return Column(
       children: [
         profileIcon,
@@ -387,18 +392,15 @@ class MainDdayViewState extends State<MainDdayView> {
 
       // 이름, 생일, 성별 변경 API 호출
       if (validUpdateProfile(updatedName, updatedBirthdate, updatedGender)) {
-        final updateUserProfile = await userProfileApi.updateUserProfile(
-            updatedName, updatedBirthdate, updatedGender);
+        final updateUserProfile = await userProfileApi.updateUserProfile(updatedName, updatedBirthdate, updatedGender);
         myProfileService.saveProfile(updateUserProfile);
       }
 
       // 이미지 변경 API 호출
       int updatedLeftProfileImageVersion = leftProfileImageVersion;
       if (updatedImage != null && updatedImage != leftProfileImage) {
-        var profileImageModificationResponseDto =
-            await userProfileService.updateUserProfileImage(updatedImage);
-        updatedLeftProfileImageVersion =
-            profileImageModificationResponseDto.profileImageVersion;
+        var profileImageModificationResponseDto = await userProfileService.updateUserProfileImage(updatedImage);
+        updatedLeftProfileImageVersion = profileImageModificationResponseDto.profileImageVersion;
 
         // 상태 업데이트
         setState(() {
@@ -420,8 +422,6 @@ class MainDdayViewState extends State<MainDdayView> {
   }
 
   bool validUpdateProfile(updatedName, updatedBirthdate, updatedGender) {
-    return updatedName != leftProfileName ||
-        updatedBirthdate != leftProfileBirthdate ||
-        updatedGender != leftProfileGender;
+    return updatedName != leftProfileName || updatedBirthdate != leftProfileBirthdate || updatedGender != leftProfileGender;
   }
 }
