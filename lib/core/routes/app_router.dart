@@ -1,4 +1,4 @@
-import 'package:couple_book/feature01/presentation/pages/home_page.dart';
+import 'package:couple_book/feature01/presentation/pages/home/home_page.dart';
 import 'package:couple_book/feature01/presentation/pages/login_page.dart';
 import 'package:couple_book/feature01/presentation/pages/signup_animation_page.dart';
 import 'package:couple_book/feature01/presentation/pages/splash_page.dart';
