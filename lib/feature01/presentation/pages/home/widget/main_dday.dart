@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:couple_book/core/l10n/l10n.dart';
 import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
-import 'package:couple_book/feature01/presentation/viewmodels/dday_provider.dart';
-import 'package:couple_book/feature01/presentation/viewmodels/dday_state.dart';
-import 'package:couple_book/gen/assets.gen.dart';
-import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/feature01/presentation/pages/home/widget/permission_handler_widget.dart';
 import 'package:couple_book/feature01/presentation/pages/home/widget/profile_popup.dart';
+import 'package:couple_book/feature01/viewmodels/dday_provider.dart';
+import 'package:couple_book/feature01/viewmodels/dday_state.dart';
+import 'package:couple_book/gen/assets.gen.dart';
+import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

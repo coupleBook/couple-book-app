@@ -9,7 +9,7 @@ import 'package:couple_book/data/local/user_local_data_source.dart';
 import 'package:couple_book/data/local/user_profile_image_local_data_source.dart';
 import 'package:couple_book/data/service/my_profile_service.dart';
 import 'package:couple_book/feature/auth/user_profile_service.dart';
-import 'package:couple_book/feature01/presentation/viewmodels/dday_state.dart';
+import 'package:couple_book/feature01/viewmodels/dday_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 

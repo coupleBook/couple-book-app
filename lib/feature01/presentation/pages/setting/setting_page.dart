@@ -6,19 +6,19 @@ import 'package:couple_book/data/service/couple_code_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/l10n/l10n.dart';
-import '../../api/couple_api/couple_code_creator_info_response.dart';
-import '../../data/local/couple_code_local_data_source.dart';
-import 'logout_controller.dart';
+import '../../../../../core/l10n/l10n.dart';
+import '../../../../api/couple_api/couple_code_creator_info_response.dart';
+import '../../../../data/local/couple_code_local_data_source.dart';
+import '../../../../pages/test/logout_controller.dart';
 
-class ApiTestPage extends StatefulWidget {
-  const ApiTestPage({super.key});
+class SettingPage extends StatefulWidget {
+  const SettingPage({super.key});
 
   @override
-  State<ApiTestPage> createState() => _ApiTestViewState();
+  State<SettingPage> createState() => _SettingViewState();
 }
 
-class _ApiTestViewState extends State<ApiTestPage> {
+class _SettingViewState extends State<SettingPage> {
   late LogoutController _logoutController;
   late CoupleCodeService _coupleCodeService;
   bool isPlatformLoaded = false;

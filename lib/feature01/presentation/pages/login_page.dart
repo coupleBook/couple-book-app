@@ -2,7 +2,7 @@ import 'package:couple_book/core/l10n/l10n.dart';
 import 'package:couple_book/core/routes/view_route.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:couple_book/feature01/presentation/components/sign_in_button.dart';
-import 'package:couple_book/feature01/presentation/viewmodels/login_provider.dart';
+import 'package:couple_book/feature01/viewmodels/login_provider.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';

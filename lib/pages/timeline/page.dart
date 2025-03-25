@@ -116,7 +116,7 @@ class TimelinePageState extends State<TimelinePage> with SingleTickerProviderSta
   }
 
   /// 리스트 항목을 체크박스와 함께 그리기
-  /// TODO: page.dart 파일이 아닌 위젯 파일로 따로 분리 필요
+  /// TODO: setting_page.dart 파일이 아닌 위젯 파일로 따로 분리 필요
   Widget buildAnniversaryList() {
     final anniversaries = [
       {'label': '200일', 'date': '2024/08/05(금)', 'dDay': 'D+209'},
