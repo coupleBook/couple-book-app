@@ -1,14 +1,15 @@
 import 'dart:io'; // 파일 관련 작업을 위해 추가
 
+import 'package:couple_book/feature01/presentation/pages/home/widget/gender_select_button.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 
-import '../../../core/l10n/l10n.dart';
-import '../../../data/local/entities/enums/gender_enum.dart';
-import '../../../style/text_style.dart';
-import '../../../feature01/presentation/pages/home/widget/permission_handler_widget.dart'; // 권한 처리 위젯 추가
+import '../../../../../core/l10n/l10n.dart';
+import '../../../../../data/local/entities/enums/gender_enum.dart';
+import '../../../../../style/text_style.dart';
+import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
 class ProfilePopupForm extends StatefulWidget {
   final String name;
@@ -107,34 +108,17 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildGenderButton(Gender.male),
-        _buildGenderButton(Gender.female),
+        GenderSelectButton(
+          gender: Gender.male,
+          selectedGender: _selectedGender,
+          onSelected: (gender) => setState(() => _selectedGender = gender),
+        ),
+        GenderSelectButton(
+          gender: Gender.female,
+          selectedGender: _selectedGender,
+          onSelected: (gender) => setState(() => _selectedGender = gender),
+        ),
       ],
-    );
-  }
-
-  Widget _buildGenderButton(Gender gender) {
-    final isSelected = _selectedGender == gender;
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          _selectedGender = gender;
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor:
-        isSelected ? ColorName.defaultBlack : ColorName.lightGray,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-      child: Text(
-        gender.toDisplayValue(),
-        style: TextStyle(
-          color: isSelected ? Colors.white : Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
     );
   }
 
