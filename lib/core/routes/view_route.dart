@@ -1,7 +1,6 @@
 enum ViewRoute {
   splash,
   login,
-  logout,
   home,
   coupleAnniversary,
   signupAnimation,
@@ -15,8 +14,6 @@ extension RouteString on ViewRoute {
         return 'SPLASH';
       case ViewRoute.login:
         return 'LOGIN';
-      case ViewRoute.logout:
-        return 'LOGOUT';
       case ViewRoute.home:
         return 'HOME';
       case ViewRoute.coupleAnniversary:
@@ -34,8 +31,6 @@ extension RouteString on ViewRoute {
         return '/';
       case ViewRoute.login:
         return '/login';
-      case ViewRoute.logout:
-        return '/logout';
       case ViewRoute.home:
         return '/home';
       case ViewRoute.coupleAnniversary:

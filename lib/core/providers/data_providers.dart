@@ -1,5 +1,6 @@
 import 'package:couple_book/data/local/auth_local_data_source.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
+import 'package:couple_book/feature01/services/couple_code_service.dart';
 import 'package:couple_book/data/service/login_service.dart';
 import 'package:couple_book/data/service/my_profile_service.dart';
 import 'package:couple_book/data/service/partner_profile_service.dart';
@@ -27,4 +28,8 @@ final partnerProfileServiceProvider = Provider<PartnerProfileService>((ref) {
 
 final loginServiceProvider = Provider<LoginService>((ref) {
   return LoginService();
+});
+
+final coupleCodeServiceProvider = Provider<CoupleCodeService>((ref) {
+  return CoupleCodeService();
 });
