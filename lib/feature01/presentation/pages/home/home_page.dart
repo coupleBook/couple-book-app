@@ -4,7 +4,7 @@ import 'package:couple_book/feature01/presentation/pages/home/widget/main_dday.d
 import 'package:couple_book/feature01/presentation/viewmodels/home_provider.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
-import 'package:couple_book/pages/timeline/page.dart';
+import 'package:couple_book/feature01/presentation/pages/timeline_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

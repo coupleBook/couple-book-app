@@ -4,7 +4,7 @@ import 'package:couple_book/feature01/presentation/pages/setting/setting_page.da
 import 'package:couple_book/feature01/presentation/pages/signup_animation_page.dart';
 import 'package:couple_book/feature01/presentation/pages/splash_page.dart';
 import 'package:couple_book/main.dart';
-import 'package:couple_book/pages/couple_anniversary/page.dart';
+import 'package:couple_book/feature01/presentation/pages/couple_anniversary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

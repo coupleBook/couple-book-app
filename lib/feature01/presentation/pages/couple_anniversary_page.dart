@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
-import '../../core/l10n/l10n.dart';
-import '../../core/utils/widgets/calendar.dart';
-import '../../data/local/entities/local_user_entity.dart';
-import '../../data/local/local_user_local_data_source.dart';
-import '../../gen/assets.gen.dart';
+import '../../../core/l10n/l10n.dart';
+import '../../../core/utils/widgets/calendar.dart';
+import '../../../data/local/entities/local_user_entity.dart';
+import '../../../data/local/local_user_local_data_source.dart';
+import '../../../gen/assets.gen.dart';
 
 final logger = Logger();
 

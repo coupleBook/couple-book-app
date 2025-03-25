@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:couple_book/api/user_api/user_profile_api.dart';
+import 'package:couple_book/core/providers/data_providers.dart';
 import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/partner_local_data_source.dart';
@@ -8,7 +9,7 @@ import 'package:couple_book/data/local/partner_profile_image_local_data_source.d
 import 'package:couple_book/data/local/user_local_data_source.dart';
 import 'package:couple_book/data/local/user_profile_image_local_data_source.dart';
 import 'package:couple_book/data/service/my_profile_service.dart';
-import 'package:couple_book/feature/auth/user_profile_service.dart';
+import 'package:couple_book/feature01/data/services/user_profile_service.dart';
 import 'package:couple_book/feature01/presentation/viewmodels/dday_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
@@ -165,7 +166,7 @@ final ddayProvider = StateNotifierProvider<DdayNotifier, DdayState>((ref) {
     PartnerLocalDataSource.instance,
     PartnerProfileImageLocalDataSource.instance,
     MyProfileService(),
-    UserProfileService(),
+    ref.read(userProfileServiceProvider),
     UserProfileApi(),
   );
 });

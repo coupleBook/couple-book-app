@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../gen/colors.gen.dart';
-import '../../style/text_style.dart';
+import '../../../gen/colors.gen.dart';
+import '../../../style/text_style.dart';
 
 class TimelinePage extends StatefulWidget {
   const TimelinePage({super.key});
