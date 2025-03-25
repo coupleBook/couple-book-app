@@ -1,7 +1,7 @@
 import 'package:couple_book/core/routes/view_route.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
-import 'package:couple_book/feature01/viewmodels/logout_controller.dart';
-import 'package:couple_book/feature01/viewmodels/setting_viewmodel.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/logout_controller.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/setting_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

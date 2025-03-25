@@ -1,7 +1,7 @@
 import 'package:couple_book/core/l10n/l10n.dart';
 import 'package:couple_book/feature01/presentation/pages/home/widget/home_app_bar.dart';
 import 'package:couple_book/feature01/presentation/pages/home/widget/main_dday.dart';
-import 'package:couple_book/feature01/viewmodels/home_provider.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/home_provider.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/pages/timeline/page.dart';

@@ -1,5 +1,5 @@
 import 'package:couple_book/core/routes/view_route.dart';
-import 'package:couple_book/feature01/viewmodels/splash_provider.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/splash_provider.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
