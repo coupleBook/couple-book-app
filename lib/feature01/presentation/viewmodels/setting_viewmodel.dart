@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:couple_book/api/couple_api/couple_code_creator_info_response.dart';
 import 'package:couple_book/api/couple_api/couple_linking_response_dto.dart';
 import 'package:couple_book/data/local/couple_code_local_data_source.dart';
-import 'package:couple_book/feature01/services/couple_code_service.dart';
+import 'package:couple_book/feature01/data/services/couple_code_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SettingViewModel extends StateNotifier<SettingState> {
