@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추�
 import '../../../core/l10n/l10n.dart';
 import '../../../data/local/entities/enums/gender_enum.dart';
 import '../../../style/text_style.dart';
-import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
+import '../../../feature01/presentation/pages/home/widget/permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
 class ProfilePopupForm extends StatefulWidget {
   final String name;
