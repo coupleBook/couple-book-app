@@ -1,12 +1,12 @@
 import 'package:couple_book/api/session.dart';
-import 'package:couple_book/data/local/auth_local_data_source.dart';
+import 'package:couple_book/feature01/data/local/auth_local_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 import '../core/constants/app_constants.dart';
 import '../core/utils/token_cleaner.dart';
-import '../data/local/entities/auth_entity.dart';
+import '../feature01/data/local/entities/auth_entity.dart';
 import '../main.dart';
 
 final logger = Logger();

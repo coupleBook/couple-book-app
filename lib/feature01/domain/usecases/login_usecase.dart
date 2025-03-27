@@ -1,31 +1,25 @@
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
+import 'package:couple_book/feature01/domain/models/login_result_model.dart';
+import 'package:couple_book/feature01/repository/auth_repository.dart';
+import 'package:couple_book/feature01/repository/auth_repository_provider.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
-import '../local/auth_local_data_source.dart';
-import '../local/last_login_local_data_source.dart';
-import '../local/local_user_local_data_source.dart';
-import '../remote/auth_api.dart';
-import '../repositories/auth_repository.dart';
+class LoginUseCase {
+  final AuthRepository authRepository;
+  final Logger logger;
 
-class LoginService {
-  final logger = Logger();
-  final AuthApi authApi = AuthApi();
-  final AuthRepository authRepository = AuthRepository(
-    AuthApi(),
-    AuthLocalDataSource(),
-    LastLoginLocalDataSource(),
-    LocalUserLocalDataSource(),
-  );
+  LoginUseCase({required this.authRepository, required this.logger});
 
-  Future<bool> signIn(LoginPlatform platform) async {
+  Future<LoginResultModel> execute(LoginPlatform platform) async {
     try {
-      String token = await _getTokenForPlatform(platform);
-
-      await authRepository.signIn(platform, token);
-      return true;
-    } catch (e) {
+      final token = await _getTokenForPlatform(platform);
+      final loginResultModel = await authRepository.signIn(platform, token);
+      return loginResultModel;
+    } catch (e, stack) {
+      logger.e("LoginUseCase.signIn failed", error: e, stackTrace: stack);
       rethrow;
     }
   }
@@ -59,17 +53,20 @@ class LoginService {
     final result = await googleSignIn.signIn();
     final authHeaders = await result?.authHeaders;
 
-    // 디버깅용 로그
-    if (authHeaders != null) {
-      for (var entry in authHeaders.entries) {
-        logger.d('${entry.key}: ${entry.value}');
-      }
+    if (authHeaders == null || !authHeaders.containsKey('Authorization')) {
+      throw Exception("구글 로그인 실패");
     }
 
-    final googleToken =
-        authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
+    final googleToken = authHeaders['Authorization']?.replaceFirst('Bearer ', '');
     if (googleToken == null) throw Exception("구글 로그인 실패");
 
     return googleToken;
   }
 }
+
+final loginUseCaseProvider = Provider<LoginUseCase>((ref) {
+  return LoginUseCase(
+    authRepository: ref.watch(authRepositoryProvider),
+    logger: Logger(),
+  );
+});

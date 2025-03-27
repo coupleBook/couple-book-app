@@ -2,7 +2,7 @@ import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
-import '../local/auth_local_data_source.dart';
+import '../../feature01/data/local/auth_local_data_source.dart';
 import '../local/entities/enums/login_platform.dart';
 import '../local/local_user_local_data_source.dart';
 import '../local/partner_local_data_source.dart';

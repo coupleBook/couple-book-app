@@ -34,7 +34,7 @@ class LoginPage extends ConsumerWidget {
             Text(l10n.loginPageTitle, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             const SizedBox(height: 68),
             SignInButton(
-              onPressed: () => loginNotifier.handleSignIn(context, LoginPlatform.google),
+              onPressed: () => loginNotifier.signIn(context, LoginPlatform.google),
               text: l10n.signInGoogle,
               icon: Assets.icons.googleIcon.svg(),
               backgroundColor: ColorName.defaultBlack,
@@ -42,7 +42,7 @@ class LoginPage extends ConsumerWidget {
             ),
             const SizedBox(height: 18),
             SignInButton(
-              onPressed: () => loginNotifier.handleSignIn(context, LoginPlatform.naver),
+              onPressed: () => loginNotifier.signIn(context, LoginPlatform.naver),
               text: l10n.signInNaver,
               icon: Assets.icons.naverIcon.svg(),
               backgroundColor: ColorName.defaultBlack,

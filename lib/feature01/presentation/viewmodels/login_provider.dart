@@ -1,34 +1,43 @@
-import 'package:couple_book/core/providers/data_providers.dart';
-import 'package:couple_book/data/local/entities/enums/login_platform.dart';
-import 'package:couple_book/data/service/login_service.dart';
+import 'package:couple_book/core/routes/view_route.dart';
+import 'package:couple_book/feature01/domain/models/auth_model.dart';
+import 'package:couple_book/feature01/domain/usecases/login_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
-import '../../../core/routes/view_route.dart';
+import '../../../data/local/entities/enums/login_platform.dart';
 
 final logger = Logger();
 
+/// 상태 정의
 class LoginState {
   final bool isLoggedIn;
+  final AuthModel? auth;
 
-  LoginState({this.isLoggedIn = false});
+  LoginState({this.isLoggedIn = false, this.auth});
 
-  LoginState copyWith({bool? isLoggedIn}) {
-    return LoginState(isLoggedIn: isLoggedIn ?? this.isLoggedIn);
+  LoginState copyWith({bool? isLoggedIn, AuthModel? auth}) {
+    return LoginState(
+      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      auth: auth ?? this.auth,
+    );
   }
 }
 
-class LoginNotifier extends StateNotifier<LoginState> {
-  final LoginService loginService;
+/// ViewModel 정의
+class LoginViewModel extends StateNotifier<LoginState> {
+  final LoginUseCase loginUseCase;
 
-  LoginNotifier(this.loginService) : super(LoginState());
+  LoginViewModel(this.loginUseCase) : super(LoginState());
 
-  Future<void> handleSignIn(BuildContext context, LoginPlatform platform) async {
+  Future<void> signIn(BuildContext context, LoginPlatform platform) async {
     try {
-      bool success = await loginService.signIn(platform);
-      if (success && context.mounted) {
+      final loginResultModel = await loginUseCase.execute(platform);
+
+      state = state.copyWith(isLoggedIn: true, auth: loginResultModel.auth);
+
+      if (context.mounted) {
         context.goNamed(ViewRoute.signupAnimation.name);
       }
     } catch (e) {
@@ -37,6 +46,8 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 }
 
-final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>((ref) {
-  return LoginNotifier(ref.watch(loginServiceProvider));
+/// Provider 선언
+final loginProvider = StateNotifierProvider<LoginViewModel, LoginState>((ref) {
+  final loginUseCase = ref.watch(loginUseCaseProvider);
+  return LoginViewModel(loginUseCase);
 });

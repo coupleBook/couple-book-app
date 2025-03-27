@@ -1,4 +1,4 @@
-import 'package:couple_book/data/local/auth_local_data_source.dart';
+import 'package:couple_book/feature01/data/local/auth_local_data_source.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/partner_local_data_source.dart';
