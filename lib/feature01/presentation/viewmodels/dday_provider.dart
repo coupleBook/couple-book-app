@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:couple_book/api/user_api/user_profile_api.dart';
 import 'package:couple_book/core/providers/data_providers.dart';
 import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
-import 'package:couple_book/data/local/local_user_local_data_source.dart';
+import 'package:couple_book/feature01/data/local/local_user_info_storage.dart';
 import 'package:couple_book/data/local/partner_local_data_source.dart';
 import 'package:couple_book/data/local/partner_profile_image_local_data_source.dart';
 import 'package:couple_book/data/local/user_local_data_source.dart';
@@ -17,7 +17,7 @@ import 'package:logger/logger.dart';
 final logger = Logger();
 
 class DdayNotifier extends StateNotifier<DdayState> {
-  final LocalUserLocalDataSource localUserLocalDataSource;
+  final LocalUserInfoStorage localUserLocalDataSource;
   final UserLocalDataSource userLocalDataSource;
   final UserProfileImageLocalDataSource userProfileImageLocalDataSource;
   final PartnerLocalDataSource partnerLocalDataSource;
@@ -160,7 +160,7 @@ class DdayNotifier extends StateNotifier<DdayState> {
 /// **📌 Provider 선언**
 final ddayProvider = StateNotifierProvider<DdayNotifier, DdayState>((ref) {
   return DdayNotifier(
-    LocalUserLocalDataSource.instance,
+    LocalUserInfoStorage.instance,
     UserLocalDataSource.instance,
     UserProfileImageLocalDataSource.instance,
     PartnerLocalDataSource.instance,

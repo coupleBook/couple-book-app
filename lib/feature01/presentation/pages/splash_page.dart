@@ -1,5 +1,6 @@
 import 'package:couple_book/core/routes/view_route.dart';
-import 'package:couple_book/feature01/presentation/viewmodels/splash_provider.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/auth_info_provider.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/local_user_info_provider.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ class SplashPage extends ConsumerStatefulWidget {
   ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProviderStateMixin {
+class _SplashPageState extends ConsumerState<SplashPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
 
@@ -35,8 +37,7 @@ class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProvid
         if (mounted) {
           _controller.reverse().then((_) {
             if (mounted) {
-              final splashState = ref.read(splashProvider);
-              _navigateToTargetPage(splashState);
+              _navigateByState();
             }
           });
         }
@@ -46,11 +47,8 @@ class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<SplashState>(splashProvider, (previous, next) {
-      if (previous != next) {
-        _navigateToTargetPage(next);
-      }
-    });
+    ref.listen(authInfoProvider, (_, __) => _navigateByState());
+    ref.listen(localUserInfoProvider, (_, __) => _navigateByState());
 
     return Scaffold(
       body: Stack(
@@ -69,10 +67,16 @@ class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProvid
     );
   }
 
-  void _navigateToTargetPage(SplashState splashState) {
-    if (splashState.existToken && splashState.existAnniversary) {
+  void _navigateByState() {
+    final authInfo = ref.read(authInfoProvider);
+    final localUserInfo = ref.read(localUserInfoProvider);
+
+    final hasToken = authInfo?.accessToken.isNotEmpty == true;
+    final hasAnniversary = localUserInfo?.anniversary?.isNotEmpty == true;
+
+    if (hasToken && hasAnniversary) {
       context.go(ViewRoute.home.path);
-    } else if (splashState.existToken && !splashState.existAnniversary) {
+    } else if (hasToken && !hasAnniversary) {
       context.go(ViewRoute.coupleAnniversary.path);
     } else {
       context.go(ViewRoute.login.path);

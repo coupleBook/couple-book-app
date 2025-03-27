@@ -1,6 +1,6 @@
-import 'package:couple_book/feature01/data/local/auth_local_data_source.dart';
+import 'package:couple_book/feature01/data/local/auth_info_storage.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
-import 'package:couple_book/data/local/local_user_local_data_source.dart';
+import 'package:couple_book/feature01/data/local/local_user_info_storage.dart';
 import 'package:couple_book/data/local/partner_local_data_source.dart';
 import 'package:couple_book/data/local/partner_profile_image_local_data_source.dart';
 import 'package:couple_book/data/local/user_local_data_source.dart';
@@ -12,12 +12,12 @@ import 'package:logger/logger.dart';
 class LogoutService {
   final logger = Logger();
 
-  final authLocalDataSource = AuthLocalDataSource();
+  final authLocalDataSource = AuthInfoStorage();
   final userLocalDataSource = UserLocalDataSource();
   final partnerLocalDataSource = PartnerLocalDataSource();
   final userProfileImageLocalDataSource = UserProfileImageLocalDataSource();
   final partnerProfileImageLocalDataSource = PartnerProfileImageLocalDataSource();
-  final localUserLocalDataSource = LocalUserLocalDataSource();
+  final localUserLocalDataSource = LocalUserInfoStorage();
 
   Future<void> signOut(LoginPlatform platform) async {
     switch (platform) {
@@ -53,12 +53,12 @@ class LogoutService {
 
   Future<void> _clearLocalData() async {
     try {
-      await authLocalDataSource.clearAuthInfo();
+      await authLocalDataSource.clear();
       await userLocalDataSource.clearUser();
       await partnerLocalDataSource.clearPartner();
       await userProfileImageLocalDataSource.clearProfileImage();
       await partnerProfileImageLocalDataSource.clearPartnerProfileImage();
-      await localUserLocalDataSource.clearLocalUser();
+      await localUserLocalDataSource.clear();
       logger.d('로컬 데이터 삭제 완료');
     } catch (e) {
       logger.e('로컬 데이터 삭제 실패: $e');

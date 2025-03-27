@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/routes/view_route.dart';
-import '../../../data/local/local_user_local_data_source.dart';
+import '../../data/local/local_user_info_storage.dart';
 import '../../../data/local/user_local_data_source.dart';
 import 'package:logger/logger.dart';
 
@@ -17,7 +17,7 @@ class SignupAnimationPage extends ConsumerStatefulWidget {
 
 class SignupAnimationPageState extends ConsumerState<SignupAnimationPage> {
   final logger = Logger();
-  final localUserLocalDataSource = LocalUserLocalDataSource.instance;
+  final localUserLocalDataSource = LocalUserInfoStorage.instance;
   final userLocalDataSource = UserLocalDataSource.instance;
   String userName = ''; // 사용자 이름 상태
 

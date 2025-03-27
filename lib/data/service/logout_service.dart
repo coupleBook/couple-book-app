@@ -2,9 +2,9 @@ import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
-import '../../feature01/data/local/auth_local_data_source.dart';
+import '../../feature01/data/local/auth_info_storage.dart';
 import '../local/entities/enums/login_platform.dart';
-import '../local/local_user_local_data_source.dart';
+import '../../feature01/data/local/local_user_info_storage.dart';
 import '../local/partner_local_data_source.dart';
 import '../local/partner_profile_image_local_data_source.dart';
 import '../local/user_local_data_source.dart';
@@ -13,13 +13,13 @@ import '../local/user_profile_image_local_data_source.dart';
 class LogoutService {
   final logger = Logger();
 
-  final authLocalDataSource = AuthLocalDataSource();
+  final authLocalDataSource = AuthInfoStorage();
   final userLocalDataSource = UserLocalDataSource();
   final partnerLocalDataSource = PartnerLocalDataSource();
   final partnerProfileImageLocalDataSource =
       PartnerProfileImageLocalDataSource();
   final userProfileImageLocalDataSource = UserProfileImageLocalDataSource();
-  final localUserLocalDataSource = LocalUserLocalDataSource();
+  final localUserLocalDataSource = LocalUserInfoStorage();
 
   Future<void> signOut(LoginPlatform platform) async {
     switch (platform) {
@@ -56,12 +56,14 @@ class LogoutService {
 
   Future<void> _clearLocalToken() async {
     try {
-      await authLocalDataSource.clearAuthInfo();
+      await authLocalDataSource.clear();
       await userLocalDataSource.clearUser();
       await partnerLocalDataSource.clearPartner();
       await userProfileImageLocalDataSource.clearProfileImage();
       await partnerProfileImageLocalDataSource.clearPartnerProfileImage();
-      await localUserLocalDataSource.clearLocalUser();
+
+      /// 여러 계정을 쓸 걸 생각하고 추가했던 건데, 하나의 계정만 쓴다면 기념일을 초기화할 필요가 없음. 추후에 다시 확인.
+      // await localUserLocalDataSource.clearLocalUser();
 
       logger.d('모든 토큰과 사용자 데이터가 삭제되었습니다.');
     } catch (e) {

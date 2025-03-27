@@ -7,8 +7,8 @@ import 'package:logger/logger.dart';
 
 import '../../../core/l10n/l10n.dart';
 import '../../../core/utils/widgets/calendar.dart';
-import '../../../data/local/entities/local_user_entity.dart';
-import '../../../data/local/local_user_local_data_source.dart';
+import '../../domain/models/local_user_info.dart';
+import '../../data/local/local_user_info_storage.dart';
 import '../../../gen/assets.gen.dart';
 
 final logger = Logger();
@@ -21,7 +21,7 @@ class CoupleAnniversaryPage extends StatefulWidget {
 }
 
 class CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
-  final localUserLocalDataSource = LocalUserLocalDataSource.instance;
+  final localUserLocalDataSource = LocalUserInfoStorage.instance;
   DateTime? _selectedDate;
 
   /// ************************************************
@@ -61,8 +61,8 @@ class CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
   /// ************************************************
   Future<void> _saveDateAndNavigate() async {
     if (_selectedDate != null) {
-      await localUserLocalDataSource.saveLocalUser(
-        LocalUserEntity(anniversary: _selectedDate!.toIso8601String()),
+      await localUserLocalDataSource.save(
+        LocalUserInfo(anniversary: _selectedDate!.toIso8601String()),
       );
 
       if (mounted) {

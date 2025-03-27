@@ -1,6 +1,6 @@
 import 'package:couple_book/core/routes/view_route.dart';
-import 'package:couple_book/feature01/domain/models/auth_model.dart';
 import 'package:couple_book/feature01/domain/usecases/login_usecase.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/auth_info_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,44 +10,29 @@ import '../../../data/local/entities/enums/login_platform.dart';
 
 final logger = Logger();
 
-/// 상태 정의
-class LoginState {
-  final bool isLoggedIn;
-  final AuthModel? auth;
+class LoginViewModel {
+  final Ref ref;
 
-  LoginState({this.isLoggedIn = false, this.auth});
-
-  LoginState copyWith({bool? isLoggedIn, AuthModel? auth}) {
-    return LoginState(
-      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
-      auth: auth ?? this.auth,
-    );
-  }
-}
-
-/// ViewModel 정의
-class LoginViewModel extends StateNotifier<LoginState> {
-  final LoginUseCase loginUseCase;
-
-  LoginViewModel(this.loginUseCase) : super(LoginState());
+  LoginViewModel(this.ref);
 
   Future<void> signIn(BuildContext context, LoginPlatform platform) async {
     try {
-      final loginResultModel = await loginUseCase.execute(platform);
+      final loginUseCase = ref.read(loginUseCaseProvider);
+      final authNotifier = ref.read(authInfoProvider.notifier);
 
-      state = state.copyWith(isLoggedIn: true, auth: loginResultModel.auth);
+      final loginResult = await loginUseCase.execute(platform);
+      await authNotifier.update(loginResult.auth);
 
       if (context.mounted) {
         context.goNamed(ViewRoute.signupAnimation.name);
       }
-    } catch (e) {
-      logger.e('$platform 로그인 오류: $e');
+    } catch (e, stack) {
+      logger.e('$platform 로그인 실패', error: e, stackTrace: stack);
     }
   }
 }
 
 /// Provider 선언
-final loginProvider = StateNotifierProvider<LoginViewModel, LoginState>((ref) {
-  final loginUseCase = ref.watch(loginUseCaseProvider);
-  return LoginViewModel(loginUseCase);
+final loginViewModelProvider = Provider<LoginViewModel>((ref) {
+  return LoginViewModel(ref);
 });

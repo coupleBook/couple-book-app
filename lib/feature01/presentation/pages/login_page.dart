@@ -1,8 +1,9 @@
 import 'package:couple_book/core/l10n/l10n.dart';
 import 'package:couple_book/core/routes/view_route.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
+import 'package:couple_book/feature01/domain/usecases/login_usecase.dart';
 import 'package:couple_book/feature01/presentation/components/sign_in_button.dart';
-import 'package:couple_book/feature01/presentation/viewmodels/login_provider.dart';
+import 'package:couple_book/feature01/presentation/viewmodels/auth_info_provider.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,11 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginNotifier = ref.read(loginProvider.notifier);
+    final authNotifier = ref.read(authInfoProvider.notifier);
+    final loginUseCase = ref.read(loginUseCaseProvider);
 
-    // 상태 변화 감지 후 네비게이션 실행
-    ref.listen<LoginState>(loginProvider, (previous, next) {
-      if (next.isLoggedIn) {
+    ref.listen(authInfoProvider, (prev, next) {
+      if (next?.accessToken != null && next!.accessToken.isNotEmpty) {
         context.goNamed(ViewRoute.signupAnimation.name);
       }
     });
@@ -34,7 +35,10 @@ class LoginPage extends ConsumerWidget {
             Text(l10n.loginPageTitle, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             const SizedBox(height: 68),
             SignInButton(
-              onPressed: () => loginNotifier.signIn(context, LoginPlatform.google),
+              onPressed: () async {
+                final result = await loginUseCase.execute(LoginPlatform.google);
+                await authNotifier.update(result.auth);
+              },
               text: l10n.signInGoogle,
               icon: Assets.icons.googleIcon.svg(),
               backgroundColor: ColorName.defaultBlack,
@@ -42,7 +46,10 @@ class LoginPage extends ConsumerWidget {
             ),
             const SizedBox(height: 18),
             SignInButton(
-              onPressed: () => loginNotifier.signIn(context, LoginPlatform.naver),
+              onPressed: () async {
+                final result = await loginUseCase.execute(LoginPlatform.naver);
+                await authNotifier.update(result.auth);
+              },
               text: l10n.signInNaver,
               icon: Assets.icons.naverIcon.svg(),
               backgroundColor: ColorName.defaultBlack,
