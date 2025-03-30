@@ -22,7 +22,6 @@ class LoginViewModel extends ChangeNotifier {
   Future<void> handleSignIn(LoginPlatform platform, BuildContext context) async {
     try {
       _state = _state.copyWith(
-        isLoading: true,
         currentPlatform: platform,
         errorMessage: null,
       );
@@ -31,14 +30,10 @@ class LoginViewModel extends ChangeNotifier {
       bool isLoggedIn = await _loginService.signIn(platform);
       if (isLoggedIn && context.mounted) {
         context.goNamed(ViewRoute.signupAnimation.name);
-      } else {
-        _state = _state.copyWith(isLoading: false);
-        notifyListeners();
       }
     } catch (e) {
       logger.e('$platform 로그인 오류: $e');
       _state = _state.copyWith(
-        isLoading: false,
         errorMessage: e.toString(),
       );
       notifyListeners();

@@ -68,14 +68,6 @@ class _LoginViewState extends State<LoginView> {
       value: _viewModel,
       child: Consumer<LoginViewModel>(
         builder: (context, viewModel, child) {
-          if (viewModel.state.isLoading) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-
           return Scaffold(
             backgroundColor: ColorName.backgroundColor,
             body: Center(
