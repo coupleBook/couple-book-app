@@ -8,7 +8,7 @@ import 'package:couple_book/pages/test/page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'main.dart';
+import '../../main.dart';
 
 enum ViewRoute {
   splash,

@@ -1,6 +1,6 @@
 import 'package:couple_book/core/constants/app_constants.dart';
+import 'package:couple_book/core/routing/router.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
-import 'package:couple_book/router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';

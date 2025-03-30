@@ -1,6 +1,6 @@
+import 'package:couple_book/core/routing/router.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/presentation/widgets/calendar/calendar_view.dart';
-import 'package:couple_book/router.dart';
 import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

@@ -1,6 +1,6 @@
+import 'package:couple_book/core/routing/router.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:couple_book/gen/colors.gen.dart';
-import 'package:couple_book/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
