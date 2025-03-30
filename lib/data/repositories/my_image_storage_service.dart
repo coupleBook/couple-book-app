@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:couple_book/api/user_api/user_profile_api.dart';
 import 'package:couple_book/core/utils/image/profile_image_path.dart';
 import 'package:couple_book/data/local/datasources/user_profile_image_local_data_source.dart';
 import 'package:couple_book/data/local/entities/user_profile_image_entity.dart';
+import 'package:couple_book/data/remote/datasources/user_api/user_profile_api.dart';
 import 'package:logger/logger.dart';
 
 class MyImageStorageService {

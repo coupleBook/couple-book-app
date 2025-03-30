@@ -1,4 +1,4 @@
-import '../../dto/api_dto.dart';
+import 'package:couple_book/dto/api_dto.dart';
 
 class ProfileImageResponseDto extends ApiResponse {
   final String profileImageUrl;

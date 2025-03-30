@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:couple_book/api/couple_api/couple_code_creator_info_response.dart';
 import 'package:couple_book/core/l10n/l10n.dart';
 import 'package:couple_book/core/routing/router.dart';
 import 'package:couple_book/data/local/datasources/couple_code_local_data_source.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
+import 'package:couple_book/data/remote/datasources/couple_api/couple_code_creator_info_response.dart';
 import 'package:couple_book/data/repositories/couple_code_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

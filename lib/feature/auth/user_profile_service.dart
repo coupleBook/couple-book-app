@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
-import 'package:couple_book/api/user_api/user_profile_api.dart';
+import 'package:couple_book/data/remote/datasources/user_api/profile_image_modification_response_dto.dart';
+import 'package:couple_book/data/remote/datasources/user_api/user_profile_api.dart';
 import 'package:couple_book/data/repositories/my_image_storage_service.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:logger/logger.dart';
@@ -12,8 +12,7 @@ class UserProfileService {
   final myImageStorageService = MyImageStorageService();
   final logger = Logger();
 
-  Future<ProfileImageModificationResponseDto> updateUserProfileImage(
-      File imageFile) async {
+  Future<ProfileImageModificationResponseDto> updateUserProfileImage(File imageFile) async {
     try {
       var compressedImage = await _compressImage(imageFile);
 
@@ -27,12 +26,10 @@ class UserProfileService {
       logger.i("원본 이미지 크기: ${imageFile.lengthSync()} bytes");
       logger.i("압축 이미지 크기: ${uploadImage.lengthSync()} bytes");
 
-      final responseDto =
-          await userProfileApi.updateUserProfileImage(uploadImage);
+      final responseDto = await userProfileApi.updateUserProfileImage(uploadImage);
 
       // TODO - 파일명 고정
-      myImageStorageService.saveImage(
-          uploadImage, "myProfileImage", responseDto.profileImageVersion);
+      myImageStorageService.saveImage(uploadImage, "myProfileImage", responseDto.profileImageVersion);
 
       return responseDto;
     } catch (e) {
@@ -44,8 +41,7 @@ class UserProfileService {
   Future<XFile?> _compressImage(File file) async {
     try {
       final dir = await getTemporaryDirectory();
-      final targetPath =
-          '${dir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final targetPath = '${dir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
 
       final compressedFile = await FlutterImageCompress.compressAndGetFile(
         file.absolute.path,

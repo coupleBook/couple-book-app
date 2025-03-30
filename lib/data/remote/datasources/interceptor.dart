@@ -1,4 +1,4 @@
-import 'package:couple_book/api/session.dart';
+import 'package:couple_book/data/remote/datasources/session.dart';
 import 'package:couple_book/core/constants/app_constants.dart';
 import 'package:couple_book/core/utils/auth/token_cleaner.dart';
 import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';

@@ -2,7 +2,7 @@
 
 import 'package:dio/dio.dart';
 
-import '../core/constants/app_constants.dart';
+import 'package:couple_book/core/constants/app_constants.dart';
 import 'interceptor.dart';
 
 /// 앱 전반적으로 사용하는 데이터들을 관리, dio 의 interceptor 주입, 싱글톤으로 관리

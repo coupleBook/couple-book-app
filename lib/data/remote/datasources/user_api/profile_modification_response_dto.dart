@@ -1,4 +1,4 @@
-import '../../dto/api_dto.dart';
+import 'package:couple_book/dto/api_dto.dart';
 
 class ProfileModificationResponseDto extends ApiResponse {
   String id;

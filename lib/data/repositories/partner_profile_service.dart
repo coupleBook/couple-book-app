@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:couple_book/api/partner_api/partner_profile_api.dart';
 import 'package:couple_book/core/utils/image/profile_image_path.dart';
 import 'package:couple_book/data/local/datasources/partner_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/partner_profile_image_local_data_source.dart';
 import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
 import 'package:couple_book/data/local/entities/partner_entity.dart';
 import 'package:couple_book/data/local/entities/partner_profile_image_entity.dart';
+import 'package:couple_book/data/remote/datasources/partner_api/partner_profile_api.dart';
 import 'package:couple_book/data/remote/models/response/common/partner_info_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';

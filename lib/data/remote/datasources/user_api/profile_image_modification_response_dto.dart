@@ -1,4 +1,4 @@
-import '../../dto/api_dto.dart';
+import 'package:couple_book/dto/api_dto.dart';
 
 class ProfileImageModificationResponseDto extends ApiResponse {
   final String profileImageUrl;
@@ -11,8 +11,7 @@ class ProfileImageModificationResponseDto extends ApiResponse {
     required this.profileImageVersion,
   });
 
-  factory ProfileImageModificationResponseDto.fromJson(
-      Map<String, dynamic> json) {
+  factory ProfileImageModificationResponseDto.fromJson(Map<String, dynamic> json) {
     return ProfileImageModificationResponseDto(
       status: json['status'],
       error: json['error'],

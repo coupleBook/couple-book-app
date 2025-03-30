@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:couple_book/api/session.dart';
-import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
-import 'package:couple_book/api/user_api/profile_image_response_dto.dart';
-import 'package:couple_book/api/user_api/user_profile_response_dto.dart';
 import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
+import 'package:couple_book/data/remote/datasources/session.dart';
+import 'package:couple_book/data/remote/datasources/user_api/profile_image_modification_response_dto.dart';
+import 'package:couple_book/data/remote/datasources/user_api/profile_image_response_dto.dart';
+import 'package:couple_book/data/remote/datasources/user_api/user_profile_response_dto.dart';
 import 'package:couple_book/data/remote/models/response/common/my_info_response.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';

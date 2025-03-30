@@ -1,11 +1,11 @@
-import 'package:couple_book/api/couple_api/couple_api.dart';
-import 'package:couple_book/api/couple_api/couple_code_creator_info_response.dart';
-import 'package:couple_book/api/couple_api/couple_linking_response_dto.dart';
-import 'package:couple_book/api/couple_api/create_couple_code_response_dto.dart';
 import 'package:couple_book/data/local/datasources/couple_code_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/entities/couple_code_entity.dart';
 import 'package:couple_book/data/local/entities/local_user_entity.dart';
+import 'package:couple_book/data/remote/datasources/couple_api/couple_api.dart';
+import 'package:couple_book/data/remote/datasources/couple_api/couple_code_creator_info_response.dart';
+import 'package:couple_book/data/remote/datasources/couple_api/couple_linking_response_dto.dart';
+import 'package:couple_book/data/remote/datasources/couple_api/create_couple_code_response_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -37,9 +37,7 @@ class CoupleCodeService {
         return Future.value(null);
       }
 
-      final response = await coupleApi
-          .createCoupleCode(localUser)
-          .then((value) => saveEntity(value));
+      final response = await coupleApi.createCoupleCode(localUser).then((value) => saveEntity(value));
 
       logger.d('커플 연동 코드 생성 성공: $response');
       _showSnackBar('커플 연동 코드가 생성되었습니다.');
@@ -53,8 +51,7 @@ class CoupleCodeService {
   }
 
   // 커플 연동 코드 조회 (입력된 코드 사용)
-  Future<CoupleCodeCreatorInfoResponseDto?> getCoupleLinkCode(
-      String code) async {
+  Future<CoupleCodeCreatorInfoResponseDto?> getCoupleLinkCode(String code) async {
     try {
       final response = await coupleApi.findUserInfoByCode(code);
       logger.d('커플 연동 코드 조회 성공: $response');
@@ -72,8 +69,7 @@ class CoupleCodeService {
     try {
       final response = await coupleApi.linkCouple(code);
       final coupleInfo = response.coupleInfo;
-      final localUserEntity = LocalUserEntity(
-          anniversary: coupleInfo.datingAnniversary.toIso8601String());
+      final localUserEntity = LocalUserEntity(anniversary: coupleInfo.datingAnniversary.toIso8601String());
 
       localUserLocalDataSource.saveLocalUser(localUserEntity);
 

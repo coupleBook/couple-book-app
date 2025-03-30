@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:couple_book/api/user_api/user_profile_api.dart';
 import 'package:couple_book/core/l10n/l10n.dart';
 import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/partner_local_data_source.dart';
@@ -8,6 +7,7 @@ import 'package:couple_book/data/local/datasources/partner_profile_image_local_d
 import 'package:couple_book/data/local/datasources/user_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/user_profile_image_local_data_source.dart';
 import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
+import 'package:couple_book/data/remote/datasources/user_api/user_profile_api.dart';
 import 'package:couple_book/data/repositories/my_profile_service.dart';
 import 'package:couple_book/feature/auth/user_profile_service.dart';
 import 'package:couple_book/gen/assets.gen.dart';
