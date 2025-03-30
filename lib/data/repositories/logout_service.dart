@@ -1,14 +1,13 @@
+import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/partner_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/partner_profile_image_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/user_profile_image_local_data_source.dart';
+import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
-
-import '../local/auth_local_data_source.dart';
-import '../local/entities/enums/login_platform.dart';
-import '../local/local_user_local_data_source.dart';
-import '../local/partner_local_data_source.dart';
-import '../local/partner_profile_image_local_data_source.dart';
-import '../local/user_local_data_source.dart';
-import '../local/user_profile_image_local_data_source.dart';
 
 class LogoutService {
   final logger = Logger();
@@ -16,8 +15,7 @@ class LogoutService {
   final authLocalDataSource = AuthLocalDataSource();
   final userLocalDataSource = UserLocalDataSource();
   final partnerLocalDataSource = PartnerLocalDataSource();
-  final partnerProfileImageLocalDataSource =
-      PartnerProfileImageLocalDataSource();
+  final partnerProfileImageLocalDataSource = PartnerProfileImageLocalDataSource();
   final userProfileImageLocalDataSource = UserProfileImageLocalDataSource();
   final localUserLocalDataSource = LocalUserLocalDataSource();
 

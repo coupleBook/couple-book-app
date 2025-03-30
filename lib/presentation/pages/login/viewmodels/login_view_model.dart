@@ -1,6 +1,6 @@
 import 'package:couple_book/core/routing/router.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
-import 'package:couple_book/data/service/login_service.dart';
+import 'package:couple_book/data/repositories/login_service.dart';
 import 'package:couple_book/presentation/pages/login/models/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

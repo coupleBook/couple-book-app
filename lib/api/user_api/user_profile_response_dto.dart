@@ -1,6 +1,6 @@
-import '../../data/models/response/common/couple_info_response.dart';
-import '../../data/models/response/common/my_info_response.dart';
-import '../../dto/api_dto.dart';
+import 'package:couple_book/data/remote/models/response/common/couple_info_response.dart';
+import 'package:couple_book/data/remote/models/response/common/my_info_response.dart';
+import 'package:couple_book/dto/api_dto.dart';
 
 class UserProfileResponseDto extends ApiResponse {
   MyInfoResponse me;
@@ -18,9 +18,7 @@ class UserProfileResponseDto extends ApiResponse {
       status: json['status'],
       error: json['error'],
       me: MyInfoResponse.fromJson(json['data']['me']),
-      coupleInfo: json['data']['coupleInfo'] != null
-          ? CoupleInfoResponse.fromJson(json['data']['coupleInfo'])
-          : null,
+      coupleInfo: json['data']['coupleInfo'] != null ? CoupleInfoResponse.fromJson(json['data']['coupleInfo']) : null,
     );
   }
 

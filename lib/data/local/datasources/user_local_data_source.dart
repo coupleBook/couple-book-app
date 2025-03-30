@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import '../../core/storage/secure_storage_helper.dart';
-import 'entities/user_entity.dart';
+import 'package:couple_book/core/storage/secure_storage_helper.dart';
+import 'package:couple_book/data/local/entities/user_entity.dart';
 
 class UserLocalDataSource {
   static final UserLocalDataSource instance = UserLocalDataSource._internal();

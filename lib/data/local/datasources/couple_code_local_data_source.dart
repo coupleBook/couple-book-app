@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import '../../core/storage/secure_storage_helper.dart';
-import 'entities/couple_code_entity.dart';
+import 'package:couple_book/core/storage/secure_storage_helper.dart';
+import 'package:couple_book/data/local/entities/couple_code_entity.dart';
 
 class CoupleCodeLocalDataSource {
-  static final CoupleCodeLocalDataSource instance =
-      CoupleCodeLocalDataSource._internal();
+  static final CoupleCodeLocalDataSource instance = CoupleCodeLocalDataSource._internal();
 
   factory CoupleCodeLocalDataSource() => instance;
 
@@ -14,8 +13,7 @@ class CoupleCodeLocalDataSource {
   static const _coupleCodeKey = 'COUPLE_CODE';
 
   Future<void> saveCoupleCode(CoupleCodeEntity code) async {
-    await SecureStorageHelper.setItem(
-        _coupleCodeKey, jsonEncode(code.toJson()));
+    await SecureStorageHelper.setItem(_coupleCodeKey, jsonEncode(code.toJson()));
   }
 
   Future<CoupleCodeEntity?> getCoupleCode() async {

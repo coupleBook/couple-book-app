@@ -1,4 +1,4 @@
-import 'package:couple_book/data/models/response/common/partner_info_response.dart';
+import 'partner_info_response.dart';
 
 class CoupleInfoResponse {
   String coupleId;
@@ -6,11 +6,7 @@ class CoupleInfoResponse {
   String? updatedAt;
   PartnerInfoResponse partner;
 
-  CoupleInfoResponse(
-      {required this.coupleId,
-      required this.datingAnniversary,
-      this.updatedAt,
-      required this.partner});
+  CoupleInfoResponse({required this.coupleId, required this.datingAnniversary, this.updatedAt, required this.partner});
 
   Map<String, dynamic> toJson() {
     return {

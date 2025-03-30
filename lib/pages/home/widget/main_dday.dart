@@ -1,22 +1,22 @@
 import 'dart:io';
 
-import 'package:couple_book/data/local/partner_profile_image_local_data_source.dart';
+import 'package:couple_book/api/user_api/user_profile_api.dart';
+import 'package:couple_book/core/l10n/l10n.dart';
+import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/partner_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/partner_profile_image_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/user_profile_image_local_data_source.dart';
+import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
+import 'package:couple_book/data/repositories/my_profile_service.dart';
 import 'package:couple_book/feature/auth/user_profile_service.dart';
+import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
+import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
-import '../../../../gen/assets.gen.dart';
-import '../../../api/user_api/user_profile_api.dart';
-import '../../../core/l10n/l10n.dart';
-import '../../../data/local/entities/enums/gender_enum.dart';
-import '../../../data/local/local_user_local_data_source.dart';
-import '../../../data/local/partner_local_data_source.dart';
-import '../../../data/local/user_local_data_source.dart';
-import '../../../data/local/user_profile_image_local_data_source.dart';
-import '../../../data/service/my_profile_service.dart';
-import '../../../style/text_style.dart';
 import 'permission_handler_widget.dart';
 import 'profile_popup.dart'; // 새로 만든 파일을 import
 

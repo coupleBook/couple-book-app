@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:couple_book/core/routing/router.dart';
-import 'package:couple_book/data/local/local_user_local_data_source.dart';
-import 'package:couple_book/data/local/user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/user_local_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';

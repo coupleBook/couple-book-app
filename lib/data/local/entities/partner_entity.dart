@@ -1,4 +1,5 @@
-import '../../models/response/common/partner_info_response.dart';
+import 'package:couple_book/data/remote/models/response/common/partner_info_response.dart';
+
 import 'enums/gender_enum.dart';
 
 class PartnerEntity {

@@ -1,5 +1,5 @@
-import 'package:couple_book/data/local/auth_local_data_source.dart';
-import 'package:couple_book/data/local/local_user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/pages/couple_anniversary/page.dart';

@@ -1,4 +1,5 @@
-import '../../models/response/common/my_info_response.dart';
+import 'package:couple_book/data/remote/models/response/common/my_info_response.dart';
+
 import 'enums/gender_enum.dart';
 
 class UserEntity {
@@ -28,17 +29,13 @@ class UserEntity {
       id: json['id'],
       name: json['name'],
       birthday: json['birthday'],
-      gender: json['gender'] != null
-          ? Gender.fromServerValue(json['gender'])
-          : null,
+      gender: json['gender'] != null ? Gender.fromServerValue(json['gender']) : null,
       updatedAt: DateTime.parse(json['updatedAt']));
 
   factory UserEntity.fromMyInfoResponse(MyInfoResponse response) => UserEntity(
       id: response.id,
       name: response.name,
       birthday: response.birthday,
-      gender: response.gender != null
-          ? Gender.fromServerValue(response.gender!)
-          : null,
+      gender: response.gender != null ? Gender.fromServerValue(response.gender!) : null,
       updatedAt: DateTime.parse(response.updatedAt));
 }

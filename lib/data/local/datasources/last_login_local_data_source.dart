@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import '../../core/storage/secure_storage_helper.dart';
-import 'entities/last_login_entity.dart';
+import 'package:couple_book/core/storage/secure_storage_helper.dart';
+import 'package:couple_book/data/local/entities/last_login_entity.dart';
 
 class LastLoginLocalDataSource {
-  static final LastLoginLocalDataSource instance =
-      LastLoginLocalDataSource._internal();
+  static final LastLoginLocalDataSource instance = LastLoginLocalDataSource._internal();
 
   factory LastLoginLocalDataSource() => instance;
 
@@ -14,8 +13,7 @@ class LastLoginLocalDataSource {
   static const _lastLoginKey = 'LAST_LOGIN_INFO';
 
   Future<void> saveLastLogin(LastLoginEntity lastLogin) async {
-    await SecureStorageHelper.setItem(
-        _lastLoginKey, jsonEncode(lastLogin.toJson()));
+    await SecureStorageHelper.setItem(_lastLoginKey, jsonEncode(lastLogin.toJson()));
   }
 
   Future<LastLoginEntity?> getLastLogin() async {

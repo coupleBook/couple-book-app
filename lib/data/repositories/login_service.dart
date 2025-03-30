@@ -1,13 +1,12 @@
+import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/last_login_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
+import 'package:couple_book/data/remote/datasources/auth_api.dart';
+import 'package:couple_book/data/repositories/auth_repository.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
-
-import '../local/auth_local_data_source.dart';
-import '../local/last_login_local_data_source.dart';
-import '../local/local_user_local_data_source.dart';
-import '../remote/auth_api.dart';
-import '../repositories/auth_repository.dart';
 
 class LoginService {
   final logger = Logger();
@@ -66,8 +65,7 @@ class LoginService {
       }
     }
 
-    final googleToken =
-        authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
+    final googleToken = authHeaders?['Authorization']?.replaceFirst('Bearer ', '');
     if (googleToken == null) throw Exception("구글 로그인 실패");
 
     return googleToken;

@@ -1,14 +1,13 @@
 import 'dart:io';
 
+import 'package:couple_book/api/session.dart';
 import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
 import 'package:couple_book/api/user_api/profile_image_response_dto.dart';
 import 'package:couple_book/api/user_api/user_profile_response_dto.dart';
+import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
+import 'package:couple_book/data/remote/models/response/common/my_info_response.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-
-import '../../data/local/entities/enums/gender_enum.dart';
-import '../../data/models/response/common/my_info_response.dart';
-import '../session.dart';
 
 class UserProfileApi {
   final _dio = Session().dio;
@@ -27,14 +26,12 @@ class UserProfileApi {
   /// 유저 프로필 이미지 조회 API
   /// ************************************************
   Future<ProfileImageResponseDto> getUserProfileImage() async {
-    final Response<dynamic> response =
-        await _dio.get('/api/v1/user/profile/image');
+    final Response<dynamic> response = await _dio.get('/api/v1/user/profile/image');
 
     if (response.statusCode == 200) {
       return ProfileImageResponseDto.fromJson(response.data);
     } else {
-      throw Exception(
-          "Failed to get user profile image: ${response.statusCode}, ${response.data}");
+      throw Exception("Failed to get user profile image: ${response.statusCode}, ${response.data}");
     }
   }
 
@@ -58,16 +55,14 @@ class UserProfileApi {
     if (response.statusCode == 200) {
       return MyInfoResponse.fromJson(response.data['data']);
     } else {
-      throw Exception(
-          "Failed to update user profile: ${response.statusCode}, ${response.data}");
+      throw Exception("Failed to update user profile: ${response.statusCode}, ${response.data}");
     }
   }
 
   /// ************************************************
   /// 유저 프로필 이미지 변경 API
   /// ************************************************
-  Future<ProfileImageModificationResponseDto> updateUserProfileImage(
-      File imageFile) async {
+  Future<ProfileImageModificationResponseDto> updateUserProfileImage(File imageFile) async {
     try {
       // FormData 생성
       final formData = FormData.fromMap({
@@ -89,8 +84,7 @@ class UserProfileApi {
       if (response.statusCode == 200) {
         return ProfileImageModificationResponseDto.fromJson(response.data);
       } else {
-        throw Exception(
-            "Failed to update user profile image: ${response.statusCode}, ${response.data}");
+        throw Exception("Failed to update user profile image: ${response.statusCode}, ${response.data}");
       }
     } catch (e) {
       logger.e("Error updating profile image: $e");

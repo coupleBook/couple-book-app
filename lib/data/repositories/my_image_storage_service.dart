@@ -1,17 +1,15 @@
 import 'dart:io';
 
+import 'package:couple_book/api/user_api/user_profile_api.dart';
+import 'package:couple_book/core/utils/image/profile_image_path.dart';
+import 'package:couple_book/data/local/datasources/user_profile_image_local_data_source.dart';
+import 'package:couple_book/data/local/entities/user_profile_image_entity.dart';
 import 'package:logger/logger.dart';
-
-import '../../api/user_api/user_profile_api.dart';
-import '../../core/utils/image/profile_image_path.dart';
-import '../local/entities/user_profile_image_entity.dart';
-import '../local/user_profile_image_local_data_source.dart';
 
 class MyImageStorageService {
   final logger = Logger();
 
-  final userProfileImageLocalDataSource =
-      UserProfileImageLocalDataSource.instance;
+  final userProfileImageLocalDataSource = UserProfileImageLocalDataSource.instance;
   final userProfileApi = UserProfileApi();
 
   /// 이미지 저장
@@ -22,8 +20,7 @@ class MyImageStorageService {
       final savedImage = await imageFile.copy(imagePath);
 
       // SecureStorage에 메타데이터 저장
-      userProfileImageLocalDataSource.saveProfileImage(
-          UserProfileImageEntity(filePath: imagePath, version: version));
+      userProfileImageLocalDataSource.saveProfileImage(UserProfileImageEntity(filePath: imagePath, version: version));
 
       return savedImage.path; // 저장된 이미지 경로 반환
     } catch (e) {

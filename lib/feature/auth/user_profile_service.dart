@@ -2,11 +2,10 @@ import 'dart:io';
 
 import 'package:couple_book/api/user_api/profile_image_modification_response_dto.dart';
 import 'package:couple_book/api/user_api/user_profile_api.dart';
+import 'package:couple_book/data/repositories/my_image_storage_service.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../../data/service/my_image_storage_service.dart';
 
 class UserProfileService {
   final userProfileApi = UserProfileApi();

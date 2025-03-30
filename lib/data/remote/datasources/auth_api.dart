@@ -1,8 +1,8 @@
+import 'package:couple_book/core/constants/app_constants.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../models/response/login_response_model.dart';
 
 class AuthApi {

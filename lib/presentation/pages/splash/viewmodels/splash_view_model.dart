@@ -1,5 +1,5 @@
-import 'package:couple_book/data/local/auth_local_data_source.dart';
-import 'package:couple_book/data/local/local_user_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
 import 'package:couple_book/presentation/pages/splash/models/splash_state.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -33,6 +33,7 @@ class SplashViewModel extends ChangeNotifier {
   }
 
   SplashState get state => _state;
+
   double get opacity => _opacityAnimation.value;
 
   Future<void> _initializeSplash() async {

@@ -1,23 +1,21 @@
 import 'dart:io';
 
-import 'package:couple_book/data/local/partner_local_data_source.dart';
+import 'package:couple_book/api/partner_api/partner_profile_api.dart';
+import 'package:couple_book/core/utils/image/profile_image_path.dart';
+import 'package:couple_book/data/local/datasources/partner_local_data_source.dart';
+import 'package:couple_book/data/local/datasources/partner_profile_image_local_data_source.dart';
+import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
+import 'package:couple_book/data/local/entities/partner_entity.dart';
+import 'package:couple_book/data/local/entities/partner_profile_image_entity.dart';
+import 'package:couple_book/data/remote/models/response/common/partner_info_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
-
-import '../../api/partner_api/partner_profile_api.dart';
-import '../../core/utils/image/profile_image_path.dart';
-import '../local/entities/enums/gender_enum.dart';
-import '../local/entities/partner_entity.dart';
-import '../local/entities/partner_profile_image_entity.dart';
-import '../local/partner_profile_image_local_data_source.dart';
-import '../models/response/common/partner_info_response.dart';
 
 class PartnerProfileService {
   final logger = Logger();
 
   final _localDataSource = PartnerLocalDataSource.instance;
-  final _partnerProfileImageLocalDataSource =
-      PartnerProfileImageLocalDataSource.instance;
+  final _partnerProfileImageLocalDataSource = PartnerProfileImageLocalDataSource.instance;
 
   final _partnerProfileApi = PartnerProfileApi();
 
@@ -42,11 +40,9 @@ class PartnerProfileService {
       return true;
     }
 
-    final userProfileImageEntity =
-        await _partnerProfileImageLocalDataSource.getPartnerProfileImage();
+    final userProfileImageEntity = await _partnerProfileImageLocalDataSource.getPartnerProfileImage();
 
-    if (userProfileImageEntity == null ||
-        userProfileImageEntity.version < response.profileImageVersion) {
+    if (userProfileImageEntity == null || userProfileImageEntity.version < response.profileImageVersion) {
       return await _fetchAndSaveProfileImage(response.profileImageVersion);
     }
 
@@ -55,10 +51,8 @@ class PartnerProfileService {
 
   Future<bool> _fetchAndSaveProfileImage(int version) async {
     try {
-      final profileImageResponseDto =
-          await _partnerProfileApi.getPartnerProfileImage();
-      final profileImageResponse =
-          await http.get(Uri.parse(profileImageResponseDto.profileImageUrl));
+      final profileImageResponseDto = await _partnerProfileApi.getPartnerProfileImage();
+      final profileImageResponse = await http.get(Uri.parse(profileImageResponseDto.profileImageUrl));
 
       final path = await getProfileImagePath("partnerProfileImage");
       final file = File(path);

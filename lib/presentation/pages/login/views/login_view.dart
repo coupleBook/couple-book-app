@@ -1,6 +1,6 @@
 import 'package:couple_book/core/l10n/l10n.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
-import 'package:couple_book/data/service/login_service.dart';
+import 'package:couple_book/data/repositories/login_service.dart';
 import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/presentation/pages/login/viewmodels/login_view_model.dart';

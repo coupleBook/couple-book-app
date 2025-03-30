@@ -1,7 +1,7 @@
 import 'package:couple_book/core/routing/router.dart';
+import 'package:couple_book/data/local/datasources/last_login_local_data_source.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
-import 'package:couple_book/data/local/last_login_local_data_source.dart';
-import 'package:couple_book/data/service/logout_service.dart';
+import 'package:couple_book/data/repositories/logout_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';

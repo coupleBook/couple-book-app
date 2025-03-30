@@ -1,5 +1,5 @@
-import 'package:couple_book/data/models/response/common/couple_info_response.dart';
-import 'package:couple_book/data/models/response/common/my_info_response.dart';
+import 'package:couple_book/data/remote/models/response/common/couple_info_response.dart';
+import 'package:couple_book/data/remote/models/response/common/my_info_response.dart';
 
 class LoginResponseModel {
   final MyInfoResponse  me;

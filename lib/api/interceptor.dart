@@ -1,13 +1,12 @@
 import 'package:couple_book/api/session.dart';
-import 'package:couple_book/data/local/auth_local_data_source.dart';
+import 'package:couple_book/core/constants/app_constants.dart';
+import 'package:couple_book/core/utils/auth/token_cleaner.dart';
+import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';
+import 'package:couple_book/data/local/entities/auth_entity.dart';
+import 'package:couple_book/main.dart';
 import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
-
-import '../core/constants/app_constants.dart';
-import '../core/utils/auth/token_cleaner.dart';
-import '../data/local/entities/auth_entity.dart';
-import '../main.dart';
 
 final logger = Logger();
 final AuthLocalDataSource authLocalDataSource = AuthLocalDataSource();
@@ -28,16 +27,14 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
     return handler.next(response);
   },
   onError: (DioException e, ErrorInterceptorHandler handler) async {
-    logger.d(
-        'ON ERROR REQUEST[${e.requestOptions.method}]: ${e.requestOptions.path}');
+    logger.d('ON ERROR REQUEST[${e.requestOptions.method}]: ${e.requestOptions.path}');
     logger.d('ON ERROR RESPONSE: ${e.response}');
     logger.d('ON ERROR STATUS CODE: ${e.response?.statusCode}');
     logger.d('ON ERROR HEADER: ${e.response?.headers}');
     logger.d('ON ERROR DATA: ${e.response?.data}');
 
     // 에러 응답이 있고, INVALID_ACCESS_TOKEN 에러인지 확인
-    if (e.response?.statusCode == 401 &&
-        e.response?.data['error']?['code'] == 'ERROR_0006') {
+    if (e.response?.statusCode == 401 && e.response?.data['error']?['code'] == 'ERROR_0006') {
       logger.d('INVALID_ACCESS_TOKEN detected. Attempting to refresh token.');
 
       try {
@@ -79,8 +76,7 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
         );
 
         // 요청 재시도
-        final retryRequest =
-            await _retryRequest(e.requestOptions, newAccessToken);
+        final retryRequest = await _retryRequest(e.requestOptions, newAccessToken);
         return handler.resolve(retryRequest);
       } catch (error) {
         logger.e('Failed to refresh token: $error');
@@ -100,8 +96,7 @@ InterceptorsWrapper interceptorsWrapper = InterceptorsWrapper(
 /// ************************************************
 /// 요청 재시도 함수
 /// ************************************************
-Future<Response> _retryRequest(
-    RequestOptions requestOptions, String newAccessToken) async {
+Future<Response> _retryRequest(RequestOptions requestOptions, String newAccessToken) async {
   final dio = Session().dio;
   return await dio.fetch(requestOptions);
 }

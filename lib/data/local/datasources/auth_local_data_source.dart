@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import '../../core/storage/secure_storage_helper.dart';
-import 'entities/auth_entity.dart';
+import 'package:couple_book/core/storage/secure_storage_helper.dart';
+import 'package:couple_book/data/local/entities/auth_entity.dart';
 
 class AuthLocalDataSource {
   static final AuthLocalDataSource instance = AuthLocalDataSource._internal();
