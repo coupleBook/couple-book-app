@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 import '../../api/user_api/user_profile_api.dart';
-import '../../core/utils/profile_image_path.dart';
+import '../../core/utils/image/profile_image_path.dart';
 import '../local/entities/user_entity.dart';
 import '../local/entities/user_profile_image_entity.dart';
 import '../local/user_local_data_source.dart';

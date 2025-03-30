@@ -4,7 +4,7 @@ import 'package:couple_book/data/local/last_login_local_data_source.dart';
 import 'package:couple_book/data/local/local_user_local_data_source.dart';
 import 'package:intl/intl.dart';
 
-import '../../core/utils/token_cleaner.dart';
+import '../../core/utils/auth/token_cleaner.dart';
 import '../local/auth_local_data_source.dart';
 import '../local/entities/auth_entity.dart';
 import '../local/entities/last_login_entity.dart';

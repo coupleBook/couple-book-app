@@ -3,4 +3,4 @@ class TokenCleaner {
   static String cleanToken(String token) {
     return token.replaceFirst('Bearer ', '').replaceAll(' ', '');
   }
-}
+} 

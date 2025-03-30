@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 import '../../api/partner_api/partner_profile_api.dart';
-import '../../core/utils/profile_image_path.dart';
+import '../../core/utils/image/profile_image_path.dart';
 import '../local/entities/enums/gender_enum.dart';
 import '../local/entities/partner_entity.dart';
 import '../local/entities/partner_profile_image_entity.dart';

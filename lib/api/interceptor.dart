@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 import '../core/constants/app_constants.dart';
-import '../core/utils/token_cleaner.dart';
+import '../core/utils/auth/token_cleaner.dart';
 import '../data/local/entities/auth_entity.dart';
 import '../main.dart';
 
