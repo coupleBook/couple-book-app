@@ -1,4 +1,4 @@
-import 'package:couple_book/dto/response_dto/change_dating_date_response_dto.dart';
+import 'package:couple_book/data/remote/models/response/change_dating_date_response_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 

@@ -1,4 +1,4 @@
-import 'package:couple_book/dto/api_dto.dart';
+import 'package:couple_book/data/remote/models/common/api_dto.dart';
 
 class ChangeDatingDateResponseDto extends ApiResponse {
   String coupleId;

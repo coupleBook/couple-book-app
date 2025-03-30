@@ -1,6 +1,6 @@
+import 'package:couple_book/data/remote/models/common/api_dto.dart';
 import 'package:couple_book/data/remote/models/response/common/couple_info_response.dart';
 import 'package:couple_book/data/remote/models/response/common/my_info_response.dart';
-import 'package:couple_book/dto/api_dto.dart';
 
 class UserProfileResponseDto extends ApiResponse {
   MyInfoResponse me;
