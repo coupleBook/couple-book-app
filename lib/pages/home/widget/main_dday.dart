@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:couple_book/core/constants/assets.gen.dart';
-import 'package:couple_book/core/l10n/l10n.dart';
+import 'package:couple_book/core/constants/l10n.dart';
 import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/partner_local_data_source.dart';

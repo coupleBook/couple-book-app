@@ -6,7 +6,7 @@ import 'package:couple_book/pages/home/widget/main_dday.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/l10n/l10n.dart';
+import 'package:couple_book/core/constants/l10n.dart';
 import '../../core/constants/assets.gen.dart';
 import '../timeline/page.dart';
 

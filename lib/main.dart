@@ -2,8 +2,8 @@ import 'package:couple_book/core/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/constants/l10n.dart';
 import 'core/l10n/app_localizations.dart';
-import 'core/l10n/l10n.dart';
 import 'core/theme/colors.gen.dart';
 
 Future<void> main() async {

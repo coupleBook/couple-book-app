@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../core/l10n/l10n.dart';
+import 'package:couple_book/core/constants/l10n.dart';
 
 class PermissionHandlerWidget extends StatefulWidget {
   final VoidCallback onPermissionGranted;

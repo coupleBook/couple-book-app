@@ -1,4 +1,4 @@
-import 'package:couple_book/core/l10n/l10n.dart';
+import 'package:couple_book/core/constants/l10n.dart';
 import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/core/constants/assets.gen.dart';
 import 'package:couple_book/core/theme/text_style.dart';

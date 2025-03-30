@@ -81,6 +81,7 @@ flutter:
     - assets/bgImgs/
     - assets/colors/
     - assets/contents/
+    - assets/l10n/
   fonts:
     - family: Iseoyunchae
       fonts:

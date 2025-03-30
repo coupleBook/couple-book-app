@@ -1,4 +1,4 @@
-import 'package:couple_book/core/l10n/l10n.dart';
+import 'package:couple_book/core/constants/l10n.dart';
 import 'package:couple_book/data/local/entities/enums/login_platform.dart';
 import 'package:couple_book/data/repositories/login_service.dart';
 import 'package:couple_book/core/constants/assets.gen.dart';
