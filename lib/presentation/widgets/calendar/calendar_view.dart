@@ -1,4 +1,4 @@
-import 'package:couple_book/gen/colors.gen.dart';
+import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/presentation/widgets/calendar/year_month_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/l10n.dart';
-import '../../../gen/assets.gen.dart';
-import '../../../gen/colors.gen.dart';
+import '../../../core/constants/assets.gen.dart';
+import '../../../core/theme/colors.gen.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function() onNotificationTab;

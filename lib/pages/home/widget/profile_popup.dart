@@ -1,7 +1,7 @@
 import 'dart:io'; // 파일 관련 작업을 위해 추가
 
-import 'package:couple_book/gen/assets.gen.dart';
-import 'package:couple_book/gen/colors.gen.dart';
+import 'package:couple_book/core/constants/assets.gen.dart';
+import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 

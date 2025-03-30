@@ -1,7 +1,7 @@
 import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
-import 'package:couple_book/gen/assets.gen.dart';
-import 'package:couple_book/gen/colors.gen.dart';
+import 'package:couple_book/core/constants/assets.gen.dart';
+import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/pages/couple_anniversary/page.dart';
 import 'package:couple_book/pages/home/page.dart';
 import 'package:couple_book/presentation/pages/login/views/login_view.dart';

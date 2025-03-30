@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/l10n/app_localizations.dart';
 import 'core/l10n/l10n.dart';
-import 'gen/colors.gen.dart';
+import 'core/theme/colors.gen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
