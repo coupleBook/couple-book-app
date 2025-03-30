@@ -1,10 +1,10 @@
 import 'package:couple_book/main.dart';
 import 'package:couple_book/pages/couple_anniversary/page.dart';
 import 'package:couple_book/pages/home/page.dart';
-import 'package:couple_book/pages/login/signup_animation.dart';
 import 'package:couple_book/pages/logout/page.dart';
 import 'package:couple_book/pages/test/page.dart';
 import 'package:couple_book/presentation/pages/login/views/login_view.dart';
+import 'package:couple_book/presentation/pages/signup_animation/views/signup_animation_view.dart';
 import 'package:couple_book/presentation/pages/splash/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -129,7 +129,7 @@ final router = GoRouter(
       pageBuilder: (context, state) {
         return CustomTransitionPage(
           key: state.pageKey,
-          child: const SignupAnimationPage(),
+          child: const SignupAnimationView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity: animation,
