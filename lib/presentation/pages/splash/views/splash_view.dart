@@ -1,12 +1,11 @@
+import 'package:couple_book/core/constants/assets.gen.dart';
+import 'package:couple_book/core/routing/router.dart';
+import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/data/local/datasources/auth_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
-import 'package:couple_book/core/constants/assets.gen.dart';
-import 'package:couple_book/core/theme/colors.gen.dart';
-import 'package:couple_book/pages/couple_anniversary/page.dart';
-import 'package:couple_book/pages/home/page.dart';
-import 'package:couple_book/presentation/pages/login/views/login_view.dart';
 import 'package:couple_book/presentation/pages/splash/viewmodels/splash_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SplashView extends StatefulWidget {
@@ -16,7 +15,7 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<SplashView> {
   late SplashViewModel _viewModel;
 
   @override
@@ -25,8 +24,24 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
     _viewModel = SplashViewModel(
       authLocalDataSource: AuthLocalDataSource(),
       localUserLocalDataSource: LocalUserLocalDataSource(),
-      vsync: this,
     );
+    _viewModel.addListener(_onViewModelChanged);
+  }
+
+  void _onViewModelChanged() {
+    if (_viewModel.state.isInitialized) {
+      if (context.mounted) {
+        if (_viewModel.state.existToken) {
+          if (_viewModel.state.existAnniversary) {
+            context.goNamed(ViewRoute.home.name);
+          } else {
+            context.goNamed(ViewRoute.coupleAnniversary.name);
+          }
+        } else {
+          context.goNamed(ViewRoute.login.name);
+        }
+      }
+    }
   }
 
   @override
@@ -35,23 +50,16 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
       value: _viewModel,
       child: Consumer<SplashViewModel>(
         builder: (context, viewModel, child) {
-          if (viewModel.state.hideSplash) {
-            if (viewModel.state.existToken && viewModel.state.existAnniversary) {
-              return const HomePage();
-            } else if (viewModel.state.existToken) {
-              return const CoupleAnniversaryPage();
-            } else {
-              return const LoginView();
-            }
-          }
-
-          return AnimatedOpacity(
-            opacity: viewModel.opacity,
-            duration: const Duration(milliseconds: 500),
-            child: Container(
-              color: ColorName.backgroundColor,
-              child: Center(
-                child: Assets.icons.appLogoIcon.svg(),
+          return Scaffold(
+            backgroundColor: ColorName.white,
+            body: Center(
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 500),
+                opacity: viewModel.state.isInitialized ? 1.0 : 0.0,
+                child: Assets.icons.appLogoIcon.svg(
+                  width: 200,
+                  height: 200,
+                ),
               ),
             ),
           );
@@ -62,6 +70,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
 
   @override
   void dispose() {
+    _viewModel.removeListener(_onViewModelChanged);
     _viewModel.dispose();
     super.dispose();
   }
