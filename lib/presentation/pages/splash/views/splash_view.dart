@@ -4,7 +4,7 @@ import 'package:couple_book/gen/assets.gen.dart';
 import 'package:couple_book/gen/colors.gen.dart';
 import 'package:couple_book/pages/couple_anniversary/page.dart';
 import 'package:couple_book/pages/home/page.dart';
-import 'package:couple_book/pages/login/page.dart';
+import 'package:couple_book/presentation/pages/login/views/login_view.dart';
 import 'package:couple_book/presentation/pages/splash/viewmodels/splash_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +41,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
             } else if (viewModel.state.existToken) {
               return const CoupleAnniversaryPage();
             } else {
-              return const LoginPage();
+              return const LoginView();
             }
           }
 
