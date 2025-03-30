@@ -1,4 +1,5 @@
 import 'package:couple_book/gen/colors.gen.dart';
+import 'package:couple_book/presentation/widgets/calendar/calendar_view.dart';
 import 'package:couple_book/router.dart';
 import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 import '../../core/l10n/l10n.dart';
-import '../../core/utils/widgets/calendar.dart';
 import '../../data/local/entities/local_user_entity.dart';
 import '../../data/local/local_user_local_data_source.dart';
 import '../../gen/assets.gen.dart';
@@ -42,7 +42,7 @@ class CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
                 top: Radius.circular(20.0), // 모서리를 둥글게
               ),
             ),
-            child: Calendar(
+            child: CalendarView(
               selectedDate: _selectedDate, // 선택된 날짜 전달
               onDaySelected: (selectedDay) {
                 setState(() {
@@ -127,9 +127,7 @@ class CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
                 splashFactory: NoSplash.splashFactory, // 클릭 시 물결 효과 제거
               ),
               child: AppText(
-                _selectedDate == null
-                    ? l10n.selectDate
-                    : '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일',
+                _selectedDate == null ? l10n.selectDate : '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일',
                 style: TypoStyle.notoSansSemiBold13_1_4.copyWith(
                   fontSize: 15,
                   letterSpacing: -0.2,
@@ -150,8 +148,7 @@ class CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
                   },
                 ),
                 foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                minimumSize:
-                    WidgetStateProperty.all<Size>(Size(screenWidth * 0.84, 58)),
+                minimumSize: WidgetStateProperty.all<Size>(Size(screenWidth * 0.84, 58)),
                 shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -165,9 +162,7 @@ class CoupleAnniversaryPageState extends State<CoupleAnniversaryPage> {
                   fontSize: 15,
                   letterSpacing: -0.2,
                 ),
-                color: _selectedDate == null
-                    ? ColorName.pointBtnBg
-                    : ColorName.white,
+                color: _selectedDate == null ? ColorName.pointBtnBg : ColorName.white,
               ),
             ),
           ],
