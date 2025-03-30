@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:couple_book/core/storage/secure_storage_helper.dart';
-import 'package:couple_book/core/storage/shared_preferences_helper.dart';
+import 'package:couple_book/data/storage/secure_storage_helper.dart';
+import 'package:couple_book/data/storage/shared_preferences_helper.dart';
 import 'package:couple_book/data/local/entities/local_user_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';

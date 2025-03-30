@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:couple_book/core/storage/secure_storage_helper.dart';
+import 'package:couple_book/data/storage/secure_storage_helper.dart';
 import 'package:couple_book/data/local/entities/partner_entity.dart';
 
 class PartnerLocalDataSource {

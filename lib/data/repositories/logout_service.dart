@@ -59,7 +59,7 @@ class LogoutService {
       await partnerLocalDataSource.clearPartner();
       await userProfileImageLocalDataSource.clearProfileImage();
       await partnerProfileImageLocalDataSource.clearPartnerProfileImage();
-      // await localUserLocalDataSource.clearLocalUser();
+      await localUserLocalDataSource.clearLocalUser();
 
       logger.d('모든 토큰과 사용자 데이터가 삭제되었습니다.');
     } catch (e) {
