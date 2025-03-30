@@ -1,8 +1,8 @@
 import 'package:couple_book/main.dart';
-import 'package:couple_book/pages/test/page.dart';
 import 'package:couple_book/presentation/pages/couple_anniversary/views/couple_anniversary_view.dart';
 import 'package:couple_book/presentation/pages/home/views/home_view.dart';
 import 'package:couple_book/presentation/pages/login/views/login_view.dart';
+import 'package:couple_book/presentation/pages/settings/views/settings_view.dart';
 import 'package:couple_book/presentation/pages/signup_animation/views/signup_animation_view.dart';
 import 'package:couple_book/presentation/pages/splash/views/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +125,7 @@ final router = GoRouter(
       pageBuilder: (context, state) {
         return CustomTransitionPage(
           key: state.pageKey,
-          child: const ApiTestPage(),
+          child: const SettingsView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity: animation,

@@ -6,6 +6,7 @@ import 'package:couple_book/data/remote/datasources/couple_api/couple_api.dart';
 import 'package:couple_book/data/remote/datasources/couple_api/couple_code_creator_info_response.dart';
 import 'package:couple_book/data/remote/datasources/couple_api/couple_linking_response_dto.dart';
 import 'package:couple_book/data/remote/datasources/couple_api/create_couple_code_response_dto.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -68,21 +69,34 @@ class CoupleCodeService {
   Future<CoupleLinkingResponseDto?> coupleLink(String code) async {
     try {
       final response = await coupleApi.linkCouple(code);
-      final coupleInfo = response.coupleInfo;
-      final localUserEntity = LocalUserEntity(anniversary: coupleInfo.datingAnniversary.toIso8601String());
+
+      // 정상 응답 처리
+      final coupleInfo = response.coupleInfo!;
+      final localUserEntity = LocalUserEntity(
+        anniversary: coupleInfo.datingAnniversary.toIso8601String(),
+      );
 
       localUserLocalDataSource.saveLocalUser(localUserEntity);
-
       partnerProfileService.saveProfile(coupleInfo.partner);
       coupleCodeLocalDataSource.clearCoupleCode();
 
       logger.d('커플 연동 성공: $response');
       _showSnackBar('커플 연동에 성공했습니다.');
+
       return response;
+    } on DioException catch (e) {
+      // 👇 서버에서 내려준 에러 메시지를 꺼냄
+      final message = e.response?.data['error']?['message'] ?? '알 수 없는 오류가 발생했습니다.';
+      final code = e.response?.data['error']?['code'] ?? 'UNKNOWN_ERROR';
+
+      logger.e('커플 연동 실패 (400 응답): $message');
+      return CoupleLinkingResponseDto.failure(code: code, message: message);
     } catch (e) {
-      logger.e('커플 연동 실패: $e');
-      _showSnackBar('커플 연동 실패: $e');
-      return Future.value(null);
+      logger.e('커플 연동 실패 (기타 오류): $e');
+      return CoupleLinkingResponseDto.failure(
+        code: 'EXCEPTION',
+        message: '서버 오류가 발생했습니다.',
+      );
     }
   }
 

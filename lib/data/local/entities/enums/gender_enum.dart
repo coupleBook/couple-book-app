@@ -23,14 +23,14 @@ enum Gender {
   }
 
   // 서버로부터 받은 값을 Enum으로 변환
-  static Gender fromServerValue(String value) {
+  static Gender? fromServerValue(String? value) {
     switch (value) {
       case 'M':
         return Gender.male;
       case 'F':
         return Gender.female;
       default:
-        throw Exception('Invalid gender value: $value');
+        return null;
     }
   }
 }

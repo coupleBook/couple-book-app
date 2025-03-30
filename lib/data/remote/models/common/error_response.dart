@@ -1,8 +1,8 @@
-class ErrorDto {
+class ErrorResponse {
   String code;
   String message;
 
-  ErrorDto({
+  ErrorResponse({
     required this.code,
     required this.message,
   });
