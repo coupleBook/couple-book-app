@@ -1,13 +1,13 @@
 import 'dart:io'; // 파일 관련 작업을 위해 추가
 
 import 'package:couple_book/core/constants/assets.gen.dart';
+import 'package:couple_book/core/constants/l10n.dart';
 import 'package:couple_book/core/theme/colors.gen.dart';
+import 'package:couple_book/core/theme/text_style.dart';
+import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // image_picker 패키지 추가
 
-import 'package:couple_book/core/constants/l10n.dart';
-import '../../../data/local/entities/enums/gender_enum.dart';
-import '../../../core/theme/text_style.dart';
 import 'permission_handler_widget.dart'; // 권한 처리 위젯 추가
 
 class ProfilePopupForm extends StatefulWidget {
@@ -69,8 +69,7 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                child: Assets.icons.closeIcon
-                    .svg(width: 16, height: 16), // 닫기 아이콘 추가
+                child: Assets.icons.closeIcon.svg(width: 16, height: 16), // 닫기 아이콘 추가
               ),
             ),
             const SizedBox(height: 16),
@@ -122,8 +121,7 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
         });
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-        isSelected ? ColorName.defaultBlack : ColorName.lightGray,
+        backgroundColor: isSelected ? ColorName.defaultBlack : ColorName.lightGray,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -144,12 +142,9 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
         CircleAvatar(
           radius: 60.0, // 프로필 사진 크기를 더 크게 변경
           backgroundColor: Colors.transparent,
-          backgroundImage: _selectedImage != null
-              ? FileImage(_selectedImage!)
-              : null, // 선택한 이미지로 설정
+          backgroundImage: _selectedImage != null ? FileImage(_selectedImage!) : null, // 선택한 이미지로 설정
           child: _selectedImage == null
-              ? Assets.icons.profileMaleContent
-                  .svg(width: 96, height: 96) // 기본 아이콘 크기도 조정
+              ? Assets.icons.profileMaleContent.svg(width: 96, height: 96) // 기본 아이콘 크기도 조정
               : null, // 이미지가 선택되지 않았을 때 기본 아이콘 표시
         ),
         Positioned(
@@ -189,8 +184,7 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
 
   // 이미지 선택을 처리하는 함수
   Future<void> _pickImageFromGallery() async {
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _selectedImage = File(pickedFile.path);
@@ -223,8 +217,7 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
             // 날짜 필드에서만 캘린더가 뜨도록 onTap 이벤트 설정
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: const TextStyle(
-                  color: Colors.orangeAccent, fontWeight: FontWeight.w500),
+              hintStyle: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.w500),
               // 힌트 텍스트 스타일
               errorText: errorText,
               errorStyle: const TextStyle(color: Colors.orangeAccent),
@@ -233,8 +226,7 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
                 borderSide: BorderSide(color: ColorName.defaultGray), // 밑줄 색상
               ),
               focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: ColorName.defaultGray), // 포커스된 상태에서의 밑줄 색상
+                borderSide: BorderSide(color: ColorName.defaultGray), // 포커스된 상태에서의 밑줄 색상
               ),
             ),
           ),
@@ -268,8 +260,7 @@ class ProfilePopupFormState extends State<ProfilePopupForm> {
           final BuildContext currentContext = context;
           setState(() {
             nameError = _validateName(_nameController.text);
-            birthdateError =
-                _birthdateController.text.isEmpty ? l10n.selectDate : null;
+            birthdateError = _birthdateController.text.isEmpty ? l10n.selectDate : null;
           });
           if (nameError == null && birthdateError == null) {
             Navigator.of(currentContext).pop({
