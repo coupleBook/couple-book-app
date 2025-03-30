@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:couple_book/core/constants/assets.gen.dart';
 import 'package:couple_book/core/l10n/l10n.dart';
+import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/data/local/datasources/local_user_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/partner_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/partner_profile_image_local_data_source.dart';
@@ -8,10 +10,10 @@ import 'package:couple_book/data/local/datasources/user_local_data_source.dart';
 import 'package:couple_book/data/local/datasources/user_profile_image_local_data_source.dart';
 import 'package:couple_book/data/local/entities/enums/gender_enum.dart';
 import 'package:couple_book/data/remote/datasources/user_api/user_profile_api.dart';
+import 'package:couple_book/data/repositories/my_image_storage_service.dart';
 import 'package:couple_book/data/repositories/my_profile_service.dart';
-import 'package:couple_book/feature/auth/user_profile_service.dart';
-import 'package:couple_book/core/constants/assets.gen.dart';
-import 'package:couple_book/core/theme/colors.gen.dart';
+import 'package:couple_book/data/repositories/user_profile_repository_impl.dart';
+import 'package:couple_book/domain/usecases/auth/update_user_profile_image_use_case.dart';
 import 'package:couple_book/style/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +42,12 @@ class MainDdayViewState extends State<MainDdayView> {
   final partnerProfileImageLocalDataSource = PartnerProfileImageLocalDataSource.instance;
 
   final String todayDate = DateFormat('yy/MM/dd/EEEE', 'ko_KR').format(DateTime.now());
-  final UserProfileService userProfileService = UserProfileService();
+  final UpdateUserProfileImageUseCase updateUserProfileImageUseCase = UpdateUserProfileImageUseCase(
+    UserProfileRepositoryImpl(
+      userProfileApi: UserProfileApi(),
+      myImageStorageService: MyImageStorageService(),
+    ),
+  );
   final myProfileService = MyProfileService();
 
   final userProfileApi = UserProfileApi();
@@ -399,7 +406,7 @@ class MainDdayViewState extends State<MainDdayView> {
       // 이미지 변경 API 호출
       int updatedLeftProfileImageVersion = leftProfileImageVersion;
       if (updatedImage != null && updatedImage != leftProfileImage) {
-        var profileImageModificationResponseDto = await userProfileService.updateUserProfileImage(updatedImage);
+        var profileImageModificationResponseDto = await updateUserProfileImageUseCase.execute(updatedImage);
         updatedLeftProfileImageVersion = profileImageModificationResponseDto.profileImageVersion;
 
         // 상태 업데이트
