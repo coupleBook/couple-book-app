@@ -1,7 +1,6 @@
 import 'package:couple_book/main.dart';
 import 'package:couple_book/pages/couple_anniversary/page.dart';
 import 'package:couple_book/pages/home/page.dart';
-import 'package:couple_book/pages/logout/page.dart';
 import 'package:couple_book/pages/test/page.dart';
 import 'package:couple_book/presentation/pages/login/views/login_view.dart';
 import 'package:couple_book/presentation/pages/signup_animation/views/signup_animation_view.dart';
@@ -12,7 +11,6 @@ import 'package:go_router/go_router.dart';
 enum ViewRoute {
   splash,
   login,
-  logout,
   home,
   coupleAnniversary,
   signupAnimation,
@@ -26,8 +24,6 @@ extension RouteString on ViewRoute {
         return 'SPLASH';
       case ViewRoute.login:
         return 'LOGIN';
-      case ViewRoute.logout:
-        return 'LOGOUT';
       case ViewRoute.home:
         return 'HOME';
       case ViewRoute.coupleAnniversary:
@@ -66,22 +62,6 @@ final router = GoRouter(
         return CustomTransitionPage(
           key: state.pageKey,
           child: const LoginView(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-        );
-      },
-    ),
-    GoRoute(
-      path: '/Logout',
-      name: 'LOGOUT',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const LogoutPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity: animation,
