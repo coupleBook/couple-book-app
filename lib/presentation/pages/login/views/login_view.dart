@@ -4,7 +4,7 @@ import 'package:couple_book/data/repositories/login_service.dart';
 import 'package:couple_book/core/constants/assets.gen.dart';
 import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/presentation/pages/login/viewmodels/login_view_model.dart';
-import 'package:couple_book/style/text_style.dart';
+import 'package:couple_book/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

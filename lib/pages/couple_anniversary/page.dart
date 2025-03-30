@@ -5,7 +5,7 @@ import 'package:couple_book/data/local/entities/local_user_entity.dart';
 import 'package:couple_book/core/constants/assets.gen.dart';
 import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/presentation/widgets/calendar/calendar_view.dart';
-import 'package:couple_book/style/text_style.dart';
+import 'package:couple_book/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';

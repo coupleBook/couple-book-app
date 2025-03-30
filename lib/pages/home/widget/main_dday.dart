@@ -14,7 +14,7 @@ import 'package:couple_book/data/repositories/my_image_storage_service.dart';
 import 'package:couple_book/data/repositories/my_profile_service.dart';
 import 'package:couple_book/data/repositories/user_profile_repository_impl.dart';
 import 'package:couple_book/domain/usecases/auth/update_user_profile_image_use_case.dart';
-import 'package:couple_book/style/text_style.dart';
+import 'package:couple_book/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
