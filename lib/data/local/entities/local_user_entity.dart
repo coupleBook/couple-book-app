@@ -7,6 +7,8 @@ class LocalUserEntity {
     'anniversary': anniversary,
   };
 
+  DateTime get anniversaryDateTime => DateTime.parse(anniversary);
+
   factory LocalUserEntity.fromJson(Map<String, dynamic> json) =>
       LocalUserEntity(anniversary: json['anniversary']);
 }

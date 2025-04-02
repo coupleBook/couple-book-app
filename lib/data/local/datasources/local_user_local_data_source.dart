@@ -21,7 +21,7 @@ class LocalUserLocalDataSource {
     await SharedPreferencesHelper.setItem(_localUserKey, jsonEncode(localUser.toJson()));
   }
 
-  Future<LocalUserEntity?> _getLocalUser() async {
+  Future<LocalUserEntity?> getLocalUser() async {
     final data = await SharedPreferencesHelper.getItem(_localUserKey);
 
     if (data != null) {
@@ -54,7 +54,7 @@ class LocalUserLocalDataSource {
   }
 
   Future<DateTime?> _getAnniversary() async {
-    final localUserEntity = await _getLocalUser();
+    final localUserEntity = await getLocalUser();
     if (localUserEntity == null) {
       return null;
     }
