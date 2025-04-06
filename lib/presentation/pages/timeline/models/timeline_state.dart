@@ -1,37 +1,42 @@
+import 'anniversary_item.dart';
+
 class TimelineState {
-  final int selectedTabIndex;
   final List<AnniversaryItem> anniversaries;
-  final Map<String, bool> checkedItems;
+  final Set<String> generatedKeys;
+  final String? myName;
+  final String? myBirthday;
+  final String? partnerName;
+  final String? partnerBirthday;
+  final bool initialScrollDone;
 
   TimelineState({
-    this.selectedTabIndex = 0,
-    this.anniversaries = const [],
-    this.checkedItems = const {},
-  });
+    List<AnniversaryItem>? anniversaries,
+    Set<String>? generatedKeys,
+    this.myName,
+    this.myBirthday,
+    this.partnerName,
+    this.partnerBirthday,
+    this.initialScrollDone = false,
+  })  : anniversaries = anniversaries ?? [],
+        generatedKeys = generatedKeys ?? {};
 
   TimelineState copyWith({
-    int? selectedTabIndex,
     List<AnniversaryItem>? anniversaries,
-    Map<String, bool>? checkedItems,
+    Set<String>? generatedKeys,
+    String? myName,
+    String? myBirthday,
+    String? partnerName,
+    String? partnerBirthday,
+    bool? initialScrollDone,
   }) {
     return TimelineState(
-      selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
       anniversaries: anniversaries ?? this.anniversaries,
-      checkedItems: checkedItems ?? this.checkedItems,
+      generatedKeys: generatedKeys ?? this.generatedKeys,
+      myName: myName ?? this.myName,
+      myBirthday: myBirthday ?? this.myBirthday,
+      partnerName: partnerName ?? this.partnerName,
+      partnerBirthday: partnerBirthday ?? this.partnerBirthday,
+      initialScrollDone: initialScrollDone ?? this.initialScrollDone,
     );
   }
 }
-
-class AnniversaryItem {
-  final String label;
-  final String date;
-  final String dDay;
-
-  AnniversaryItem({
-    required this.label,
-    required this.date,
-    required this.dDay,
-  });
-
-  String get id => '$label-$date'; // 체크박스 상태 관리를 위한 고유 ID
-} 
