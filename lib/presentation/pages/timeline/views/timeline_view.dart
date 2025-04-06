@@ -1,5 +1,6 @@
 import 'package:couple_book/core/theme/colors.gen.dart';
 import 'package:couple_book/core/theme/text_style.dart';
+import 'package:couple_book/presentation/pages/timeline/models/anniversary_item.dart';
 import 'package:couple_book/presentation/pages/timeline/viewmodels/timeline_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,13 @@ class _TimelineViewState extends State<TimelineView> with TickerProviderStateMix
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(_handleTabChange);
     _viewModel = TimelineViewModel();
+  }
+
+  void _handleTabChange() {
+    if (_tabController.indexIsChanging) return;
+    _viewModel.updateTabIndex(_tabController.index);
   }
 
   @override
@@ -40,12 +47,20 @@ class _TimelineViewState extends State<TimelineView> with TickerProviderStateMix
             _buildTabBar(),
             Expanded(
               child: Consumer<TimelineViewModel>(
-                builder: (context, viewModel, _) {
+                builder: (context, vm, child) {
                   return TabBarView(
                     controller: _tabController,
                     children: [
-                      _buildAnniversaryList(viewModel, 0), // 전체보기 → 오늘 강조
-                      _buildAnniversaryList(viewModel, 1), // 첫날보기 → 사귄 날 강조
+                      _buildAnniversaryList(
+                        vm.state.anniversaries,
+                        vm.scrollController0,
+                        highlightCondition: (item) => item.isToday,
+                      ),
+                      _buildAnniversaryList(
+                        vm.state.anniversaries,
+                        vm.scrollController1,
+                        highlightCondition: (item) => item.label == '사귄 날',
+                      ),
                     ],
                   );
                 },
@@ -70,9 +85,7 @@ class _TimelineViewState extends State<TimelineView> with TickerProviderStateMix
         highlightColor: Colors.transparent,
         hoverColor: Colors.transparent,
         tabBarTheme: TabBarTheme(
-          overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                (states) => states.contains(WidgetState.pressed) ? Colors.transparent : null,
-          ),
+          overlayColor: WidgetStateProperty.resolveWith<Color?>((states) => states.contains(WidgetState.pressed) ? Colors.transparent : null),
         ),
       ),
       child: TabBar(
@@ -87,10 +100,6 @@ class _TimelineViewState extends State<TimelineView> with TickerProviderStateMix
         labelColor: Colors.white,
         unselectedLabelColor: Colors.grey,
         labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        onTap: (index) {
-          _viewModel.updateTabIndex(index); // ✅ 탭 전환 시 ViewModel에 전달
-          setState(() {});
-        },
         tabs: [
           _buildTabText('전체보기', 0),
           _buildTabText('첫날보기', 1),
@@ -114,17 +123,18 @@ class _TimelineViewState extends State<TimelineView> with TickerProviderStateMix
     );
   }
 
-  Widget _buildAnniversaryList(TimelineViewModel viewModel, int tabIndex) {
+  Widget _buildAnniversaryList(
+    List<AnniversaryItem> items,
+    ScrollController controller, {
+    required bool Function(AnniversaryItem) highlightCondition,
+  }) {
     return ListView.builder(
-      controller: viewModel.scrollController,
-      itemCount: viewModel.state.anniversaries.length + 1,
+      controller: controller,
+      itemCount: items.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) return _buildListHeader();
-        final item = viewModel.state.anniversaries[index - 1];
-
-        final isToday = tabIndex == 0 && item.label == '오늘';
-        final isFirstDayTab = tabIndex == 1 && item.label == '사귄 날';
-        final isHighlighted = isToday || isFirstDayTab;
+        final item = items[index - 1];
+        final isHighlighted = highlightCondition(item);
 
         final labelStyle = TextStyle(
           fontWeight: FontWeight.bold,
@@ -132,18 +142,18 @@ class _TimelineViewState extends State<TimelineView> with TickerProviderStateMix
           color: isHighlighted ? Colors.orange : Colors.black,
         );
         final dateStyle = TextStyle(
-          fontSize: 14,
           color: isHighlighted ? Colors.orange : Colors.grey,
+          fontSize: 14,
         );
         final dDayStyle = TextStyle(
-          fontSize: 16,
           color: isHighlighted ? Colors.orange : Colors.orange,
+          fontSize: 16,
         );
 
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0.0),
               child: Column(
                 children: [
                   SizedBox(
@@ -172,7 +182,11 @@ class _TimelineViewState extends State<TimelineView> with TickerProviderStateMix
                           flex: 3,
                           child: Align(
                             alignment: Alignment.center,
-                            child: Text(item.dDay, style: dDayStyle, textAlign: TextAlign.center),
+                            child: Text(
+                              item.dDay,
+                              style: dDayStyle,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ],
